@@ -1,10 +1,7 @@
+# Group 27 CS 309 - Group Event Planner
+An event planner for group events such as dinners and hiking trips.
 
-
-
-
-
-
-Setup Directions
+###Setup Directions
 
 (1) Change you permissions on a directory (preferably in /var/www) so that you have read and write permissions on it.
 
@@ -38,37 +35,37 @@ Setup Directions
 
 (4) In the folder you clone the git repository and there is the file "manage.py", run "gunicorn planner.wsgi"
 
+###Directions to setup networking so that you can view your webpage
 
+(1)  Edit /etc/network/interfaces as root.  There should be two lines: "auto eth0" and "iface eth0 inet dhcp".  Copy those two lines and replace eth0 with eth1.  
 
-Directions to setup networking so that you can view your webpage
+(2)  Shutdown the virtual machine.
 
-(5)  Edit /etc/network/interfaces as root.  There should be two lines: "auto eth0" and "iface eth0 inet dhcp".  Copy those two lines and replace eth0 with eth1.  
+(3)  Go to the settings for the virtual machine in VirtualBox.  Click on Network, then Adapter 2.  In the drop-down, select "Host-only Adapater".  Hit OK to exit the menus.
 
-(6)  Shutdown the virtual machine.
+(4)  Power on the virtual machine.
 
-(7)  Go to the settings for the virtual machine in VirtualBox.  Click on Network, then Adapter 2.  In the drop-down, select "Host-only Adapater".  Hit OK to exit the menus.
+(5)  Restart the server by running gunicorn planner.wsgi in the directory with manage.py
 
-(8)  Power on the virtual machine.
+(6) Run "ifconfig"  There will be a section labelled "eth1".  On the second line in that section (starting "inet addr:") There wil be an IP address.  On your host machine, enter this ip address in the address bar of your web browser and press enter.  A default Django website should appear.
 
-(9)  Restart the server by running gunicorn planner.wsgi in the directory with manage.py
+###Setup so that you can use SSH, SCP, and SFTP to connect
 
-(10) Run "ifconfig"  There will be a section labelled "eth1".  On the second line in that section (starting "inet addr:") There wil be an IP address.  On your host machine, enter this ip address in the address bar of your web browser and press enter.  A default Django website should appear.
+(1) Install the SSH server by running "sudo apt-get install openssh-server"
 
+(2) Follow the directions in the section above to setup networking so that you can access your VM from your host machine.
 
+(3a) If using a Mac, in the Mac's terminal, enter ssh -l <username> <ip_address> where <username> is your username on the virtual machine and <ip_address> is the IP address of the virtual machine.
 
-Using Tmux
+(3b) If using FileZilla, in the host box, enter "sftp://ip_address" (replace IP address with the IP address). Fill in your username and password for the VM and hit Quickconnect.
+
+###Using Tmux
 
 (1) To install, type "sudo apt-get install tmux"
 
-
-
 Your current tmux window is outlined in green.
 
-
-
 To enter tmux commands, you first have to press Control+B, then you can type the commands to add windows, resize windows, and more.  Type exit to close out of a tmux window.  The current Below are the most useful tmux commands.
-
-
 
 " = split horizontally
 
