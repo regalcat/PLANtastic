@@ -1,0 +1,276 @@
+
+$MySQL:> connect;
+
+// Drop the old tables;
+$MySQL:> drop table Person;
+$MySQL:> drop table Instructor;
+$MySQL:> drop table Student;
+$MySQL:> drop table Course;
+$MySQL:> drop table Offering;
+$MySQL:> drop table Enrollment;
+
+// Create the tables - Item 1-6;
+
+// Item 1;
+$MySQL:> create table Person (
+Name char (20),
+ID char (9) not null,
+Address char (30),
+DOB date,
+Primary key (ID));
+
+// Item 2;
+$MySQL:> create table Instructor (
+InstructorID char (9) not null references ID,
+Rank char (12),
+Salary int,
+Primary key (InstructorID));
+
+// Item 3;
+$MySQL:> create table Student (
+StudentID char (9) not null references ID,
+Classification char (10),
+GPA double,
+MentorID char (9) references InstructorID,
+CreditHours int,
+Primary key (StudentID));
+
+// Item 4;
+$MySQL:> create table Course (
+CourseCode char (6) not null,
+CourseName char(50),
+PreReq char(6));
+
+// Item 5;
+$MySQL:> create table Offering (
+CourseCode char (6) not null,
+SectionNo int not null,
+InstructorID char (9) not null references InstructorID,
+Primary key (CourseCode, SectionNo));
+
+// Item 6;
+$MySQL:> create table Enrollment (
+CourseCode char(6) not null,
+SectionNo int not null,
+StudentID char(9) not null references Student,
+Grade char(4) not null,
+Primary key (CourseCode, StudentID),
+Foreign key (CourseCode, SectionNo) references Offering);
+
+// Load the tables with information - Item 7-12;
+
+// Item 7;
+$MySQL:> load | Person | ComS363/Projects/Datasets/University_Dataset.xml;
+
+// Item 8;
+$MySQL:> load | Instructor | ComS363/Projects/Datasets/University_Dataset.xml;
+
+// Item 9;
+$MySQL:> load | Student | ComS363/Projects/Datasets/University_Dataset.xml;
+
+// Item 10;
+$MySQL:> load | Course | ComS363/Projects/Datasets/University_Dataset.xml;
+
+// Item 11;
+$MySQL:> load | Offering | ComS363/Projects/Datasets/University_Dataset.xml;
+
+// Item 12;
+$MySQL:> load | Enrollment | ComS363/Projects/Datasets/University_Dataset.xml;
+
+// Develop the SQL command - Item 13-30;
+
+
+// Item 13;
+$MySQL:> select s.StudentID, s.MentorID 
+from Student s
+where (s.Classification = "Junior" or s.Classification = "Senior")
+	and s.GPA >3.8;
+
+// Item 14;
+$MySQL:> select distinct e.CourseCode, e.SectionNo
+from Enrollment e
+where e.StudentID in ( select s.StudentID
+		from Student s
+		where s.Classification = "Sophomore");
+
+// Item 15;
+$MySQL:> select distinct p.Name, i.Salary
+from Person p, Instructor i, Student s
+where ( s.MentorID = i.InstructorID and i.InstructorID = p.ID and s.Classification = "Freshman");
+
+
+// Item 16;
+$MySQL:> select sum(i.Salary) SumSalary
+from Instructor i
+where i.InstructorID not in (select o.InstructorID
+		from Offering o);
+
+// Item 17;
+$MySQL:> select p.Name, p.DOB
+from Person p, Student s
+where (s.StudentID = p.ID and Year(p.DOB) = 1976);
+
+// Item 18;
+$MySQL:> select p.Name, i.Rank
+from Person p, Instructor i
+where i.InstructorID not in (select distinct o.InstructorID from Offering o) and i.InstructorID = p.ID and i.InstructorID not in (select distinct s.MentorID from Student s);
+
+
+// Item 19;
+$MySQL:> select p.ID, p.Name, p.DOB
+from Person p
+where p.DOB in (select max(p.DOB) from Person p);
+
+
+// Item 20;
+$MySQL:> select p.ID, p.DOB, p.Name
+from Person p
+where p.ID not in (select i.InstructorID from Instructor i) and p.ID not in (select s.StudentID from Student s);
+
+// Item 21;
+$MySQL:> select p.Name, count(s.MentorID) MentoredStudents
+from Person p, Instructor i, Student s
+where i.InstructorID = p.ID and i.InstructorID = s.MentorID
+group by p.Name;
+
+// Item 22;
+$MySQL:> select distinct s.Classification, count(s.StudentID) Students, avg(s.GPA) AverageGPA
+from Student s
+group by s.Classification;
+
+// Item 23;
+$MySQL:> select e.CourseCode, count(*) EnrolledStudents
+from Enrollment e
+group by e.CourseCode
+order by EnrolledStudents
+limit 1;
+
+// Item 24;
+$MySQL:> select s.StudentID, s.MentorID
+from Student s, Enrollment e, Offering o
+where s.MentorID = o.InstructorID and s.StudentID = e.StudentID and o.CourseCode = e.CourseCode;
+
+// Item 25;
+$MySQL:> select s.StudentID, p.Name, s.CreditHours
+from Student s, Person p
+where p.ID = s.StudentID and s.Classification = "Freshman" and  Year(p.DOB) >= 1976;
+
+
+// Item 26;
+$MySQL:> insert into Person (Name, ID, Address, DOB)
+values ("Briggs Jason", 480293439, "215 North Hyland Avenue", '1975-01-15  00:00:00');
+
+$MySQL:> insert into Student (StudentID, Classification, GPA, MentorID, CreditHours)
+values (480293439, "Junior", 3.48, 480293439, 75);
+
+$MySQL:> insert into Enrollment (CourseCode, SectionNo, StudentID, Grade)
+values ("CS311", 2, 480293439, 'A');
+
+$MySQL:> insert into Enrollment (CourseCode, SectionNo, StudentID, Grade)
+values ("CS330", 1, 480293439, "A-");
+
+$MySQL:> select *
+from Person p
+where p.Name = "Briggs Jason";
+
+$MySQL:> select *
+from Student s
+where s.StudentID = 480293439;
+
+$MySQL:> select *
+from Enrollment e
+where e.StudentID = 480293439;
+
+
+// Item 27;
+$MySQL:> delete from Enrollment
+where StudentID in (select s.StudentID
+		from Student s
+		where s.GPA < 0.5);
+
+$MySQL:> delete from Student
+where GPA < 0.5;
+
+$MySQL:> select *
+from Student s
+where s.GPA < 0.5;
+
+// Item 28;
+
+$MySQL:> select p.Name, i.Salary
+from Instructor i, Person p
+where i.InstructorID = p.ID and p.Name = "Ricky Ponting";
+
+$MySQL:> select p.Name, i.Salary
+from Instructor i, Person p
+where i.InstructorID = p.ID and p.Name = "Darren Lehmann";
+
+
+$MySQL:> update Instructor
+set Salary = Salary * 1.10
+where InstructorID in (select p.ID from Person p where p.Name = "Darren Lehmann") and
+InstructorID in (select o.InstructorID
+	from Offering o 
+	where o.CourseCode in (select e.CourseCode
+			from Enrollment e
+			where e.StudentID in (select s.StudentID
+					from Student s
+					where s.GPA >3.0
+					group by s.GPA
+					having count(*) >= 5)));
+
+$MySQL:> update Instructor
+set Salary = Salary * 1.10
+where InstructorID in (select p.ID from Person p where p.Name = "Ricky Ponting") and
+InstructorID in (select o.InstructorID
+	from Offering o 
+	where o.CourseCode in (select e.CourseCode
+			from Enrollment e
+			where e.StudentID in (select s.StudentID
+					from Student s
+					where s.GPA >3.0
+					group by s.GPA
+					having count(*) >= 5)));
+
+
+$MySQL:> select p.Name, i.Salary
+from Instructor i, Person p
+where i.InstructorID = p.ID and p.Name = "Ricky Ponting";
+
+$MySQL:> select p.Name, i.Salary
+from Instructor i, Person p
+where i.InstructorID = p.ID and p.Name = "Darren Lehmann";
+
+
+// Item 29;
+$MySQL:> insert into Person (Name, ID, Address, DOB)
+values ("Trevor Horns", 000957303, "23 Canberra Street", '1964-11-23  00:00:00');
+
+$MySQL:> select *
+from Person p
+where p.Name = "Trevor Horns";
+
+
+// Item 30;
+$MySQL:> delete from Enrollment
+where StudentID in (select s.StudentID
+		from Student s
+		where s.StudentID in (select p.ID
+				from Person p
+				where p.Name = "Jan Austin"));
+
+$MySQL:> delete from Student
+where StudentID in (select p.ID from Person p where p.Name = "Jan Austin");
+
+$MySQL:> delete from Instructor
+where InstructorID in (select p.ID from Person p where p.Name = "Jan Austin");
+
+$MySQL:> delete from Person
+where Name = "Jan Austin";
+
+$MySQL:> select *
+from Person p
+where p.Name = "Jan Austin";
+
+
+$MySQL:> disconnect;
