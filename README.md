@@ -1,7 +1,7 @@
 # Group 27 CS 309 - Group Event Planner
 An event planner for group events such as dinners and hiking trips.
 
-###Setup Directions
+### Setup Directions
 
 (1) Change you permissions on a directory (preferably in /var/www) so that you have read and write permissions on it.
 
@@ -35,7 +35,7 @@ An event planner for group events such as dinners and hiking trips.
 
 (4) In the folder you clone the git repository and there is the file "manage.py", run "gunicorn planner.wsgi"
 
-###Directions to setup networking so that you can view your webpage
+### Directions to setup networking so that you can view your webpage
 
 (1)  Edit /etc/network/interfaces as root.  There should be two lines: "auto eth0" and "iface eth0 inet dhcp".  Copy those two lines and replace eth0 with eth1.  
 
@@ -49,7 +49,7 @@ An event planner for group events such as dinners and hiking trips.
 
 (6) Run "ifconfig"  There will be a section labelled "eth1".  On the second line in that section (starting "inet addr:") There wil be an IP address.  On your host machine, enter this ip address in the address bar of your web browser and press enter.  A default Django website should appear.
 
-###Setup so that you can use SSH, SCP, and SFTP to connect
+### Setup so that you can use SSH, SCP, and SFTP to connect
 
 (1) Install the SSH server by running "sudo apt-get install openssh-server"
 
@@ -59,7 +59,7 @@ An event planner for group events such as dinners and hiking trips.
 
 (3b) If using FileZilla, in the host box, enter "sftp://ip_address" (replace IP address with the IP address). Fill in your username and password for the VM and hit Quickconnect.
 
-###Using Tmux
+### Using Tmux
 
 (1) To install, type "sudo apt-get install tmux"
 
