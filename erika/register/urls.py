@@ -3,6 +3,7 @@ from register import views
 
 urlpatterns = patterns('',
 	url(r'^$', views.index, name='index',
+	url(r'(?<userID>\d+)/$' views.profile, name = 'profile'),
 ) 
 
  
