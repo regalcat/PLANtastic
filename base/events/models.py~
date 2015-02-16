@@ -10,7 +10,7 @@ class EventModel(models.Model):
 
 class HikeEventModel(models.Model) extends EventModel:
         event_type = 'Hike'
-        event_date_end = 
+        #event_date_end = 
         
         
 

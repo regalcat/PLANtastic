@@ -10,7 +10,9 @@ class EventModel(models.Model):
 
 class HikeEventModel(models.Model) extends EventModel:
         event_type = 'Hike'
-        #event_date_end = 
+        event_date_end = models.DateTimeField(auto_now=False,auto_now_add=False)
+        event_date_end.blank = True
+        
         
         
 
