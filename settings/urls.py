@@ -1,6 +1,5 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
-from base import urls as base_urls
 
 urlpatterns = patterns('',
     # Examples:
@@ -8,5 +7,6 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
-	url(r'^', include(base_urls))
+	url(r'^', include('base.urls')),
+	url(r'^(?P<eventid>\d+)/tools/item_share/', include('tools.item_share.urls')),
 )
