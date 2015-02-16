@@ -1,0 +1,5 @@
+<h1>New Event</h1>
+<form action="{{ current_path }}" method="post">
+
+<p>Event Name: <input name="eventName" type="text" /></p>
+<p>Event 
