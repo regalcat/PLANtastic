@@ -5,7 +5,7 @@ def index(request):
 
 
 def profile(request, userID):
-	return HttpResponse("This is the profile of ", userID)
+	return HttpResponse("This is the profile of " +userID)
 
 
 
