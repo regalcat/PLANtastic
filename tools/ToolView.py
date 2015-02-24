@@ -6,5 +6,5 @@ class ToolView(View):
 	    return ("tools/default.html", ())
 
 	def getMainPageUrl():
-		return "default"
+		return "tools"
 
