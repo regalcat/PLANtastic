@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.template import RequestContext, loader
 
 from django.contrib.auth.models import User
-from base.Helpers import getUser, getEvent
+from base.Helpers import getUser, getEvent, getMenuInfo
 from base.events.models import EventModel
 from tools.item_share.models import ItemModel, ItemSignupModel
 from tools.ToolView import ToolView
@@ -26,7 +26,7 @@ class ItemShareView(ToolView):
 		if (True):
 			admin = True
 		template = loader.get_template("item_share/main.html")
-		context = RequestContext(request, {'items' : items, 'event' : cur_event, 'user' : user, 'cur_path' : request.get_full_path() })
+		context = RequestContext(request, {'items' : items, 'event' : cur_event, 'user' : user, 'cur_path' : request.get_full_path(), 'title' : "Item Share", 'menu': getMenuInfo(request) })
 		return HttpResponse(template.render(context))
 
 	def post(request, eventid):

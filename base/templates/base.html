@@ -1,4 +1,43 @@
-<p>TODO - insert menu bar</p>
+<!DOCTYPE html>
+<head>
+	<title>{{ title }} </title>
+	<!-- TODO = add CSS and JavaScript -->
+</head>
+
+<body>
+<div class="menu-bar">
+<ul>
+<li><a href="{{ menu.server }}/home">Home</a></li>
+<li>
+<ul>
+	<li><a href="{{ menu.server }}/upcoming">Upcoming</a></li>
+	{% for event in menu.prev_events %}
+		<li><a href ="{{ menu.server}}/{{ event.eventid }}">{{ event.event_name }}</a></li>
+	{% endfor %}
+</ul></li>
+<li><ul>
+	<li><a href="{{ menu.server }}/past">Past</a></li>
+	{% for event in menu.upcoming_events %}
+		<li><a href = "{{ menu.server }}/{{ event.eventid }}">{{ event.event_name }}</a></li>
+	{% endfor %}
+</ul></li>
+<li><ul>
+	<li><a href="{{ menu.server }}/new">New Event</a></li>
+	{% for event in menu.event_types %}
+		<li><a href="{{ menu.server }}/new?type={{ event }}" >{{ event }}</a></li>
+	{% endfor %}
+</ul></li>
+<li><ul>
+	<li><a href="{{ menu.server }}/profile">{{ menu.user.first_name }} {{ menu.user.last_name }}</a></li>
+	<li><a href="{{ menu.server }}/manage_account">Manage Account</a></li>
+	<li><a href="{{ menu.server }}/logout">Log Out</a></li>
+</ul</li>
+</ul>
+
+</div>
+
 {% block content %}
 Welcome to the PLANtastic website!
 {% endblock %}
+
+</body>

@@ -2,7 +2,7 @@ from django.db import models
 #from base.models import UserModel
 
 class EventModel(models.Model):
-	eventid = models.ForeignKey(primary_key=True)
+	eventid = models.IntegerField(primary_key=True)
 	event_name = models.CharField(max_length=50)
 	event_location = models.CharField(max_length=50)
 	event_location.blank = True
