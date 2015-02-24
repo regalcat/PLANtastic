@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+
+<table> 
+{% for item in items %}
+	<tr>
+	<td>{{ item.item_name }}</td><td>{{ item.amount_needed }}</td><td>{{ item.amount_preferred }}</td>
+	</tr>
+	{% for signup in item.signups %}
+	<tr class="dropdon">
+	<td>{{ signup.user.first_name }} {{ signup.user.last_name }}</td>
+	<td>{{ signup.amount }}</td>
+	</tr>
+	{% endfor %}
+	<p> TODO - add signups </p>
+{% endfor %}
+</table>
+{% endblock %}
+
+

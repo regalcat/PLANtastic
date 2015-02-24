@@ -1,18 +1,17 @@
 from django.db import models
-#from base.models import EventModel
-#from base.models import UserModel
+from django.contrib.auth.models import User
+from base.events.models import EventModel
 
 class ItemModel(models.Model):
-# TODO - Get EventModel from Megan
-#	eventid = models.ForeignKey(EventModel)
-	eventid = models.IntegerField()
-	itemid = models.IntegerField(primary_key=True)
+	event = models.ForeignKey(EventModel)
 	item_name = models.CharField(max_length=50)
 	amount_needed = models.IntegerField()
 	amount_preferred = models.IntegerField()
+	items=models.Manager()
 
 class ItemSignupModel(models.Model):
-#	eventid = models.ForeignKey(EventModel)
-#o	uid = models.ForeignKey(UserModel)
+	event = models.ForeignKey(EventModel)
+	user = models.ForeignKey(User)
 	itemid = models.ForeignKey(ItemModel)
 	amount = models.IntegerField()
+	objects = models.Manager()
