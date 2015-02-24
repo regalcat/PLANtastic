@@ -9,7 +9,7 @@ class EventModel(models.Model):
 	event_date_start = models.DateTimeField(auto_now=False,auto_now_add=False)
 	event_date_start.blank = True
 	event_type = ('Dinner','Hike','Other Trip','Other Gathering')
-	event_description = models.CharField(max_length=250)
+	event_description = models.CharField(max_length=500)
 	event_description.blank = True
 
 class HikeEventModel(EventModel):
