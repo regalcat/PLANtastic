@@ -6,8 +6,7 @@ from base.events.models import EventModel
 # Returns the user that is currently logged in
 def getUser(request):
 	# TODO
-	print User.objects.filter(id=1)
-	return User.objects.filter(id=1)
+	return User.objects.filter(id=1)[0]
 
 # Returns the event that is currently in play from the event_id
 def getEvent(event_id):
@@ -20,8 +19,7 @@ def getUserEvents(user):
 def getMenuInfo(request):
 	toReturn = {}
 	toReturn['user'] = getUser(request)
-	print toReturn['user'].first_name
-	toReturn['server'] = "https://" + request.get_host()
+	toReturn['server'] = "http://" + request.get_host()
 	# TODO - separate previous events from upcoming events
 	toReturn['prev_events'] = getUserEvents(toReturn['user'])
 	toReturn['upcoming_events'] = toReturn['prev_events']

@@ -18,7 +18,6 @@ class ItemShareView(ToolView):
 		user = getUser(request)
 		cur_event = getEvent(eventid)
 		items = ItemModel.items.filter(id=1)
-		print items
 		for item in items:
 			item.signups = ItemSignupModel.objects.filter(itemid = item)
 		admin = False
