@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 	'base',
+	'tools',
 	'tools.item_share',
 )
 
