@@ -10,8 +10,8 @@ class InviteForm(forms.Form):
 	
 	#A rather long function that sends the email. Takes in the InviteForm object that called it.
 	def send_email(self):
-		gmail_user = 'plantastic@gmail.com'
-		gmail_passwd = '' #This seems like a horrible idea. I'll find a better way later.
+		gmail_user = 'mail.plantastic@gmail.com'
+		gmail_passwd = 'QwertyQwerty123' #This seems like a horrible idea. I'll find a better way later.
 		smtpserver = smtplib.SMTP("smtp.gmail.com", 587)
 		smtpserver.ehlo()
 		smtpserver.starttls()

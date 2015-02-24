@@ -9,5 +9,7 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^test/', test),
+    url(r'^(?P<eventid>\d+)/invite$', views.invite),
+    url(r'^(?P<eventid>\d+)/invite-form$', views.InviteForm)
 )
 
