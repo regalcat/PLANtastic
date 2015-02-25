@@ -1,5 +1,10 @@
+## Views.py
+
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.views.generic.edit import CreateView 
+from django.contrib.auth.models import User 
+## from django.core.urlresolvers import reverse
 
 
 def index(request):
@@ -12,6 +17,36 @@ def register(request):
 
 def profile(request, userID):
 	return HttpResponse("This is the profile of " +userID)
+
+def created(request):
+	return render(request, 'register/created.html')
+
+class UserCreate(CreateView):
+	model = User
+	template_name = "register/add.html"
+	fields = ['username', 'password', 'first_name', 'last_name', 'email']
+	success_url = "created"
+	
+#	success_url = reverse('created')
+
+
+
+#def logIn(request):
+	
+	
+
+#def createUser(request, ):
+#	user = 
+#
+#	user.Save()
+
+
+
+
+
+
+
+
 
 
 
