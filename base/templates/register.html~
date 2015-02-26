@@ -5,7 +5,7 @@
 <br>
 <a href="{% url 'base:index' %}"><button>Go back to index page</button></a></p>
 
-<form action="{% url 'base:register' %}" method= "POST">
+<form action="" method= "POST">
 {% csrf_token %}
 {{ form }}
 
