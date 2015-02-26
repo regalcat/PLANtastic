@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block menubar %}
+<p>We can't see the menubar if we are not logged in.</p>
+{% endblock %}
+
 {% block content %}
 
 {% if form.error %}
@@ -14,6 +18,8 @@
 
 <input type= "submit" value="Log in">
 </form>
+
+<a href = "{% url 'base:index' %}"><button>Go back to index page</button></a>
 
 {% endblock %}
 

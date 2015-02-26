@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-Welcome {{ username }}! This is your Home Page. 
+Welcome {{ username }}!
+<br>This is your Home Page. 
 
 {% endblock %}

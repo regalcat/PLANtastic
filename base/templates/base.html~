@@ -29,10 +29,10 @@
 	{% endfor %}
 </ul></li>
 <li><ul>
-	<li><a href="{{ menu.server }}/profile">{{ user }} {{ menu.user }}</a></li>
+	<li><a href="{{ menu.server }}/profile">{{ username }} profile</a></li>
 	<li><a href="{{ menu.server }}/manage_account">Manage Account</a></li>
 	<li><a href="{{ menu.server }}/logout">Log Out</a></li>
-</ul</li>
+</ul></li>
 </ul>
 
 </div>
