@@ -10,6 +10,10 @@ urlpatterns = patterns('',
 	url(r'^profile/$', views.profile, name='profile'),
 	url(r'^manage_account/$', views.manage_account, name='manage_acount'),
 	url(r'^logout/$', views.logout, name='logout'),
+	url(r'^login/$', views.login, name='login'),
+	url(r'^register/$', views.register, name='register'),
+	url(r'^auth/$', views.authView, name='authView'),
+	url(r'^invalid/$', views.invalidLogin, name='invalidLogin'),
 # TODO 	url(r'^new', new_event_views.get_ name='new_event'
 # TODO Login Url
 # TODO REgister URL

@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% block menubar %}
 <head>
 	<title>{{ title }} </title>
 	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}/bootstrap-3.3.2-dist/css/bootstrap.css">
@@ -35,6 +36,8 @@
 </ul>
 
 </div>
+
+{% endblock %}
 
 {% block content %}
 Welcome to the PLANtastic website!

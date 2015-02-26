@@ -1,4 +1,17 @@
 {% extends "base.html" %}
+
+{% block menubar %}
+<br>
+<p>Here we can not see the menubar since we are not logged in.</p>
+<br>
+{% endblock %}
+
+
 {% block content %}
 This is the index page.  Remember to add unique subdirectories in your templates folder!
+<br>
+<p><a href="{% url 'base:login' %}"><button>Click here to log in</button></a>
+<br>
+<a href="{% url 'base:register' %}"><button>Click here to register for a new account</button></a></p>
+
 {% endblock %}
