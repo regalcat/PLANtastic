@@ -2,7 +2,8 @@ from django.http import HttpResponse
 from django.template import RequestContext, loader
 
 from django.contrib.auth.models import User
-from base.Helpers import getUser, getEvent, getMenuInfo
+from django.views.decorators.csrf import csrf_exempt
+from base.Helpers import getEvent, getMenuInfo
 from base.events.models import EventModel
 from tools.item_share.models import ItemModel, ItemSignupModel
 from tools.ToolView import ToolView
@@ -15,7 +16,7 @@ class ItemShareView(ToolView):
 		return "item_share"
 
 	def get(self, request, eventid):
-		user = getUser(request)
+		user = request.user
 		cur_event = getEvent(eventid)
 		items = ItemModel.items.filter(id=1)
 		for item in items:
@@ -31,8 +32,8 @@ class ItemShareView(ToolView):
 		context = RequestContext(request, {'items' : items, 'event' : cur_event, 'user' : user, 'cur_path' : request.get_full_path(), 'title' : "Item Share", 'menu': getMenuInfo(request) })
 		return HttpResponse(template.render(context))
 
-	def post(request, eventid):
-		
+	@csrf_exempt
+	def post(request, eventid):		
 		print request.POST['amount']
 		print request.POST['item_id']
 		print request.POST['uid']

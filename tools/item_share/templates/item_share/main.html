@@ -17,8 +17,9 @@
 	<td>{{ item.amount_needed }}</td><td>{{ item.amount_preferred }}</td><td>{{ item.signedup }}</td>
 
 	<form action = "{{ cur_path }}" action="post">
+		{% csrf_token %}
 		<td><input type="number" name="amount" min=0
-				onchange="formChanged(value, {{ item.id }}, {{ user.id}}, {{ item.event.eventid}})"></td>
+				onchange="formChanged(value, {{ item.id }}, {{ item.event.eventid}}, '{{ csrf_token }}')"></td>
 		<td><input type="hidden" value={{ item.id }}></td>
 	</form>
 	</tr>
