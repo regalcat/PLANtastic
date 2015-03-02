@@ -16,11 +16,11 @@ urlpatterns = patterns('',
 	url(r'^auth/$', views.authView, name='authView'),
 	url(r'^invalid/$', views.invalidLogin, name='invalidLogin'),
 	url(r'^registerSuccess/$', views.registerSuccess, name='registerSuccess'),
-<<<<<<< HEAD
+
 	url(r'^new',views.new, name='new_event')
-=======
- 	url(r'^new', event_views.new, name='new_event'),
->>>>>>> ccc594009b1b416d7daed67c8f4924ef47162f37
+
+ 	#url(r'^new', event_views.new, name='new_event'),
+
 
 	
 )
