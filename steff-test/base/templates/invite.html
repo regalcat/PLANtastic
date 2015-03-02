@@ -1,13 +1,23 @@
-<html>
-<head>
-	<title>PLANtastic! | Invite friends</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block menubar %}
+<p>You may not be logged in.<p>
+{% endblock %}
+
+{% block content %}
 	<h2>Invite your friends to join your event!</h2>
 	<p>Enter email addresses of your friends below to invite them.</p>
-	<form action="" method="post">
+	
+	{% if form.error %}
+	< class="error">Sorry, that's not a valid email.</p>
+	{% endif %}
+
+	
+	<form action="{% url 'base:InviteView' %}" method="post">
 		{{ form.as_p }}
 		<input type="submit" value="Send Invite" />
 	</form>
-</body>
-</html>
+
+<a href = "{% url 'base:index' %}"><button>Home</button></a>
+
+{% endblock %}

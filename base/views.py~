@@ -11,7 +11,7 @@ def index(request):
 
 def home(request):
 	# TODO
-	return render(request, 'home.html', {'username' : request.user.username})
+	return render(request, 'home.html')
 
 def upcoming(request):
 	# TODO
@@ -50,7 +50,8 @@ def authView(request):
 
 	if user is not None:
 		authLogin(request, user)
-		return HttpResponseRedirect(reverse('base:home'))
+		return render(request, reverse('base:home'))
+#, {'username' : request.user.username}
 
 	else:
 		return HttpResponseRedirect(reverse('base:invalidLogin'))

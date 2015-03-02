@@ -20,6 +20,9 @@ class ItemShareView(ToolView):
 		items = ItemModel.items.filter(id=1)
 		for item in items:
 			item.signups = ItemSignupModel.objects.filter(itemid = item)
+			item.signedup = 0
+			for signup in item.signups:
+				item.signedup += signup.amount
 		admin = False
 #		if (user.isCoPlanner(event) or user.isCreator(event)):
 		if (True):
@@ -29,6 +32,9 @@ class ItemShareView(ToolView):
 		return HttpResponse(template.render(context))
 
 	def post(request, eventid):
-		user = getUser(request)
-		event = getEvent(eventid)
+		
+		print request.POST['amount']
+		print request.POST['item_id']
+		print request.POST['uid']
+		print request.POST['event_id']
 		return HttpResponse("Post Item Share page")
