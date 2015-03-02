@@ -13,13 +13,13 @@
 <ul>
 	<li><a href="{{ menu.server }}/upcoming">Upcoming</a></li>
 	{% for event in menu.prev_events %}
-		<li><a href ="{{ menu.server}}/{{ event.eventid }}">{{ event.event_name }}</a></li>
+		<li><a href ="{{ menu.server}}/{{ event.eventid }}">{{ event.eventName }}</a></li>
 	{% endfor %}
 </ul></li>
 <li><ul>
 	<li><a href="{{ menu.server }}/past">Past</a></li>
 	{% for event in menu.upcoming_events %}
-		<li><a href = "{{ menu.server }}/{{ event.eventid }}">{{ event.event_name }}</a></li>
+		<li><a href = "{{ menu.server }}/{{ event.eventid }}">{{ event.eventName }}</a></li>
 	{% endfor %}
 </ul></li>
 <li><ul>
@@ -29,7 +29,7 @@
 	{% endfor %}
 </ul></li>
 <li><ul>
-	<li><a href="{{ menu.server }}/profile">{{ username }} profile</a></li>
+	<li><a href="{{ menu.server }}/profile">{{ menu.user.username }}'s profile</a></li>
 	<li><a href="{{ menu.server }}/manage_account">Manage Account</a></li>
 	<li><a href="{{ menu.server }}/logout">Log Out</a></li>
 </ul></li>

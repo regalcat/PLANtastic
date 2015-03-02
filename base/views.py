@@ -1,3 +1,4 @@
+from Helpers import getMenuInfo
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext, loader
 from django.contrib.auth import authenticate, login as authLogin, logout as authLogout
@@ -10,11 +11,12 @@ def index(request):
 	return render(request, 'index.html')
 
 def home(request):
-	return render(request, 'home.html', {'username' : request.user.username})
+	# TODO
+	return render(request, 'home.html', {'menu' : getMenuInfo(request), 'title' : "Home"})
 
 def upcoming(request):
 	# TODO
-	return HttpResponse("Upcoming Trips Page")
+	return HttpResponse("Upcoming Events Page")
 
 def past(request):
 	# TODO
@@ -32,7 +34,8 @@ def logout(request):
 	return HttpResponseRedirect(reverse('base:index'))
 
 def event_home(request, eventid):
-	return HttpResponse("Event Home Page")
+	# TODO - replace Event Home with the event title
+	return render(request, 'event_home.html', {'menu' : getMenuInfo(request), 'title' : "Event Home"})
 
 def login(request):
 	return render(request, 'login.html')
@@ -66,6 +69,12 @@ def register(request):
 	args = {}
 	args['form'] = UserCreationForm()
 	return render(request, 'register.html', args)
+
+def new(request):
+	template = loader.get_template('new.html')
+	context = RequestContext(request)
+	return HttpResponse(template.render(context))
+
 
 
 

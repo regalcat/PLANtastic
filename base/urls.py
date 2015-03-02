@@ -1,5 +1,6 @@
 from django.conf.urls import patterns, url
 from base import views
+from base.events import views as event_views
 
 urlpatterns = patterns('',
     url(r'^$', views.index, name='index'),
@@ -16,7 +17,10 @@ urlpatterns = patterns('',
 	url(r'^invalid/$', views.invalidLogin, name='invalidLogin'),
 	url(r'^registerSuccess/$', views.registerSuccess, name='registerSuccess'),
 
-# TODO 	url(r'^new', new_event_views.get_ name='new_event'
+	url(r'^new',views.new, name='new_event')
+
+ 	#url(r'^new', event_views.new, name='new_event'),
+
 
 	
 )
