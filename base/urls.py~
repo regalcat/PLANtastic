@@ -18,5 +18,6 @@ urlpatterns = patterns('',
 
 # TODO 	url(r'^new', new_event_views.get_ name='new_event'
 
+# TODO REgister URL
 	
 )
