@@ -16,7 +16,7 @@ class EventModel(models.Model):
 		event = cls(eventid=eventid, eventName=eventName, eventLocation=eventLocation, eventDateStart=eventDateStart, eventType=eventType, eventDescription=eventDescription)
 		return event
 
-	def getEventTypes:
+	def getEventTypes():
 		return ('Dinner', 'Hike', 'Other Trip', 'Other Gathering')
 
 class HikeEventModel(EventModel):

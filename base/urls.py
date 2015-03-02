@@ -15,8 +15,7 @@ urlpatterns = patterns('',
 	url(r'^auth/$', views.authView, name='authView'),
 	url(r'^invalid/$', views.invalidLogin, name='invalidLogin'),
 	url(r'^registerSuccess/$', views.registerSuccess, name='registerSuccess'),
-
-# TODO 	url(r'^new', new_event_views.get_ name='new_event'
+	url(r'^new',views.new, name='new_event')
 
 	
 )

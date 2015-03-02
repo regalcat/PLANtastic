@@ -72,6 +72,12 @@ def register(request):
 	args['form'] = UserCreationForm()
 	return render(request, 'register.html', args)
 
+def new(request):
+	template = loader.get_template('new.html')
+	context = RequestContext(request)
+	return HttpResponse(template.render(context))
+
+
 
 
 
