@@ -5,4 +5,9 @@
 <br>
 <p>This is your Profile Page. </p>
 
+You have been a member since {{ membership }}
+<br>
+<br>
+<a href="{% url 'base:manageAccount' %}"><button>Click here to manage account</button></a>
+
 {% endblock %}
