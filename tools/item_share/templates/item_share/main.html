@@ -14,23 +14,22 @@
 	<tr>
 	{% if item.signups.count > 0 %}<td class="plus">+{% else %}<td> {% endif %}</td>
 	<td>{{ item.item_name }}</td>
-	<td>{{ item.amount_needed }}</td><td>{{ item.amount_preferred }}</td><td>{{ item.signedup }}</td>
+	<td>{{ item.amount_needed }}</td><td>{{ item.amount_preferred }}</td><td id="signup_{{ item.id }}">{{ item.signedup }}</td>
 
-	<form action = "{{ cur_path }}" action="post">
-		{% csrf_token %}
-		<td><input type="number" name="amount" min=0
-				onchange="formChanged(value, {{ item.id }}, {{ item.event.eventid}}, '{{ csrf_token }}')"></td>
-		<td><input type="hidden" value={{ item.id }}></td>
+	<form action = "{{ cur_path }}" method="post">
+		<td><input type="number" name="amount" min=0 value="{% if not item.your_signup %}0{% else %}{{ item.your_signup.amount }}{% endif %}" 
+				onchange="formChanged(value, {{ item.id }})"></td>
+		<td><input type="hidden" value="{{ item.id }}" name="item_id"></td>
 	</form>
 	</tr>
 	{% for signup in item.signups %}
 		<tr class="dropdown">
 		<td></td>
-		<td>{{ signup.user.first_name }} {{ signup.user.last_name }}</td>
+		<td> {{ signup.user.username }} </td>
+<!-- TODO		<td>{{ signup.user.first_name }} {{ signup.user.last_name }}</td> -->
 		<td>{{ signup.amount }}</td>
 		</tr>
 	{% endfor %}
-	<p> TODO - add signups </p>
 {% endfor %}
 </table>
 

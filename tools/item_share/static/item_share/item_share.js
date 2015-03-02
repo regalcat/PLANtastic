@@ -1,11 +1,11 @@
-function formChanged(amount, item_id, uid, event_id, csrf) {
+function formChanged(amount, item_id) {
 	var xhr = new XMLHttpRequest();
 	xhr.onreadystatechange = function() {
-    	document.getElementById("username").innerHTML =  xhr.responseText;
+    	document.getElementById("signup_"+item_id).innerHTML =  xhr.responseText;
 	};
 	xhr.open("post", document.location, true); // change
-	xhr.setRequestHeader("X-CSRFToken", csrf);
+//	xhr.setRequestHeader("X-CSRFToken", csrf);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	var data = "amount="+amount+"&item_id="+item_id+"&event_id="+event_id;
+	var data = "amount="+amount+"&item_id="+item_id+"&ajax=True";
 	xhr.send(data);
 }

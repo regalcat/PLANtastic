@@ -20,22 +20,35 @@ class ItemShareView(ToolView):
 		cur_event = getEvent(eventid)
 		items = ItemModel.items.filter(id=1)
 		for item in items:
-			item.signups = ItemSignupModel.objects.filter(itemid = item)
+			item.signups = ItemSignupModel.objects.filter(itemid = item).exclude(user=request.user)
+			item.your_signup = ItemSignupModel.objects.filter(itemid=item, user=request.user)
 			item.signedup = 0
 			for signup in item.signups:
 				item.signedup += signup.amount
+			if item.your_signup.count() == 0:
+				item.your_signup = False
+			else:
+				item.your_signup = item.your_signup[0]
+				item.signedup += item.your_signup.amount
 		admin = False
 #		if (user.isCoPlanner(event) or user.isCreator(event)):
 		if (True):
 			admin = True
 		template = loader.get_template("item_share/main.html")
-		context = RequestContext(request, {'items' : items, 'event' : cur_event, 'user' : user, 'cur_path' : request.get_full_path(), 'title' : "Item Share", 'menu': getMenuInfo(request) })
+		context = RequestContext(request, {'items' : items, 'event' : cur_event, 'cur_path' : request.get_full_path(), 'title' : "Item Share", 'menu': getMenuInfo(request) })
 		return HttpResponse(template.render(context))
 
 	@csrf_exempt
-	def post(request, eventid):		
-		print request.POST['amount']
-		print request.POST['item_id']
-		print request.POST['uid']
-		print request.POST['event_id']
-		return HttpResponse("Post Item Share page")
+	def post(self, request, eventid):		
+		ajax = request.POST.get('ajax', False)
+		cur_event=getEvent(eventid)
+		item = ItemModel.items.get(id=request.POST['item_id'], event=cur_event)
+		signup = ItemSignupModel.objects.update_or_create(itemid=item, user = request.user, event=cur_event, defaults={'amount' : request.POST['amount']})
+		if ajax:
+			# TODO - return sum of all people brining
+			items = ItemSignupModel.objects.filter(itemid=item, event=cur_event)
+			total = 0
+			for item in items:
+				total += item.amount
+			return HttpResponse(total)
+		return self.get(request, eventid)

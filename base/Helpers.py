@@ -5,7 +5,7 @@ from base.events.models import EventModel
 
 # Returns the event that is currently in play from the event_id
 def getEvent(event_id):
-	return EventModel(eventid=event_id)
+	return EventModel.objects.get(eventid=event_id)
 
 def getUserEvents(user):
 	#TODO - should access Invite Table
