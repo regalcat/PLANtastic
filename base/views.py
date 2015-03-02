@@ -6,6 +6,8 @@ from django.shortcuts import render
 from django.core.urlresolvers import reverse
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
+from base.events.models import EventModel
+
 
 def index(request):
 	return render(request, 'index.html')
@@ -72,7 +74,7 @@ def register(request):
 
 def new(request):
 	if request.method == "POST":
-		form = createEvent(request.POST['name'])
+		form = EventModel.createEvent(EventModel,request.POST['eventName'])
 		if form.is_valid():
 			form.save()
 			return HttpResponseRedirect('http://'+request.get_host()+"/"+event.eventId)
