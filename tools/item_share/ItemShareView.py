@@ -18,7 +18,7 @@ class ItemShareView(ToolView):
 	def get(self, request, eventid):
 		user = request.user
 		cur_event = getEvent(eventid)
-		items = ItemModel.items.filter(id=1)
+		items = ItemModel.items.filter(event=cur_event)
 		for item in items:
 			item.signups = ItemSignupModel.objects.filter(itemid = item).exclude(user=request.user)
 			item.your_signup = ItemSignupModel.objects.filter(itemid=item, user=request.user)
