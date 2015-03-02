@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>New Event</h1>
+<form action="{{ current_path }}" method="post">
+<body>
+  <p>Event Name: <input name="eventName" type="text" maxlength="50" size="52" id="eventName"/> </p>
+  <p>Event Location: <input name="eventLocation" type="text" maxlength="50" size="52"/> </p>
+  <p>Event Date: <input name="eventDateStart" type="DateTime" id="eventDateStart"/> </p>
+  <p>Event Description:</p> <textarea rows"10" columns="55" maxlength="500" name="eventDescription" type="textarea" id="eventDescription"style ="height:200px;width:500px"> </textarea></p>
+  <p>Event Type:</p>
+   
+  <input name="eventType" type="radio" value="dinner" id="eventType"/>Dinner </p>
+  <input name="eventType" type="radio" value="hike" id="eventType"/>Hike </p>
+  <input name="eventType" type="radio" value="otherTrip" id="eventType"/>Other Trip </p>
+  <input name="eventType" type="radio" value="otherGathering" id=eventType"/>Other Gathering </p>
+ 
+
+{% endblock %}
+
+
+document.getElementById("eventType").value 
+
+<?php $a = "TRUE";
+
+if ($a == "FALSE"): ?>
+
+    <p>Event End Date: <input name="eventDateStart" type="DateTime"/> </p>
+    <p>Elevation: <input name="Elevation" type="text"/></p>
+    <p>Difficulty:<select name="Difficulty">
+        <option value="unknown">Unknown</option>
+        <option value="easy">Easy</option>
+        <option value="moderate">Moderate</option>
+        <option value="difficult">Difficult</option>
+        <option value="strenuous">Strenuous</option>
+        <option value="technical">Technical</option>
+        </select></p>
+
+}
+ 
+<?php elseif (eventType.value =="otherTrip"): ?>
+
+<?php endif; ?>
+
+ <button type="button" onclick="<a href="{{ menu.server }}/">Next</button>
+</body>
+</html>
+</html>
+  
+
+

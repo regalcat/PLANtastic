@@ -3,7 +3,7 @@
 {% block content %}
 <script src="{{ STATIC_URL }}create_event.js"></script>
 <h1>New Event</h1>
-<form action="" method="post" id="mainForm">
+<form action="{{ current_path }}" method="post" id="mainForm">
 {% csrf_token %}
 <body>
   <p>Event Name: <input name="eventName" type="text" maxlength="50" size="52" id="eventName"/> </p>

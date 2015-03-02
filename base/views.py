@@ -72,7 +72,7 @@ def register(request):
 
 def new(request):
 	if request.method == "POST":
-		form = EventModel(request.POST)
+		form = createEvent(request.POST['name'])
 		if form.is_valid():
 			form.save()
 			return HttpResponseRedirect('http://'+request.get_host()+"/"+event.eventId)
