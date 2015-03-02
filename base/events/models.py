@@ -1,42 +1,49 @@
 from django.db import models
-#from base.models import UserModel
+
 
 class EventModel(models.Model):
-	eventid = models.IntegerField(primary_key=True)
-	event_name = models.CharField(max_length=50)
-	event_location = models.CharField(max_length=50)
-	event_location.blank = True
-	event_date_start = models.DateTimeField(auto_now=False,auto_now_add=False)
-	event_date_start.blank = True
-	event_type = ('Dinner','Hike','Other Trip','Other Gathering')
-	event_description = models.CharField(max_length=250)
-	event_description.blank = True
+	eventid = models.AutoField(primary_key=True)
+	eventName = models.CharField(max_length=50)
+	eventLocation = models.CharField(max_length=50)
+	eventLocation.blank = True
+	eventDateStart = models.DateTimeField(auto_now=False,auto_now_add=False)
+	eventDateStart.blank = True
+	eventType = ('Dinner','Hike','Other Trip','Other Gathering')
+	eventDescription = models.CharField(max_length=500)
+	eventDescription.blank = True
+
+	def createEvent(cls,eventid,eventName,eventLocation,eventDateStart,eventType,eventDescription):
+		event = cls(eventid=eventid, eventName=eventName, eventLocation=eventLocation, eventDateStart=eventDateStart, eventType=eventType, eventDescription=eventDescription)
+		return event
+
+	def getEventTypes:
+		return ('Dinner', 'Hike', 'Other Trip', 'Other Gathering')
 
 class HikeEventModel(EventModel):
-	event_type = 'Hike'
-	event_date_end = models.DateTimeField(auto_now=False,auto_now_add=False)
-	event_date_end.blank = True
-	event_elevation = models.IntegerField()
-	event_elevation.blank = True
-	event_difficulty = ('Unknown','Easy','Moderate','Difficult','Strenuous','Technical')
-	event_distance = models.FloatField()
-        event_distance.blank = True
-	event_duration = models.DateTimeField(auto_now=False,auto_now_add=False)
-	event_duration.blank = True
+	eventType = 'Hike'
+	eventDateEnd = models.DateTimeField(auto_now=False,auto_now_add=False)
+	eventDateEnd.blank = True
+	eventElevation = models.IntegerField()
+	eventElevation.blank = True
+	eventDifficulty = ('Unknown','Easy','Moderate','Difficult','Strenuous','Technical')
+	eventDistance = models.FloatField()
+        eventDistance.blank = True
+	eventDuration = models.DateTimeField(auto_now=False,auto_now_add=False)
+	eventDuration.blank = True
 
 class GenericTripModel(EventModel):
-	event_type = 'Other Trip'
-	event_date_end = models.DateTimeField(auto_now=False,auto_now_add=False)
-	event_date_end.blank = True
-	event_duration = models.DateTimeField(auto_now=False,auto_now_add=False)
-	event_duration.blank = True
-	event_destination = models.CharField(max_length=200)
+	eventType = 'Other Trip'
+	eventDateEnd = models.DateTimeField(auto_now=False,auto_now_add=False)
+	eventDateEnd.blank = True
+	eventDuration = models.DateTimeField(auto_now=False,auto_now_add=False)
+	eventDuration.blank = True
+	eventDestination = models.CharField(max_length=200)
 	#should this be TextField? How do we want to implement multidestinations?
 
 class GenericGatheringModel(EventModel):
-	event_type = 'Other Gathering'
-	event_date_end = models.DateTimeField(auto_now=False,auto_now_add=False)
-	event_date_end.blank = True
+	eventType = 'Other Gathering'
+	eventDateEnd = models.DateTimeField(auto_now=False,auto_now_add=False)
+	eventDateEnd.blank = True
 	
 	
 	
