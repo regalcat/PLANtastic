@@ -1,20 +1,39 @@
 {% extends "base.html" %}
 {% block content %}
-
+<script src="{{ STATIC_URL }}item_share/item_share.js"></script>
 <table> 
+<tr class="table-header">
+<td> </td>
+<td>  Item Name  </td>
+<td>  Amount Needed  </td>
+<td>  Amount Preferred  </td>
+<td>  Total Signups  </td>
+<td>  Number You'll Bring  </td>
+</tr>
 {% for item in items %}
 	<tr>
-	<td>{{ item.item_name }}</td><td>{{ item.amount_needed }}</td><td>{{ item.amount_preferred }}</td>
+	{% if item.signups.count > 0 %}<td class="plus">+{% else %}<td> {% endif %}</td>
+	<td>{{ item.item_name }}</td>
+	<td>{{ item.amount_needed }}</td><td>{{ item.amount_preferred }}</td><td>{{ item.signedup }}</td>
+
+	<form action = "{{ cur_path }}" action="post">
+		<td><input type="number" name="amount" min=0
+				onchange="formChanged(value, {{ item.id }}, {{ user.id}}, {{ item.event.eventid}})"></td>
+		<td><input type="hidden" value={{ item.id }}></td>
+	</form>
 	</tr>
 	{% for signup in item.signups %}
-	<tr class="dropdon">
-	<td>{{ signup.user.first_name }} {{ signup.user.last_name }}</td>
-	<td>{{ signup.amount }}</td>
-	</tr>
+		<tr class="dropdown">
+		<td></td>
+		<td>{{ signup.user.first_name }} {{ signup.user.last_name }}</td>
+		<td>{{ signup.amount }}</td>
+		</tr>
 	{% endfor %}
 	<p> TODO - add signups </p>
 {% endfor %}
 </table>
+
+
 {% endblock %}
 
 
