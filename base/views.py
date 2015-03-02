@@ -1,43 +1,41 @@
+from Helpers import getMenuInfo
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext, loader
 from django.contrib.auth import authenticate, login as authLogin, logout as authLogout
 from django.shortcuts import render
 from django.core.urlresolvers import reverse
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
 
 def index(request):
-	# TODO
 	return render(request, 'index.html')
 
 def home(request):
 	# TODO
-	return render(request, 'home.html', {'username' : request.user.username})
+	return render(request, 'home.html', {'menu' : getMenuInfo(request), 'title' : "Home"})
 
 def upcoming(request):
 	# TODO
-	return HttpResponse("Upcoming Trips Page")
+	return HttpResponse("Upcoming Events Page")
 
 def past(request):
 	# TODO
 	return HttpResponse("Past Events Page")
 
-def profile(request):
-	# TODO
-	return HttpResponse("Profile Page")
+@login_required(login_url = '/login/')  # User have to be logged in to see this view - if not: redirects to login_url
+def profile(request):	
+	return render(request, 'profile.html', {'username' : request.user.username, 'membership' : request.user.date_joined})
 
 def manage_account(request):
-	# TOD
-
-	return HttpResponse("Manage Account")
+	return render(request, 'manageAccount.html')
 
 def logout(request):
-	# TODO
 	authLogout(request)
-
-	return render(request, 'index.html')
+	return HttpResponseRedirect(reverse('base:index'))
 
 def event_home(request, eventid):
-	return HttpResponse("Event Home Page")
+	# TODO - replace Event Home with the event title
+	return render(request, 'event_home.html', {'menu' : getMenuInfo(request), 'title' : "Event Home"})
 
 def login(request):
 	return render(request, 'login.html')
