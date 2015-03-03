@@ -15,7 +15,7 @@ def getMenuInfo(request):
 	toReturn = {}
 	toReturn['server'] = "http://" + request.get_host()
 	# TODO - separate previous events from upcoming events
-	toReturn['prev_events'] = getUserEvents(toReturn['user'])
+	toReturn['prev_events'] = getUserEvents(request.user)
 	toReturn['upcoming_events'] = toReturn['prev_events']
 	# TODO - Get Correct Options
 	toReturn['event_types'] = ('Dinner', 'Hike')
