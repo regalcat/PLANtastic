@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<body>
+    <p>Event End Date: <input name="eventDateStart" type="DateTime"/> </p>
+    <p>Elevation: <input name="Elevation" type="text"/></p>
+    <p>Difficulty:<select name="Difficulty">
+        <option value="unknown">Unknown</option>
+        <option value="easy">Easy</option>
+        <option value="moderate">Moderate</option>
+        <option value="difficult">Difficult</option>
+        <option value="strenuous">Strenuous</option>
+        <option value="technical">Technical</option>
+        </select></p>
+</body>
+{% endblock %}

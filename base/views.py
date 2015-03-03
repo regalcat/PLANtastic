@@ -6,6 +6,8 @@ from django.shortcuts import render
 from django.core.urlresolvers import reverse
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
+from base.events.models import EventModel
+
 
 def index(request):
 	return render(request, 'index.html')
@@ -24,7 +26,7 @@ def past(request):
 
 @login_required(login_url = '/login/')  # User have to be logged in to see this view - if not: redirects to login_url
 def profile(request):	
-	return render(request, 'profile.html', {'username' : request.user.username, 'membership' : request.user.date_joined})
+	return render(request, 'profile.html', {'menu' : getMenuInfo(request),'title' : "Profile", 'membership' : request.user.date_joined})
 
 def manage_account(request):
 	return render(request, 'manageAccount.html')
@@ -72,7 +74,7 @@ def register(request):
 
 def new(request):
 	if request.method == "POST":
-		form = EventModel(request.POST)
+		form = EventModel.createEvent(EventModel,request.POST['eventName'])
 		if form.is_valid():
 			form.save()
 			return HttpResponseRedirect('http://'+request.get_host()+"/"+event.eventId)
