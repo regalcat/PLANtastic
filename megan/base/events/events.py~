@@ -1,0 +1,4 @@
+from base.events.models import EventModel
+
+def getEventName(eventid)
+	return eventid.

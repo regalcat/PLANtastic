@@ -6,36 +6,51 @@
 </head>
 
 <body>
-<div class="menu-bar">
-<ul>
-<li><a href="{{ menu.server }}/home">Home</a></li>
-<li>
-<ul>
-	<li><a href="{{ menu.server }}/upcoming">Upcoming</a></li>
-	{% for event in menu.prev_events %}
-		<li><a href ="{{ menu.server}}/{{ event.eventid }}">{{ event.eventName }}</a></li>
-	{% endfor %}
-</ul></li>
-<li><ul>
-	<li><a href="{{ menu.server }}/past">Past</a></li>
+
+<nav class="navbar navbar-default">
+<div class="container-fluid">
+<div class="navbar-header">
+<ul class="nav navbar-nav">
+<li class="active"><a href="{{ menu.server }}/home">Home</a></li>
+<li class="dropdown">
+	<a href="{{menu.server}}/upcoming" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Upcoming<span class="carat"></span></a>
+	<ul class="dropdown-menu" role="menu">
+		<li><a href="{{ menu.server }}/upcoming">Upcoming</a></li>
+		{% for event in menu.prev_events %}
+			<li><a href ="{{ menu.server}}/{{ event.eventid }}">{{ event.eventName }}</a></li>
+		{% endfor %}
+	</ul></li>
+<li><ul class="dropdown" role="menu">
+	<li class="active"><a href="{{ menu.server }}/past">Past</a></li>
 	{% for event in menu.upcoming_events %}
 		<li><a href = "{{ menu.server }}/{{ event.eventid }}">{{ event.eventName }}</a></li>
 	{% endfor %}
 </ul></li>
 <li><ul>
-	<li><a href="{{ menu.server }}/new">New Event</a></li>
+	<li class="active"><a href="{{ menu.server }}/new">New Event</a></li>
 	{% for event in menu.event_types %}
-		<li><a href="{{ menu.server }}/new?type={{ event }}" >{{ event }}</a></li>
+		<li class="active"><a href="{{ menu.server }}/new?type={{ event }}" >{{ event }}</a></li>
 	{% endfor %}
 </ul></li>
-<li><ul>
-	<li><a href="{{ menu.server }}/profile">{{ user.username }}'s profile</a></li>
-	<li><a href="{{ menu.server }}/manage_account">Manage Account</a></li>
-	<li><a href="{{ menu.server }}/logout">Log Out</a></li>
-</ul></li>
+<li><div class="dropdown" id="profile-ddown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">{{ user.username}}<span class="carat"></span></a>
+	<ul class="dropdown-menu" role="menu" aria-labelledby="profile-ddown">
+	<li><a role="menuitem" href="{{ menu.server }}/profile">{{ user.username }}'s profile</a></li>
+	<li><a role="menuitem" href="{{ menu.server }}/manage_account">Manage Account</a></li>
+<li><a role="menuitem" href="{{menu.server}}/logout">Log out</a></li></div></ul></li>
+<!-- end of the menubar list-->
 </ul>
 
 </div>
+</div>
+</nav>
+<!--These scripts make the dropdowns work... or they're supposed to.-->
+<script src="https://code.jquery.com/jquery.js"></script>
+<script type"text/javascript" src="{{STATIC_URL}}bootstrap-3.3.2-dist/js/bootstrap.js"></script>
+<script>
+	$(document).ready(function(){
+		$('.dropdown-toggle').dropdown()
+	});
+</script>
 
 {% endblock %}
 
