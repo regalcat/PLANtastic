@@ -13,7 +13,6 @@ def getUserEvents(user):
 
 def getMenuInfo(request):
 	toReturn = {}
-	toReturn['user'] = request.user
 	toReturn['server'] = "http://" + request.get_host()
 	# TODO - separate previous events from upcoming events
 	toReturn['prev_events'] = getUserEvents(toReturn['user'])

@@ -24,7 +24,7 @@ def past(request):
 
 @login_required(login_url = '/login/')  # User have to be logged in to see this view - if not: redirects to login_url
 def profile(request):	
-	return render(request, 'profile.html', {'username' : request.user.username, 'membership' : request.user.date_joined})
+	return render(request, 'profile.html', {'menu' : getMenuInfo(request),'title' : "Profile", 'membership' : request.user.date_joined})
 
 def manage_account(request):
 	return render(request, 'manageAccount.html')
