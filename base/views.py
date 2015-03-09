@@ -74,10 +74,9 @@ def register(request):
 
 def new(request):
 	if request.method == "POST":
-		form = EventModel.createEvent(EventModel,request.POST['eventName'])
-		if form.is_valid():
-			form.save()
-			return HttpResponseRedirect('http://'+request.get_host()+"/"+event.eventId)
+		event = EventModel.createEvent(request.POST['eventName'],request.POST['eventLocation'],request.POST['eventDateStart'],request.POST['eventType'],request.POST['eventDescription'])
+		event.save()
+		return HttpResponseRedirect('http://'+str(request.get_host())+'/'+str(event.eventid))
 		
 	template = loader.get_template('events/new.html')
 	context = RequestContext(request)
