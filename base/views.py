@@ -28,7 +28,7 @@ def past(request):
 def profile(request):	
 	return render(request, 'profile.html', {'menu' : getMenuInfo(request),'title' : "Profile", 'membership' : request.user.date_joined})
 
-def manage_account(request):
+def manageAccount(request):
 	return render(request, 'manageAccount.html')
 
 def logout(request):
@@ -71,6 +71,17 @@ def register(request):
 	args = {}
 	args['form'] = UserCreationForm()
 	return render(request, 'register.html', args)
+
+def checkInformation(request):
+	if request.method == "POST":
+		oldpassword = request.POST.get("oldpassword")
+		newpassword = request.POST.get("newpassword1")
+
+		if oldpassword == request.user.password:
+		
+	return render(request, 'manageAccount.html')
+			
+		
 
 def new(request):
 	if request.method == "POST":
