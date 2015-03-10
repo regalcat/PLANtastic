@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+Manage Account - Here you can change your password.
+<br>
+<br>
+
+{% if form.error %}
+<p class="error">Sorry, that was not a the right password or the new passoword is not a valid one.</p>
+{% endif %}
+
+<form action= "{% url 'base:checkInformation' %}" method= "POST">
+{% csrf_token %}
+
+<label for ="oldpassword"> Old password: </label><input type="password" name="oldpassword" value="" id="oldpassword">
+<label for ="newpassword1"> New password: </label><input type="password" name="newpassword1" value="" id="newpassword1">
+<label for ="newpassword2"> New password verification: </label><input type="password" name="newpassword2" value="" id="newpassword2">
+
+<input type= "submit" value="Change Password">
+</form>
+
+
+{% endblock %}

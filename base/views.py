@@ -1,7 +1,7 @@
 from Helpers import getMenuInfo
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext, loader
-from django.contrib.auth import authenticate, login as authLogin, logout as authLogout
+from django.contrib.auth import authenticate, login as authLogin, logout as authLogout, update_session_auth_hash
 from django.shortcuts import render
 from django.core.urlresolvers import reverse
 from forms import UserRegistrationForm
@@ -85,6 +85,7 @@ def checkInformation(request):
 			if is_password_usable(encodedpassword):
 				request.user.set_password(newpassword)
 				request.user.save()
+				update_session_auth_hash(request, request.user)
 
 				return HttpResponseRedirect(reverse('base:profile'))
 		
