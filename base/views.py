@@ -1,14 +1,18 @@
-from Helpers import getMenuInfo
+#imported from django and/or python
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext, loader
 from django.contrib.auth import authenticate, login as authLogin, logout as authLogout, update_session_auth_hash
 from django.shortcuts import render
 from django.core.urlresolvers import reverse
-from forms import UserRegistrationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import check_password, make_password, is_password_usable
-from base.events.models import EventModel
+from django.views.generic.edit import FormView
 
+#imported from our project
+from base.events.models import EventModel
+from forms import InviteForm
+from forms import UserRegistrationForm
+from Helpers import getMenuInfo
 
 def index(request):
 	return render(request, 'index.html')
@@ -105,6 +109,16 @@ def new(request):
 	context = RequestContext(request)
 	return HttpResponse(template.render(context))
 
+# This method returns the email invite form
+class InviteView(FormView):
+        template_name = 'invite.html'
+        form_class = InviteForm
+        success_url = '/invite-sent/'
+
+        #Called when a valid form is submitted
+        def form_valid(self, form):
+                form.send_email()
+                return super(InviteView, self).form_valid(form)
 
 
 

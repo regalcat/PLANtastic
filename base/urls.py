@@ -1,5 +1,6 @@
 from django.conf.urls import patterns, url
 from base import views
+from base.invite.views import InviteView
 
 urlpatterns = patterns('',
     url(r'^$', views.index, name='index'),
@@ -17,10 +18,13 @@ urlpatterns = patterns('',
 	url(r'^registerSuccess/$', views.registerSuccess, name='registerSuccess'),
 	url(r'^checkInformation/$', views.checkInformation, name='checkInformation'),
 
-	url(r'^new', views.new, name='new_event')
+	url(r'^new', views.new, name='new_event'),
 
  	#url(r'^new', event_views.new, name='new_event'),
 
+	#Urls pertaining to email invites
+	url(r'^(?P<eventid>\d+)/invite$', InviteView.as_view(), name=('base.invite.html')),
+	#url(r'^(?P<eventid>\d+)/invite-form$', views.InviteForm),
 
-	
+
 )
