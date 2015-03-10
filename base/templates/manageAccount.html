@@ -13,10 +13,10 @@ Manage Account - Here you can change your password.
 <form action= "{% url 'base:checkInformation' %}" method= "POST">
 {% csrf_token %}
 
-<label for ="oldpassword"> Old password: </label><input type="password" name="oldpassword" value="" id="oldpassword">
-<label for ="newpassword1"> New password: </label><input type="password" name="newpassword1" value="" id="newpassword1">
-<label for ="newpassword2"> New password verification: </label><input type="password" name="newpassword2" value="" id="newpassword2">
-
+<label for ="oldpassword"> Old password: </label><input type="password" name="oldpassword" value="" id="oldpassword"> <br>
+<label for ="newpassword1"> New password: </label><input type="password" name="newpassword1" value="" id="newpassword1"><br>
+<label for ="newpassword2"> New password verification: </label><input type="password" name="newpassword2" value="" id="newpassword2"><br>
+<br>
 <input type= "submit" value="Change Password">
 </form>
 

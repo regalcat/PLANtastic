@@ -27,7 +27,7 @@ def past(request):
 
 @login_required(login_url = '/login/')  # User have to be logged in to see this view - if not: redirects to login_url
 def profile(request):	
-	return render(request, 'profile.html', {'menu' : getMenuInfo(request),'title' : "Profile", 'membership' : request.user.date_joined})
+	return render(request, 'profile.html', {'menu' : getMenuInfo(request),'title' : "Profile", 'membership' : request.user.date_joined, 'name' : request.user.get_short_name()})
 
 @login_required(login_url = '/login/')  # User have to be logged in to see this view - if not: redirects to login_url
 def manageAccount(request):
@@ -78,16 +78,18 @@ def checkInformation(request):
 	if request.method == "POST":
 		oldpassword = request.POST.get("oldpassword")
 		newpassword = request.POST.get("newpassword1")
+		newpassword2 = request.POST.get("newpassword2")
 
-		if request.user.check_password(oldpassword):
-			encodedpassword = make_password(newpassword)
+		if newpassword == newpassword2:
+			if request.user.check_password(oldpassword):
+				encodedpassword = make_password(newpassword)
 
-			if is_password_usable(encodedpassword):
-				request.user.set_password(newpassword)
-				request.user.save()
-				update_session_auth_hash(request, request.user)
+				if is_password_usable(encodedpassword):
+					request.user.set_password(newpassword)
+					request.user.save()
+					update_session_auth_hash(request, request.user)
 
-				return HttpResponseRedirect(reverse('base:profile'))
+					return HttpResponseRedirect(reverse('base:profile'))
 		
 	return render(request, 'manageAccount.html')
 			
