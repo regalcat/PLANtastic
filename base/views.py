@@ -4,8 +4,9 @@ from django.template import RequestContext, loader
 from django.contrib.auth import authenticate, login as authLogin, logout as authLogout
 from django.shortcuts import render
 from django.core.urlresolvers import reverse
-from django.contrib.auth.forms import UserCreationForm
+from forms import UserRegistrationForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.hashers import check_password, make_password, is_password_usable
 from base.events.models import EventModel
 
 
@@ -28,6 +29,7 @@ def past(request):
 def profile(request):	
 	return render(request, 'profile.html', {'menu' : getMenuInfo(request),'title' : "Profile", 'membership' : request.user.date_joined})
 
+@login_required(login_url = '/login/')  # User have to be logged in to see this view - if not: redirects to login_url
 def manageAccount(request):
 	return render(request, 'manageAccount.html')
 
@@ -63,13 +65,13 @@ def registerSuccess(request):
 
 def register(request):
 	if request.method == "POST":
-		form = UserCreationForm(request.POST)
+		form = UserRegistrationForm(request.POST)
 		if form.is_valid():
 			form.save()
 			return HttpResponseRedirect(reverse('base:registerSuccess'))
 
 	args = {}
-	args['form'] = UserCreationForm()
+	args['form'] = UserRegistrationForm()
 	return render(request, 'register.html', args)
 
 def checkInformation(request):
@@ -77,7 +79,14 @@ def checkInformation(request):
 		oldpassword = request.POST.get("oldpassword")
 		newpassword = request.POST.get("newpassword1")
 
-		if oldpassword == request.user.password:
+		if request.user.check_password(oldpassword):
+			encodedpassword = make_password(newpassword)
+
+			if is_password_usable(encodedpassword):
+				request.user.set_password(newpassword)
+				request.user.save()
+
+				return HttpResponseRedirect(reverse('base:profile'))
 		
 	return render(request, 'manageAccount.html')
 			
