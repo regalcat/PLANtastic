@@ -5,19 +5,34 @@
 	<title>{{title}}</title>
 	<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}bootstrap-3.3.2-dist/css/bootstrap.css">
 </head>
-<br>
+<!--<br>
 <p>Here we can not see the menubar since we are not logged in.</p>
-<br>
+<br> -->
+<!-- Empty menu bar for prettiness reasons -->
+<nav class="navbar navbar-default">
+<div class="container-fluid">
+<div class="navbar-header">
+<div class="nav navbar-nav">
+<!-- Empty on purpose. Could add a logo later. -->
+</div>
+</div>
+</div>
+</nav>
 {% endblock %}
 
 
 {% block content %}
 This is the index page.  Remember to add unique subdirectories in your templates folder!
-<div class="btn-group" role="group" aria-label=".."
-<br>
-<p><a href="{% url 'base:login' %}"><button type="button" class="btn btn-success">Click here to log in</button></a>
-<br>
-<a href="{% url 'base:register' %}"><button type="button" class="btn btn-success">Click here to register for a new account</button></a></p>
-</div>
+<!-- Jumbo-sized welcome -->
+<div class="jumbotron">
+	<h1>Welcome to PLANtastic!</h1>
 
+<!-- Login and Register buttons -->
+<div class="btn-group" role="group" aria-label=".." >
+	<br />
+	<p><a href="{% url 'base:login' %}"><button type="button" class="btn btn-success">Click here to log in</button></a>
+	<br />
+	<a href="{% url 'base:register' %}"><button type="button" class="btn btn-success">Click here to register for a new account</button></a></p>
+</div>
+</div>
 {% endblock %}
