@@ -25,12 +25,8 @@ class UserRegistrationForm(UserCreationForm):
 		user.set_password(self.cleaned_data['password1'])
 
 		if commit == True:
-			
 			user.save()
 		return user
-
-
-
 
 
 class InviteForm(forms.Form):

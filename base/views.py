@@ -31,7 +31,9 @@ def past(request):
 
 @login_required(login_url = '/login/')  # User have to be logged in to see this view - if not: redirects to login_url
 def profile(request):	
-	return render(request, 'profile.html', {'menu' : getMenuInfo(request),'title' : "Profile", 'membership' : request.user.date_joined, 'name' : request.user.get_short_name()})
+	context = {'menu' : getMenuInfo(request),'title' : "Profile", 'membership' : request.user.date_joined, 'name' : request.user.get_short_name(), 'fullname' : request.user.get_full_name(), 'email' : request.user.email, 'username' : request.user.username}
+	
+	return render(request, 'profile.html', context)
 
 @login_required(login_url = '/login/')  # User have to be logged in to see this view - if not: redirects to login_url
 def manageAccount(request):
@@ -78,6 +80,7 @@ def register(request):
 	args['form'] = UserRegistrationForm()
 	return render(request, 'register.html', args)
 
+@login_required(login_url = '/login/')  # User have to be logged in to see this view - if not: redirects to login_url
 def checkInformation(request):
 	if request.method == "POST":
 		oldpassword = request.POST.get("oldpassword")
@@ -98,10 +101,11 @@ def checkInformation(request):
 	return render(request, 'manageAccount.html')
 			
 		
-
+@login_required(login_url = '/login/')  # User have to be logged in to see this view - if not: redirects to login_url
 def new(request):
 	if request.method == "POST":
-		event = EventModel.createEvent(request.POST['eventName'],request.POST['eventLocation'],request.POST['eventDateStart'],request.POST['eventType'],request.POST['eventDescription'])
+		event = EventModel()
+		event.createEvent(request.POST['eventName'],request.POST['eventLocation'],request.POST['eventDateStart'],request.POST['eventType'],request.POST['eventDescription'])
 		event.save()
 		return HttpResponseRedirect('http://'+str(request.get_host())+'/'+str(event.eventid))
 		
