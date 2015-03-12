@@ -12,7 +12,7 @@ Manage Account <a href="{% url 'profile:profile' %}"><span style="font-size:1.3e
 <p class="error">Sorry, that was not a the right password or the new passoword is not a valid one.</p>
 {% endif %}
 
-<form action= "{% url 'base:checkInformation' %}" method= "POST">
+<form action= "{% url 'profile:checkInformation' %}" method= "POST">
 {% csrf_token %}
 
 <label for ="oldpassword"> Old password: </label><input type="password" name="oldpassword" value="" id="oldpassword"> <br>
