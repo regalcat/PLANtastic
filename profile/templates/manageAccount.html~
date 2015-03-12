@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+Manage Account <a href="{% url 'base:profile' %}"><span style="font-size:1.3em" class="glyphicon glyphicon-user"></span></a>
+<br>
+<p>Here you can change your password.</p>
+<br>
+<br>
+
+{% if form.error %}
+<p class="error">Sorry, that was not a the right password or the new passoword is not a valid one.</p>
+{% endif %}
+
+<form action= "{% url 'base:checkInformation' %}" method= "POST">
+{% csrf_token %}
+
+<label for ="oldpassword"> Old password: </label><input type="password" name="oldpassword" value="" id="oldpassword"> <br>
+<label for ="newpassword1"> New password: </label><input type="password" name="newpassword1" value="" id="newpassword1"><a href="" title="Must be a valid password"><span class="glyphicon glyphicon-question-sign"></span></a>
+<br>
+<label for ="newpassword2"> New password verification: </label><input type="password" name="newpassword2" value="" id="newpassword2"><a href="" title="Must be the same password as above"><span class="glyphicon glyphicon-question-sign"></span></a><br>
+<br>
+<input type= "submit" value="Change Password" class="btn btn-success">
+</form>
+
+
+{% endblock %}

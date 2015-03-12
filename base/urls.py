@@ -3,13 +3,13 @@ from base import views
 from base.invite.views import InviteView
 
 urlpatterns = patterns('',
-    url(r'^$', views.index, name='index'),
+	url(r'^$', views.index, name='index'),
 	url(r'^home/$', views.home, name='home'),
 	url(r'^(?P<eventid>\d+)/$', views.event_home),
 	url(r'^upcoming/$', views.upcoming, name='upcoming'),
 	url(r'^past/$', views.past, name='past'),
-	url(r'^profile/$', views.profile, name='profile'),
-	url(r'^manage_account/$', views.manageAccount, name='manageAccount'),
+	#url(r'^profile/$', views.profile, name='profile'),
+	#url(r'^manage_account/$', views.manageAccount, name='manageAccount'),
 	url(r'^logout/$', views.logout, name='logout'),
 	url(r'^login/$', views.login, name='login'),
 	url(r'^register/$', views.register, name='register'),
