@@ -44,6 +44,8 @@ class GenericGatheringModel(EventModel):
 	eventType = 'Other Gathering'
 	eventDateEnd = models.DateTimeField(auto_now=False,auto_now_add=False)
 	eventDateEnd.blank = True
+
+
 	
 	
 	
