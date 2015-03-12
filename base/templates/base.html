@@ -35,9 +35,9 @@
 </li>
 <!-- Dropdown for new event -->
 <li class="dropdown">
-	<a href="{{menu.server}}/new" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">New Event<span class="carat"></span></a>
+	<a href="{{menu.server}}/new" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">New Event <span class="glyphicon glyphicon-plus-sign"></span><span class="carat"></span></a>
 	<ul class="dropdown-menu" role="menu">
-		<li><a href="{{ menu.server }}/new">New Event</a></li>
+		<li><a href="{{ menu.server }}/new">New Event <span class="glyphicon glyphicon-plus-sign"></span></a></li>
 	{% for event in menu.event_types %}
 		<li><a href="{{ menu.server }}/new?type={{ event }}" >{{ event }}</a></li>
 	{% endfor %}
