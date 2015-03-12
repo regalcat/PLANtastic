@@ -12,11 +12,17 @@ class EventModel(models.Model):
 	eventDescription = models.CharField(max_length=500)
 	eventDescription.blank = True
 
-	def createEvent(eventid,eventName,eventLocation,eventDateStart,eventType,eventDescription):
-		event = EventModel(eventid=eventid, eventName=eventName, eventLocation=eventLocation, eventDateStart=eventDateStart, eventType=eventType, eventDescription=eventDescription)
-		return event
+	def createEvent(self,eventName,eventLocation,eventDateStart,eventType,eventDescription):
 
-	def getEventTypes():
+		self.eventName=eventName
+		self.eventLocation=eventLocation
+		self.eventDateStart=eventDateStart
+		self.eventType=eventType
+		self.eventDescription=eventDescription
+		self.save()
+		return self
+
+	def getEventTypes(self):
 		return ('Dinner', 'Hike', 'Other Trip', 'Other Gathering')
 
 class HikeEventModel(EventModel):

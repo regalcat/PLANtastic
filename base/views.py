@@ -104,7 +104,8 @@ def checkInformation(request):
 @login_required(login_url = '/login/')  # User have to be logged in to see this view - if not: redirects to login_url
 def new(request):
 	if request.method == "POST":
-		event = EventModel.createEvent(request.POST['eventName'],request.POST['eventLocation'],request.POST['eventDateStart'],request.POST['eventType'],request.POST['eventDescription'])
+		event = EventModel()
+		event.createEvent(request.POST['eventName'],request.POST['eventLocation'],request.POST['eventDateStart'],request.POST['eventType'],request.POST['eventDescription'])
 		event.save()
 		return HttpResponseRedirect('http://'+str(request.get_host())+'/'+str(event.eventid))
 		
