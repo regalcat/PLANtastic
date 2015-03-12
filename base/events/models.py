@@ -12,8 +12,8 @@ class EventModel(models.Model):
 	eventDescription = models.CharField(max_length=500)
 	eventDescription.blank = True
 
-	def createEvent(cls,eventid,eventName,eventLocation,eventDateStart,eventType,eventDescription):
-		event = cls(eventid=eventid, eventName=eventName, eventLocation=eventLocation, eventDateStart=eventDateStart, eventType=eventType, eventDescription=eventDescription)
+	def createEvent(eventid,eventName,eventLocation,eventDateStart,eventType,eventDescription):
+		event = EventModel(eventid=eventid, eventName=eventName, eventLocation=eventLocation, eventDateStart=eventDateStart, eventType=eventType, eventDescription=eventDescription)
 		return event
 
 	def getEventTypes():
