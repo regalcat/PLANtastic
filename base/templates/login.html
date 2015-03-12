@@ -1,8 +1,25 @@
 {% extends "base.html" %}
 
 {% block menubar %}
-<p>We can't see the menubar if we are not logged in.</p>
+<head>
+	<title>{{title}}</title>
+	<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}bootstrap-3.3.2-dist/css/bootstrap.css">
+</head>
+<!--<br>
+<p>Here we can not see the menubar since we are not logged in.</p>
+<br> -->
+<!-- Empty menu bar for prettiness reasons -->
+<nav class="navbar navbar-default">
+<div class="container-fluid">
+<div class="navbar-header">
+<div class="nav navbar-nav">
+<!-- Empty on purpose. Could add a logo later. -->
+</div>
+</div>
+</div>
+</nav>
 {% endblock %}
+
 
 {% block content %}
 
@@ -16,10 +33,10 @@
 <label for ="username"> Username: </label><input type="text" name="username" value="" id="username">
 <label for ="password"> Password: </label><input type="password" name="password" value="" id="password">
 
-<input type= "submit" value="Log in">
+<input type= "submit" value="Log in" class="btn btn-success">
 </form>
 
-<a href = "{% url 'base:index' %}"><button>Go back to index page</button></a>
+<a href = "{% url 'base:index' %}"><button type="button" class="btn btn-success">Go back to index page</button></a>
 
 {% endblock %}
 
