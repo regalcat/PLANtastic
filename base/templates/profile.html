@@ -2,12 +2,16 @@
 
 {% block content %}
 <h2>Welcome {{ name }}!</h2>
-<br>
-<p>This is your Profile Page. </p>
 
-You have been a member since {{ membership }}
+<p>This is your Profile Page. <a href="{% url 'base:manageAccount' %}"><span style="font-size:1.5em" class="glyphicon glyphicon-cog"></span></a>   </p>
+
+<b>Name:</b> {{ fullname }}
+<br><b>Username:</b> {{ username }}
+<br><b>Email:</b> {{ email }}
+
+<br><b>Member since:</b> {{ membership }}
 <br>
 <br>
-<a href="{% url 'base:manageAccount' %}"><button>Click here to manage account</button></a>
+
 
 {% endblock %}
