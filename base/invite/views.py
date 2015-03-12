@@ -1,7 +1,12 @@
+#Imports from django and/or python
 from django.http import HttpResponse
 from django.template import RequestContext, loader
-from base.forms import InviteForm
+from django import forms
 from django.views.generic.edit import FormView
+
+#Imports from our project
+from base.forms import InviteForm
+from base.Helpers import getEvent
 
 
 def test(request):
@@ -10,7 +15,7 @@ def test(request):
 	return HttpResponse(template.render(context))
 
 #The class that handles inviting people via email and then displays an html page
-class InviteView(forms.Form):
+class InviteView(FormView):
 	temp_name = ''
 	form_class = InviteForm
 	success_url = r'^(?P<eventid>\d+)/$'
@@ -21,7 +26,7 @@ class InviteView(forms.Form):
 		return super(InviteView, self).valid_email(form)
 
 	def get(self, request, eventid):
-		user = getUser(request)
+		user = request.user
 		cur_event = getEvent(eventid)
 		template = loader.get_template("invite.html")
 		context = RequestContext(request, {'event' : cur_event, 'user' : user, 'cur_path' : request.get_full_path(), 'title' : "Invite friends", 'menu' : getMenuInfo(request)})
