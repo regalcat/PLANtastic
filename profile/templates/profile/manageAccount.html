@@ -3,19 +3,18 @@
 {% block content %}
 
 <font size="6">Manage Account</font> <a href="{% url 'profile:profile' %}"><span style="font-size:1.3em" class="glyphicon glyphicon-user"></span></a>
-<br>
 
 <br>
 <br>
 
 <form action= "{% url 'profile:editInformation' %}" method= "POST">
 {% csrf_token %}
-{{ userform|linebreaksbr }}
-<br>
-{{ profileform|linebreaksbr }}
+
+{{ userform.as_p }}
+{{ profileform.as_p }}
 
 <!--<label for ="birthday"> Birthday:  </label><input type="text" name="birthday" value="" id="birthday"> <br>-->
-<br><br>
+
 <input type= "submit" value="Edit information" class="btn btn-success">
 </form>
 

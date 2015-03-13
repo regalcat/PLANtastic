@@ -8,9 +8,17 @@
 <b>Name:</b> {{ fullname }}
 <br><b>Username:</b> {{ username }}
 <br><b>Email:</b> {{ email }}
+{% if birthday %}
 <br><b>Birthday:</b> {{ birthday }}
+{% endif %}
+{% if gender %}
 <br><b>Gender:</b> {{ gender }}
+{% endif %}
 <br><b>Member since:</b> {{ membership }}
+{% if description %}
+<br><b>Description:</b>
+<br>{{ description }}
+{% endif %}
 <br>
 <br>
 
