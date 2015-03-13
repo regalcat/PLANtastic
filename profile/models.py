@@ -3,7 +3,11 @@ from django.contrib.auth.models import User
 
 class Profile(models.Model):
 	user = models.OneToOneField(User)
-	birthday = models.DateField()
+	birthday = models.DateField(blank=True, null=True)
+	gender = models.CharField(max_length=10, blank=True, null=True)
+
+	def getBirthday(self):
+		return self.birthday
 
 
 

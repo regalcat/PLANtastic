@@ -2,23 +2,35 @@
 
 {% block content %}
 
-Manage Account <a href="{% url 'profile:profile' %}"><span style="font-size:1.3em" class="glyphicon glyphicon-user"></span></a>
+<font size="6">Manage Account</font> <a href="{% url 'profile:profile' %}"><span style="font-size:1.3em" class="glyphicon glyphicon-user"></span></a>
+<br>
+
+<br>
+<br>
+
+<form action= "{% url 'profile:editInformation' %}" method= "POST">
+{% csrf_token %}
+{{ userform|linebreaksbr }}
+<br>
+{{ profileform|linebreaksbr }}
+
+<!--<label for ="birthday"> Birthday:  </label><input type="text" name="birthday" value="" id="birthday"> <br>-->
+<br><br>
+<input type= "submit" value="Edit information" class="btn btn-success">
+</form>
+
+<!--{% if form.error %}
+<p class="error">Sorry, that was not a the right password or the new passoword is not a valid one.</p>
+{% endif %}-->
 <br>
 <p>Here you can change your password.</p>
-<br>
-<br>
-
-{% if form.error %}
-<p class="error">Sorry, that was not a the right password or the new passoword is not a valid one.</p>
-{% endif %}
-
 <form action= "{% url 'profile:checkInformation' %}" method= "POST">
 {% csrf_token %}
 
-<label for ="oldpassword"> Old password: </label><input type="password" name="oldpassword" value="" id="oldpassword"> <br>
-<label for ="newpassword1"> New password: </label><input type="password" name="newpassword1" value="" id="newpassword1"><a href="" title="Must be a valid password"><span class="glyphicon glyphicon-question-sign"></span></a>
+<label for ="oldpassword"> Old password:  </label><input type="password" name="oldpassword" value="" id="oldpassword"> <br>
+<label for ="newpassword1"> New password:  </label><input type="password" name="newpassword1" value="" id="newpassword1"><abbr title="Must be a valid password"><span class="glyphicon glyphicon-question-sign"></span></abbr>
 <br>
-<label for ="newpassword2"> New password verification: </label><input type="password" name="newpassword2" value="" id="newpassword2"><a href="" title="Must be the same password as above"><span class="glyphicon glyphicon-question-sign"></span></a><br>
+<label for ="newpassword2"> New password verification:  </label><input type="password" name="newpassword2" value="" id="newpassword2"><a href="" title="Must be the same password as above"><span class="glyphicon glyphicon-question-sign"></span></a><br>
 <br>
 <input type= "submit" value="Change Password" class="btn btn-success">
 </form>

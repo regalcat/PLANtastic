@@ -12,13 +12,17 @@ from django.views.generic.edit import FormView
 from base.events.models import EventModel
 from base.forms import UserRegistrationForm
 from base.Helpers import getMenuInfo
+from forms import ProfileForm, UserForm
 
 
 
 
 @login_required(login_url = '/login/')  # User have to be logged in to see this view - if not: redirects to login_url
-def profile(request):	
-	context = {'menu' : getMenuInfo(request),'title' : "Profile", 'membership' : request.user.date_joined, 'name' : request.user.get_short_name(), 'fullname' : request.user.get_full_name(), 'email' : request.user.email, 'username' : request.user.username}
+def profile(request):
+	user1 = request.user
+	profile = user1.profile
+	
+	context = {'menu' : getMenuInfo(request),'title' : "Profile", 'membership' : request.user.date_joined, 'name' : request.user.get_short_name(), 'fullname' : request.user.get_full_name(), 'email' : request.user.email, 'username' : request.user.username, 'birthday' : request.user.profile.getBirthday(), 'gender' : request.user.profile.gender}
 	
 	return render(request, 'profile/profile.html', context)
 
@@ -26,7 +30,11 @@ def profile(request):
 
 @login_required(login_url = '/login/')  # User have to be logged in to see this view - if not: redirects to login_url
 def manageAccount(request):
-	return render(request, 'profile/manageAccount.html')
+	user = request.user
+	profile = user.profile
+	form = ProfileForm(instance = profile)
+	form2 = UserForm(instance= user)
+	return render(request, 'profile/manageAccount.html', {'profileform' : form, 'userform' : form2})
 
 
 
@@ -47,6 +55,27 @@ def checkInformation(request):
 					update_session_auth_hash(request, request.user)
 
 					return HttpResponseRedirect(reverse('profile:profile'))
-		
-	return render(request, 'profile/manageAccount.html')
+	
+	user = request.user
+	profile = user.profile
+	form = ProfileForm(instance = profile)
+	return render(request, 'profile/manageAccount.html', {'form' : form})
+
+@login_required(login_url = '/login/')  # User have to be logged in to see this view - if not: redirects to login_url
+def editInformation(request):
+	if request.method == "POST":
+		profileform = ProfileForm(request.POST, instance = request.user.profile)
+		userform = UserForm(request.POST, instance = request.user)
+		if userform.is_valid() and profileform.is_valid():
+			profileform.save()
+			userform.save()
+			return HttpResponseRedirect(reverse('profile:profile'))
+
+	
+	else:
+		user = request.user
+		profile = user.profile
+		form = ProfileForm(instance = profile)
+		return render(request, 'profile/manageAccount.html', {'form' : form})
+
 			
