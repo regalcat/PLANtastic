@@ -2,14 +2,16 @@ from django import forms
 #from django.forms import widgets
 from profile.models import Profile
 from django.contrib.auth.models import User
-
+from django.forms.extras.widgets import SelectDateWidget
+import datetime
+ 
 
 class ProfileForm(forms.ModelForm):
 
 	class Meta:
 		model = Profile
 		fields = ('birthday', 'gender', 'description',)
-		widgets = {'description': forms.Textarea() }
+		widgets = {'description': forms.Textarea() , 'birthday' : SelectDateWidget(years = range(datetime.date.today().year, 1930, -1)) }
 		
 
 
