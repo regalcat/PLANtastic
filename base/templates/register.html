@@ -21,14 +21,14 @@
 {% endblock %}
 
 {% block content %}
-<p>Here we do a register.
-<br>
-<a href="{% url 'base:index' %}"><button type="button" class="btn btn-success">Go back to index page</button></a></p>
 
+
+<a href="{% url 'base:index' %}"><button type="button" class="btn btn-success">Go back to index page</button></a>
+<br><br>
 <form action="{% url 'base:register' %}" method= "POST">
 {% csrf_token %}
-{{ form }}
-
+{{ form|linebreaksbr }}
+<br><br>
 <input type="submit" value="Register now!" class="btn btn-success">
 </form>
 
