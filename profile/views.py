@@ -32,9 +32,9 @@ def profile(request):
 def manageAccount(request):
 	user = request.user
 	profile = user.profile
-	form = ProfileForm(instance = profile)
-	form2 = UserForm(instance= user)
-	return render(request, 'profile/manageAccount.html', {'profileform' : form, 'userform' : form2})
+	profileform = ProfileForm(instance = profile)
+	userform = UserForm(instance = user)
+	return render(request, 'profile/manageAccount.html', {'profileform' : profileform, 'userform' : userform})
 
 
 
@@ -54,12 +54,9 @@ def checkInformation(request):
 					request.user.save()
 					update_session_auth_hash(request, request.user)
 
-					return HttpResponseRedirect(reverse('profile:profile'))
+					return HttpResponseRedirect(reverse('profile:ManageAccount'))
 	
-	user = request.user
-	profile = user.profile
-	form = ProfileForm(instance = profile)
-	return render(request, 'profile/manageAccount.html', {'form' : form})
+	return HttpResponseRedirect(reverse('profile:manageAccount'))
 
 @login_required(login_url = '/login/')  # User have to be logged in to see this view - if not: redirects to login_url
 def editInformation(request):
@@ -69,13 +66,9 @@ def editInformation(request):
 		if userform.is_valid() and profileform.is_valid():
 			profileform.save()
 			userform.save()
-			return HttpResponseRedirect(reverse('profile:profile'))
+			return HttpResponseRedirect(reverse('profile:manageAccount'))
 
-	
-	else:
-		user = request.user
-		profile = user.profile
-		form = ProfileForm(instance = profile)
-		return render(request, 'profile/manageAccount.html', {'form' : form})
+
+	return HttpResponseRedirect(reverse('profile:manageAccount'))
 
 			
