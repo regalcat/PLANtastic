@@ -1,5 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
-<p>Welcome to the event home page</p>
+{% include event.eventDescriptionTemplate %}
 <button type="button" class="btn btn-default"><a href="tools/item_share">Item Share Tool</a></button>
+{% for tool in tools %}
+  {% include tool.tile_template %}
+{% endfor %}
 {% endblock %}

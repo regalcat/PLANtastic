@@ -1,0 +1,6 @@
+<p>Name:  {{ event.eventName }}</p>
+<p>Location:  {{ event.eventLocation }}</p>
+<p>Start Date:  {{ event.eventDateStart }}</p>{% block end_date %}{% endblock %}
+<p>Type:  {{ event.eventType }}</p>
+<p>Description:  {{ event.eventDescription }}</p>
+{% block extra_info %}{% endblock %}
