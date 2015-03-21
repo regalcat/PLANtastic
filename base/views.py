@@ -9,7 +9,7 @@ from django.contrib.auth.hashers import check_password, make_password, is_passwo
 from django.views.generic.edit import FormView
 
 #imported from our project
-from base.events.models import EventModel
+from base.events.models import EventModel, HikeEventModel
 from forms import InviteForm
 from forms import UserRegistrationForm
 from Helpers import getMenuInfo
@@ -42,10 +42,6 @@ def manageAccount(request):
 def logout(request):
 	authLogout(request)
 	return HttpResponseRedirect(reverse('base:index'))
-
-def event_home(request, eventid):
-	# TODO - replace Event Home with the event title
-	return render(request, 'event_home.html', {'menu' : getMenuInfo(request), 'title' : "Event Home"})
 
 def login(request):
 	return render(request, 'login.html')
@@ -105,8 +101,16 @@ def checkInformation(request):
 def new(request):
 	if request.method == "POST":
 		event = EventModel()
-		event.createEvent(request.POST['eventName'],request.POST['eventLocation'],request.POST['eventDateStart'],request.POST['eventType'],request.POST['eventDescription'])
+		event.createEvent(request.POST['eventName'],request.POST['eventLocation'], \
+			request.POST['eventDateStart'],request.POST['eventType'],request.POST['eventDescription'])
 		event.save()
+		if (request.POST['eventType'] == u'hike'):
+			event = HikeEventModel(event.eventid, \
+				eventName=request.POST['eventName'], eventLocation=request.POST['eventLocation'], \
+				eventDateStart=request.POST['eventDateStart'],eventDescription=request.POST['eventDescription'], \
+				eventDateEnd=request.POST['eventDateEnd'], eventElevation=request.POST['eventElevation'], \
+				eventDuration=request.POST['eventDuration'], eventDistance=request.POST['eventDistance'])
+			event.save()
 		return HttpResponseRedirect('http://'+str(request.get_host())+'/'+str(event.eventid))
 		
 	template = loader.get_template('events/new.html')
@@ -123,13 +127,4 @@ class InviteView(FormView):
         def form_valid(self, form):
                 form.send_email()
                 return super(InviteView, self).form_valid(form)
-
-
-
-
-
-
-
-
-
 

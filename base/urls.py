@@ -1,11 +1,13 @@
 from django.conf.urls import patterns, url
+
 from base import views
 from base.invite.views import InviteView
+from base.events.EventHomeView import EventHomeView
 
 urlpatterns = patterns('',
 	url(r'^$', views.index, name='index'),
 	url(r'^home/$', views.home, name='home'),
-	url(r'^(?P<eventid>\d+)/$', views.event_home),
+	url(r'^(?P<eventid>\d+)/$', EventHomeView.as_view(), name='eventHome'),
 	url(r'^upcoming/$', views.upcoming, name='upcoming'),
 	url(r'^past/$', views.past, name='past'),
 	url(r'^logout/$', views.logout, name='logout'),

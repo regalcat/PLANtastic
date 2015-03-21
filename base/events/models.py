@@ -1,6 +1,5 @@
 from django.db import models
 
-
 class EventModel(models.Model):
 	eventid = models.AutoField(primary_key=True)
 	eventName = models.CharField(max_length=50)
@@ -8,12 +7,16 @@ class EventModel(models.Model):
 	eventLocation.blank = True
 	eventDateStart = models.DateTimeField(auto_now=False,auto_now_add=False)
 	eventDateStart.blank = True
-	eventType = ('Dinner','Hike','Other Trip','Other Gathering')
+	# TODO - Use actual enum type.
+	eventTypes = ('Dinner', 'Hike', 'Other Trip', 'Other Gathering')
+	eventType = 'Other Gathering'
 	eventDescription = models.CharField(max_length=500)
 	eventDescription.blank = True
 
-	def createEvent(self,eventName,eventLocation,eventDateStart,eventType,eventDescription):
+	#Base template for showing the event description.
+	eventDescriptionTemplate = 'events/base_description.html'
 
+	def createEvent(self,eventName,eventLocation,eventDateStart,eventType,eventDescription):
 		self.eventName=eventName
 		self.eventLocation=eventLocation
 		self.eventDateStart=eventDateStart
@@ -22,7 +25,8 @@ class EventModel(models.Model):
 		self.save()
 		return self
 
-	def getEventTypes(self):
+	@staticmethod
+	def getEventTypes():
 		return ('Dinner', 'Hike', 'Other Trip', 'Other Gathering')
 
 class HikeEventModel(EventModel):
@@ -36,6 +40,19 @@ class HikeEventModel(EventModel):
         eventDistance.blank = True
 	eventDuration = models.DateTimeField(auto_now=False,auto_now_add=False)
 	eventDuration.blank = True
+    
+	#Template for the description about the trip.
+	eventDescriptionTemplate = 'events/hike_description.html'
+
+	def createEvent(self, eventName, eventLocation, eventDateStart, eventType, eventDescription, eventDateEnd, eventElevation, eventDifficulty, eventDistance, eventDuration):
+		super(HikeEventModel, self).__init__(eventName, eventLocation, eventDateStart, eventType, eventDescription)
+		self.eventDateEnd = eventDateEnd
+		self.eventElevation = eventElevation
+		self.eventDifficulty = eventDifficulty
+		self.eventDistance = eventDistance
+		self.eventDuration = eventDuration
+		self.save()
+		return self
 
 class GenericTripModel(EventModel):
 	eventType = 'Other Trip'
@@ -46,16 +63,13 @@ class GenericTripModel(EventModel):
 	eventDestination = models.CharField(max_length=200)
 	#should this be TextField? How do we want to implement multidestinations?
 
+	#Template for the description about the trip.
+	eventDescriptionTemplate = 'events/generic_description.html'
+
 class GenericGatheringModel(EventModel):
 	eventType = 'Other Gathering'
 	eventDateEnd = models.DateTimeField(auto_now=False,auto_now_add=False)
 	eventDateEnd.blank = True
 
-
-	
-	
-	
-        
-        
-        
+	eventDescriptionTemplate = 'events/other_description.html'
 
