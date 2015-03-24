@@ -30,16 +30,6 @@ def past(request):
 	
 	return render(request, 'past.html', { 'menu' : getMenuInfo(request), 'title' : "Past Events"})
 
-@login_required(login_url = '/login/')  # User have to be logged in to see this view - if not: redirects to login_url
-def profile(request):	
-	context = {'menu' : getMenuInfo(request),'title' : "Profile", 'membership' : request.user.date_joined, 'name' : request.user.get_short_name(), 'fullname' : request.user.get_full_name(), 'email' : request.user.email, 'username' : request.user.username}
-	
-	return render(request, 'profile.html', context)
-
-@login_required(login_url = '/login/')  # User have to be logged in to see this view - if not: redirects to login_url
-def manageAccount(request):
-	return render(request, 'manageAccount.html')
-
 def logout(request):
 	authLogout(request)
 	return HttpResponseRedirect(reverse('base:index'))

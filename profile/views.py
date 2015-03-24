@@ -22,7 +22,7 @@ def profile(request):
 	user1 = request.user
 	profile = user1.profile
 	
-	context = {'menu' : getMenuInfo(request),'title' : "Profile", 'membership' : request.user.date_joined, 'name' : request.user.get_short_name(), 'fullname' : request.user.get_full_name(), 'email' : request.user.email, 'username' : request.user.username, 'birthday' : request.user.profile.getBirthday(), 'gender' : request.user.profile.gender, 'description' : request.user.profile.description}
+	context = {'menu' : getMenuInfo(request), 'title' : "Profile", 'membership' : request.user.date_joined, 'name' : request.user.get_short_name(), 'fullname' : request.user.get_full_name(), 'email' : request.user.email, 'username' : request.user.username, 'birthday' : request.user.profile.getBirthday(), 'gender' : request.user.profile.gender, 'description' : request.user.profile.description}
 	
 	return render(request, 'profile/profile.html', context)
 
@@ -34,7 +34,7 @@ def manageAccount(request):
 	profile = user.profile
 	profileform = ProfileForm(instance = profile)
 	userform = UserForm(instance = user)
-	return render(request, 'profile/manageAccount.html', {'profileform' : profileform, 'userform' : userform})
+	return render(request, 'profile/manageAccount.html', {'profileform' : profileform, 'userform' : userform, 'menu' : getMenuInfo(request), 'title' : "Manage Account"})
 
 
 
