@@ -22,8 +22,7 @@ def home(request):
 	return render(request, 'home.html', {'menu' : getMenuInfo(request), 'title' : "Home"})
 
 def upcoming(request):
-	# TODO
-	return HttpResponse("Upcoming Events Page")
+	return render(request, 'upcoming.html', {'menu' : getMenuInfo(request), 'title' : "Upcoming Events"})
 
 @login_required(login_url = '/login/')
 def past(request):
