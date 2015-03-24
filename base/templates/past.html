@@ -2,9 +2,15 @@
 {% block content %}
 <p>Here are your previous events!</P>
 {% for e in menu.prev_events %}
-	<p><h3>{{ e.eventName }}</h3>
-	More event info here.
-	<a href="{{ menu.server }}/{{ e.eventid }}" role="button"><button>Go to Event Page</button></a>
-	</p>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">{{ e.eventName }}</h3>
+		</div>
+		<div class="panel-body">
+			<p>Date: {{ e.eventDateStart }}</p>
+			<p>Location: {{e.eventLocation }}</p>
+			<a href="{{ menu.server }}/{{ e.eventid }}" role="button"><button class="btn btn-default">Go to Event Page</button></a>
+		</div>
+	</div>
 {% endfor %}
 {% endblock %}
