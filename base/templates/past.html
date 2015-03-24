@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<p>Here are your previous events!</P>
+{% for e in menu.prev_events %}
+	<p><h3>{{ e.eventName }}</h3>
+	More event info here.
+	<a href="{{ menu.server }}/{{ e.eventid }}" role="button"><button>Go to Event Page</button></a>
+	</p>
+{% endfor %}
+{% endblock %}

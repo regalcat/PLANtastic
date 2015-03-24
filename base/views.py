@@ -25,9 +25,10 @@ def upcoming(request):
 	# TODO
 	return HttpResponse("Upcoming Events Page")
 
+@login_required(login_url = '/login/')
 def past(request):
-	# TODO
-	return HttpResponse("Past Events Page")
+	
+	return render(request, 'past.html', { 'menu' : getMenuInfo(request), 'title' : "Past Events"})
 
 @login_required(login_url = '/login/')  # User have to be logged in to see this view - if not: redirects to login_url
 def profile(request):	

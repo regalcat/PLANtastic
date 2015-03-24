@@ -20,7 +20,7 @@
 	<a href="{{menu.server}}/upcoming" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Upcoming <span class="glyphicon glyphicon-pushpin"></span><span class="carat"></span></a>
 	<ul class="dropdown-menu" role="menu">
 		<li><a href="{{ menu.server }}/upcoming">Upcoming</a></li>
-		{% for event in menu.prev_events %}
+		{% for event in menu.upcoming_events %}
 			<li><a href ="{{ menu.server}}/{{ event.eventid }}">{{ event.eventName }}</a></li>
 		{% endfor %}
 	</ul>
@@ -30,7 +30,7 @@
 	<a href="{{menu.server}}/past" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Past <span class="glyphicon glyphicon-pushpin"></span><span class="carat"></span></a>
 	<ul class="dropdown-menu" role="menu">
 		<li><a href="{{ menu.server }}/past">Past</a></li>
-		{% for event in menu.upcoming_events %}
+		{% for event in menu.prev_events %}
 			<li><a href = "{{ menu.server }}/{{ event.eventid }}">{{ event.eventName }}</a></li>
 		{% endfor %}
 	</ul>
