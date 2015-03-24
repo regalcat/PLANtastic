@@ -84,7 +84,7 @@ def checkInformation(request):
 
 					return HttpResponseRedirect(reverse('base:profile'))
 		
-	return render(request, 'manageAccount.html')
+	return render(request, 'manageAccount.html', { 'menu' : getMenuInfo(request), 'title' : "Manage Account"})
 			
 		
 @login_required(login_url = '/login/')  # User have to be logged in to see this view - if not: redirects to login_url
