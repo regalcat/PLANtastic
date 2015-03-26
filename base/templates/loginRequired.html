@@ -21,16 +21,19 @@
 
 
 {% block content %}
-<p>You must be logged in to see this page. Please log in below or go back to the index page to register for a new account.</p>
+<p>You must be logged in to see this page. Please log in below or register for a new account.</p>
 
 <form action= "{% url 'base:authView' %}" method= "POST">
 {% csrf_token %}
 
-<label for ="username"> Userrname: </label><input type="text" name="username" value="" id="username">
+<label for ="username"> Username: </label><input type="text" name="username" value="" id="username">
 <label for ="password"> Password: </label><input type="password" name="password" value="" id="password">
 
 <input type= "submit" value="Log in" class="btn btn-success">
 </form>
+<br>
+
+<a href="{% url 'base:register' %}"><button type="button" class="btn btn-success">Click here to register for a new account</button></a>
 
 <a href = "{% url 'base:index' %}"><button type="button" class="btn btn-success">Go back to index page</button></a>
 
