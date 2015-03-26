@@ -24,7 +24,7 @@ def home(request):
 def upcoming(request):
 	return render(request, 'upcoming.html', {'menu' : getMenuInfo(request), 'title' : "Upcoming Events"})
 
-@login_required(login_url = '/login/')
+@login_required(login_url = '/loginRequired/')
 def past(request):
 	
 	return render(request, 'past.html', { 'menu' : getMenuInfo(request), 'title' : "Past Events"})
@@ -52,6 +52,9 @@ def authView(request):
 def invalidLogin(request):
 	return render(request, 'invalidLogin.html')
 
+def loginRequired(request):
+	return render(request, 'loginRequired.html')
+
 def registerSuccess(request):
 	return render(request, 'registerSuccess.html')
 
@@ -64,30 +67,9 @@ def register(request):
 
 	args = {}
 	args['form'] = UserRegistrationForm()
-	return render(request, 'register.html', args)
-
-@login_required(login_url = '/login/')  # User have to be logged in to see this view - if not: redirects to login_url
-def checkInformation(request):
-	if request.method == "POST":
-		oldpassword = request.POST.get("oldpassword")
-		newpassword = request.POST.get("newpassword1")
-		newpassword2 = request.POST.get("newpassword2")
-
-		if newpassword == newpassword2:
-			if request.user.check_password(oldpassword):
-				encodedpassword = make_password(newpassword)
-
-				if is_password_usable(encodedpassword):
-					request.user.set_password(newpassword)
-					request.user.save()
-					update_session_auth_hash(request, request.user)
-
-					return HttpResponseRedirect(reverse('base:profile'))
+	return render(request, 'register.html', args)			
 		
-	return render(request, 'manageAccount.html', { 'menu' : getMenuInfo(request), 'title' : "Manage Account"})
-			
-		
-@login_required(login_url = '/login/')  # User have to be logged in to see this view - if not: redirects to login_url
+@login_required(login_url = '/loginRequired/')  # User have to be logged in to see this view - if not: redirects to login_url
 def new(request):
 	if request.method == "POST":
 		event = EventModel()

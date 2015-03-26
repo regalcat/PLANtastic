@@ -21,15 +21,12 @@
 
 
 {% block content %}
-
-{% if form.error %}
-<p class="error">Sorry, that was not a valid username or password.</p>
-{% endif %}
+<p>You must be logged in to see this page. Please log in below or go back to the index page to register for a new account.</p>
 
 <form action= "{% url 'base:authView' %}" method= "POST">
 {% csrf_token %}
 
-<label for ="username"> Username: </label><input type="text" name="username" value="" id="username">
+<label for ="username"> Userrname: </label><input type="text" name="username" value="" id="username">
 <label for ="password"> Password: </label><input type="password" name="password" value="" id="password">
 
 <input type= "submit" value="Log in" class="btn btn-success">
@@ -38,4 +35,3 @@
 <a href = "{% url 'base:index' %}"><button type="button" class="btn btn-success">Go back to index page</button></a>
 
 {% endblock %}
-

@@ -17,7 +17,7 @@ from forms import ProfileForm, UserForm
 
 
 
-@login_required(login_url = '/login/')  # User have to be logged in to see this view - if not: redirects to login_url
+@login_required(login_url = '/loginRequired/')  # User have to be logged in to see this view - if not: redirects to login_url
 def profile(request):
 	user1 = request.user
 	profile = user1.profile
@@ -28,7 +28,7 @@ def profile(request):
 
 
 
-@login_required(login_url = '/login/')  # User have to be logged in to see this view - if not: redirects to login_url
+@login_required(login_url = '/loginRequired/')  # User have to be logged in to see this view - if not: redirects to login_url
 def manageAccount(request):
 	user = request.user
 	profile = user.profile
@@ -38,7 +38,7 @@ def manageAccount(request):
 
 
 
-@login_required(login_url = '/login/')  # User have to be logged in to see this view - if not: redirects to login_url
+@login_required(login_url = '/loginRequired/')  # User have to be logged in to see this view - if not: redirects to login_url
 def checkInformation(request):
 	if request.method == "POST":
 		oldpassword = request.POST.get("oldpassword")
@@ -58,7 +58,7 @@ def checkInformation(request):
 	
 	return HttpResponseRedirect(reverse('profile:manageAccount'))
 
-@login_required(login_url = '/login/')  # User have to be logged in to see this view - if not: redirects to login_url
+@login_required(login_url = '/loginRequired/')  # User have to be logged in to see this view - if not: redirects to login_url
 def editInformation(request):
 	if request.method == "POST":
 		profileform = ProfileForm(request.POST, instance = request.user.profile)
