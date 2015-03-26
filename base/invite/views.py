@@ -7,6 +7,7 @@ from django.views.generic.edit import FormView
 #Imports from our project
 from base.forms import InviteForm
 from base.Helpers import getEvent
+from base.Helpers import getMenuInfo
 
 
 def test(request):

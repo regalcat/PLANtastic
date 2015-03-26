@@ -73,3 +73,7 @@ class GenericGatheringModel(EventModel):
 
 	eventDescriptionTemplate = 'events/other_description.html'
 
+class InviteModel(models.Model):
+	inviteID = models.AutoField(primary_key=True)
+	inviteEvent = models.ForeignKey(EventModel)
+	inviteEmail = models.CharField(max_length=60)

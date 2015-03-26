@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 {% include event.eventDescriptionTemplate %}
+<a href="invite"><button type="button" class="btn btn-default">Invite Friends</button></a>
 <button type="button" class="btn btn-default"><a href="tools/item_share">Item Share Tool</a></button>
 {% for tool in tools %}
   {% include tool.tile_template %}

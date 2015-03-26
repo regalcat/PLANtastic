@@ -95,7 +95,7 @@ class InviteView(FormView):
         form_class = InviteForm
         success_url = '/invite-sent/'
 
-        #Called when a valid form is submitted
+	#Called when a valid form is submitted
         def form_valid(self, form):
                 form.send_email()
                 return super(InviteView, self).form_valid(form)
