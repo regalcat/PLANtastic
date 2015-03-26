@@ -1,23 +1,19 @@
 {% extends "base.html" %}
-
-{% block menubar %}
-<p>You may not be logged in.<p>
-{% endblock %}
+{% include "forms.py" %}
 
 {% block content %}
 	<h2>Invite your friends to join your event!</h2>
 	<p>Enter email addresses of your friends below to invite them.</p>
 	
 	{% if form.error %}
-	< class="error">Sorry, that's not a valid email.</p>
+	<div class="alert alert-danger" role="alert">Sorry, that's not a valid email.</div>
 	{% endif %}
 
 	
-	<form action="{% url 'base:InviteView' %}" method="post">
-		{{ form.as_p }}
-		<input type="submit" value="Send Invite" />
+	<form action="invite-action/" method="post">
+		<input type="text" class="form-control" placeholder="Invitee's email"  />
+		<input type="submit" class="btn btn-default" value="Send Invite" />
 	</form>
 
-<a href = "{% url 'base:index' %}"><button>Home</button></a>
 
 {% endblock %}

@@ -3,6 +3,7 @@ from django.conf.urls import patterns, url
 from base import views
 from base.invite.views import InviteView
 from base.events.EventHomeView import EventHomeView
+from base import forms
 
 urlpatterns = patterns('',
 	url(r'^$', views.index, name='index'),
@@ -23,7 +24,7 @@ urlpatterns = patterns('',
 
 	#Urls pertaining to email invites
 	url(r'^(?P<eventid>\d+)/invite$', InviteView.as_view(), name=('base.invite.html')),
-	#url(r'^(?P<eventid>\d+)/invite-form$', views.InviteForm),
+	url(r'^(?P<eventid>\d+)/invite-action$', forms.InviteForm, name=('invite-action')),
 
 
 )
