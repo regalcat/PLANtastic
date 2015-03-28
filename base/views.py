@@ -128,9 +128,7 @@ def new(request):
 
 		return HttpResponseRedirect('http://'+str(request.get_host())+'/'+str(event.eventid))
 		
-	template = loader.get_template('events/new.html')
-	context = RequestContext(request)
-	return HttpResponse(template.render(context))
+	return render(request, 'events/new.html', { 'menu' : getMenuInfo(request), 'title' : "Create Events"})
 
 # This method returns the email invite form
 class InviteView(FormView):
