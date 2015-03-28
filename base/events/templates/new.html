@@ -18,17 +18,17 @@
 	<p><label for="eventDateEnd" id="eventDateEndLabel" style="display:none">Event End Date:</label>
 	<input name="eventDateEnd" type="DateTime" id="eventDateEnd" style="display:none"/> </p>
 
-	<p><label for="duration" id="durationLabel" style="display:none">Duration:</label>
-	<input name="Duration" type="DateTime" id="duration" style="display:none"/></p>
+	<p><label for="eventDuration" id="durationLabel" style="display:none">Duration:</label>
+	<input name="eventDuration" type="DateTime" id="eventDuration" style="display:none"/></p>
 	
-	<p><label for="elevation" id="elevationLabel" style="display:none">Elevation:</label>
-	<input name="Elevation" type="text" id="elevation" style="display:none"/></p>
+	<p><label for="eventElevation" id="elevationLabel" style="display:none">Elevation:</label>
+	<input name="eventElevation" type="text" id="eventElevation" style="display:none"/></p>
 	
-	<p><label for="distance" id="distanceLabel" style="display:none">Distance:</label>
-	<input name="Distance" type="text" id="distance" style="display:none"/></p>
+	<p><label for="eventDistance" id="distanceLabel" style="display:none">Distance:</label>
+	<input name="eventDistance" type="text" id="eventDistance" style="display:none"/></p>
 
-	<p><label for="difficulty" id="difficultyLabel" style="display:none">Difficulty:</label>  
-	<select name="Difficulty" id="difficulty" style="display:none">
+	<p><label for="eventDifficulty" id="difficultyLabel" style="display:none">Difficulty:</label>  
+	<select name="eventDifficulty" id="eventDifficulty" style="display:none">
         <option value="unknown">Unknown</option>
         <option value="easy">Easy</option>
         <option value="moderate">Moderate</option>
@@ -61,13 +61,13 @@ function hike(){
 	//open hike options
 	document.getElementById("eventDateEnd").style.display="block";
 	document.getElementById("eventDateEndLabel").style.display="block";
-	document.getElementById("elevation").style.display="block";
+	document.getElementById("eventElevation").style.display="block";
 	document.getElementById("elevationLabel").style.display="block";
-	document.getElementById("difficulty").style.display="block";
+	document.getElementById("eventDifficulty").style.display="block";
 	document.getElementById("difficultyLabel").style.display="block";
-	document.getElementById("duration").style.display="block";
+	document.getElementById("eventDuration").style.display="block";
 	document.getElementById("durationLabel").style.display="block";
-	document.getElementById("distance").style.display="block";
+	document.getElementById("eventDistance").style.display="block";
 	document.getElementById("distanceLabel").style.display="block";
 
 	//clear other options

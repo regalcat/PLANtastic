@@ -74,15 +74,26 @@ def new(request):
 	if request.method == "POST":
 		event = EventModel()
 		event.createEvent(eventName=request.POST['eventName'],eventLocation=request.POST['eventLocation'], \
-			eventDateStart=request.POST['eventDateStart'],eventType=request.POST['eventType'],eventDescription=request.POST['eventDescription'])
+			eventDateStart=request.POST['eventDateStart'],eventType=request.POST['eventType'],  eventDescription=request.POST['eventDescription'])
 		event.save()
+
 		if (request.POST['eventType'] == u'hike'):
+			eventDuration=request.POST['eventDuration']
+			eventDistance=request.POST['eventDistance']
+			eventElevation=request.POST['eventElevation']
+			if eventDistance == '':
+				eventDistance = None
+			if eventElevation == '':
+				eventElevation = None
+			
 			event = HikeEventModel(event.eventid, \
 				eventName=request.POST['eventName'], eventLocation=request.POST['eventLocation'], \
 				eventDateStart=request.POST['eventDateStart'],eventDescription=request.POST['eventDescription'], \
-				eventDateEnd=request.POST['eventDateEnd'], eventElevation=request.POST['eventElevation'], \
-				eventDuration=request.POST['eventDuration'], eventDistance=request.POST['eventDistance'])
+				eventDateEnd=request.POST['eventDateEnd'], eventDuration=eventDuration, eventDistance=eventDistance, eventElevation=eventElevation)
 			event.save()
+
+		
+
 		return HttpResponseRedirect('http://'+str(request.get_host())+'/'+str(event.eventid))
 		
 	template = loader.get_template('events/new.html')

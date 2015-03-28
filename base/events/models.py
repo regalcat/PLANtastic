@@ -6,7 +6,7 @@ class EventModel(models.Model):
 	eventLocation = models.CharField(max_length=50)
 	eventLocation.blank = True
 	eventDateStart = models.DateTimeField(auto_now=False,auto_now_add=False)
-	eventDateStart.blank = True
+	#eventDateStart.blank = True
 	# TODO - Use actual enum type.
 	eventTypes = ('Dinner', 'Hike', 'Other Trip', 'Other Gathering')
 	eventType = 'Other Gathering'
@@ -33,14 +33,10 @@ class HikeEventModel(EventModel):
 	
 	eventType = 'Hike'
 	eventDateEnd = models.DateTimeField(auto_now=False,auto_now_add=False)
-	eventDateEnd.blank = True
-	eventElevation = models.IntegerField()
-	eventElevation.blank = True
+	eventDuration = models.CharField(max_length=30, blank=True)
+	eventElevation = models.IntegerField(blank=True, null=True)
+	eventDistance = models.FloatField(blank=True, null=True)
 	eventDifficulty = ('Unknown','Easy','Moderate','Difficult','Strenuous','Technical')
-	eventDistance = models.FloatField()
-        eventDistance.blank = True
-	eventDuration = models.CharField(max_length=30)
-	eventDuration.blank = True
     
 	#Template for the description about the trip.
 	eventDescriptionTemplate = 'events/hike_description.html'
