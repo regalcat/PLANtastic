@@ -2,10 +2,14 @@ from django.contrib.sessions.models import Session
 from django.contrib.auth.models import User
 
 from base.events import models as event_models
+from base.invite.models import MembershipModel
 
-def getUserEvents(user):
-	#TODO - should access Invite Table
-	return event_models.EventModel.objects.all()
+def getUserEvents(user_):
+	membership_entries = MembershipModel.objects.filter(user=user_)
+	events = []
+	for entry in membership_entries:
+		events.append(entry.event)
+	return events
 
 def getMenuInfo(request):
 	toReturn = {}
