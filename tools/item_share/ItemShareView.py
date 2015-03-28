@@ -3,7 +3,7 @@ from django.template import RequestContext, loader
 
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
-from base.Helpers import getEvent, getMenuInfo
+from base.Helpers import getMenuInfo
 from base.events.models import EventModel
 from tools.item_share.models import ItemModel, ItemSignupModel
 from tools.ToolView import ToolView
@@ -16,7 +16,7 @@ class ItemShareView(ToolView):
 
     def get(self, request, eventid):
         user = request.user
-        cur_event = getEvent(eventid)
+        cur_event = EventModel.getEvent(eventid)
         items = ItemModel.items.filter(event=cur_event)
         for item in items:
             item.signups = ItemSignupModel.objects.filter(itemid = item).exclude(user=request.user)

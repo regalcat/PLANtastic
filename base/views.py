@@ -1,12 +1,16 @@
 #imported from django and/or python
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext, loader
+from django.templatetags.static import static
 from django.contrib.auth import authenticate, login as authLogin, logout as authLogout, update_session_auth_hash
 from django.shortcuts import render
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import check_password, make_password, is_password_usable
 from django.views.generic.edit import FormView
+
+from os import listdir
+from os.path import isfile, join
 
 #imported from our project
 from base.events.models import EventModel, HikeEventModel
@@ -73,8 +77,8 @@ def register(request):
 def new(request):
 	if request.method == "POST":
 		event = EventModel()
-		event.createEvent(request.POST['eventName'],request.POST['eventLocation'], \
-			request.POST['eventDateStart'],request.POST['eventType'],request.POST['eventDescription'])
+		event.createEvent(eventName=request.POST['eventName'],eventLocation=request.POST['eventLocation'], \
+			eventDateStart=request.POST['eventDateStart'],eventType=request.POST['eventType'],eventDescription=request.POST['eventDescription'])
 		event.save()
 		if (request.POST['eventType'] == u'hike'):
 			event = HikeEventModel(event.eventid, \
@@ -89,14 +93,14 @@ def new(request):
 	context = RequestContext(request)
 	return HttpResponse(template.render(context))
 
-# This method returns the email invite form
-class InviteView(FormView):
-        template_name = 'invite.html'
-        form_class = InviteForm
-        success_url = '/invite-sent/'
-
-	#Called when a valid form is submitted
-        def form_valid(self, form):
-                form.send_email()
-                return super(InviteView, self).form_valid(form)
-
+def coverPic(request):
+	files = '{"pics": ['
+	path = '/var/www/planner/base/static/cover_pics/'
+	temp = listdir(path);
+	for f in temp:
+		if isfile(join(path, f)):
+			filename = static('cover_pics/' + f)
+			files += '"'+filename+'",'
+	files = files[:-1]
+	files += "]}"
+	return HttpResponse(files)

@@ -16,6 +16,20 @@ class EventModel(models.Model):
 	#Base template for showing the event description.
 	eventDescriptionTemplate = 'events/base_description.html'
 
+	# Returns the event that is currently in play from the event_id
+	@staticmethod
+	def getEvent(event_id):
+		events = HikeEventModel.objects.filter(eventid=event_id)
+		if (events.count() == 1):
+			return events[0]
+		events = GenericTripModel.objects.filter(eventid=event_id)
+		if (events.count == 1):
+			return events[0]
+		events = GenericGatheringModel.objects.filter(eventid=event_id)
+		if events.count == 1:
+			return events[0]
+		return EventModel.objects.get(eventid=event_id)
+
 	def createEvent(self,eventName,eventLocation,eventDateStart,eventType,eventDescription):
 		self.eventName=eventName
 		self.eventLocation=eventLocation

@@ -6,7 +6,7 @@ from django.views.generic.edit import FormView
 
 #Imports from our project
 from base.forms import InviteForm
-from base.Helpers import getEvent
+from base.events.models import EventModel
 from base.Helpers import getMenuInfo
 
 
@@ -28,7 +28,7 @@ class InviteView(FormView):
 
 	def get(self, request, eventid):
 		user = request.user
-		cur_event = getEvent(eventid)
+		cur_event = EventModel.getEvent(eventid)
 		template = loader.get_template("invite.html")
 		context = RequestContext(request, {'event' : cur_event, 'user' : user, 'cur_path' : request.get_full_path(), 'title' : "Invite friends", 'menu' : getMenuInfo(request)})
 		return HttpResponse(template.render(context))

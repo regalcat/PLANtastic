@@ -22,7 +22,3 @@ class AddItemView(CreateView):
 		form.instance.event_id=self.eventid
 		return super(AddItemView, self).form_valid(form)
 
-		#self.object = form.save(commit=False)
-		#self.object.event_id=self.eventid
-		#self.object.save()
-		#return HttpResponseRedirect("http://192.168.56.102/home")

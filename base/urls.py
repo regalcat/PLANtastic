@@ -25,6 +25,5 @@ urlpatterns = patterns('',
 	#Urls pertaining to email invites
 	url(r'^(?P<eventid>\d+)/invite', InviteView.as_view(), name=('invite')),
 	url(r'^(?P<eventid>\d+)/invite-action', forms.InviteForm, name=('invite-action')),
-
-
+	url(r'^cover-pic/', views.coverPic, name='cover-pic'),
 )
