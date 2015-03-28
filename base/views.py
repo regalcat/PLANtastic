@@ -14,6 +14,7 @@ from os.path import isfile, join
 
 #imported from our project
 from base.events.models import EventModel, HikeEventModel
+from base.invite.models import MembershipModel
 from forms import UserRegistrationForm
 from Helpers import getMenuInfo
 
@@ -79,6 +80,9 @@ def new(request):
 		event.createEvent(eventName=request.POST['eventName'],eventLocation=request.POST['eventLocation'], \
 			eventDateStart=request.POST['eventDateStart'],eventType=request.POST['eventType'],eventDescription=request.POST['eventDescription'])
 		event.save()
+
+		member = MembershipModel(event=event, user=request.user, status=MembershipModel.CREATOR)
+		member.save()
 
 		if (request.POST['eventType'] == u'hike'):
 			eventDuration=request.POST['eventDuration']

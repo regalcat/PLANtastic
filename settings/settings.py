@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 	'base',
 	'base.events',
+	'base.invite',
 	'profile',
 	'tools',
 	'tools.item_share',
