@@ -35,6 +35,7 @@ class InviteForm(forms.Form):
 
 	
 	#A rather long function that sends the email. Takes in the InviteForm object that called it.
+	#Remember to go to gmail and allow access for less secure apps. (Wow. That sounds shady and janky.)
 	@staticmethod
 	def send_email(to, event):
 		gmail_user = 'mail.plantastic@gmail.com'
@@ -45,11 +46,11 @@ class InviteForm(forms.Form):
 		smtpserver.login(gmail_user, gmail_passwd)
 		header = 'To:' + to +'\n' + gmail_user + '\n' + 'Subject: Plantastic Test Invite \n'
 		#print header
+		#TODO Generate strings for confirmation
 		msg = header + '\n You have been invited to ' + event.eventName + '! \n\n'
 		smtpserver.sendmail(gmail_user, to, msg)
 		#print 'Email sent!'
 		smtpserver.close()
 		#Uncomment to use the Django send_mail function. (Doesn't work right now)
-		#send_mail('Invitation to join a PLANtastic event!', 
-		#	, 'plantastic@gmail.com', [email], html_message=invitemsg.html)
+		#send_mail('Invitation to join a PLANtastic event!', msg, 'mail.plantastic@gmail.com', [to], fail_silently=False)
 		
