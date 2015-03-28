@@ -33,7 +33,9 @@ class InviteView(FormView):
 		context = RequestContext(request, {'event' : cur_event, 'user' : user, 'cur_path' : request.get_full_path(), 'title' : "Invite friends", 'menu' : getMenuInfo(request)})
 		return HttpResponse(template.render(context))
 
-	def post(request, eventid):
-		user = getUser(request)
+	def post(self, request, eventid):
+		to = request.POST['email']
 		event = getEvent(eventid)
+		InviteForm.send_email(to, event)
+		#TODO Make this go to a template that confirms that it worked
 		return HttpResponse("Thank you for inviting people!")
