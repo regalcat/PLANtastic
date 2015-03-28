@@ -35,7 +35,7 @@ class InviteView(FormView):
 
 	def post(self, request, eventid):
 		to = request.POST['email']
-		event = getEvent(eventid)
+		event = EventModel.getEvent(eventid)
 		InviteForm.send_email(to, event)
 		#Not happy with this going to the template, but I'll deal for now
 		eventname = event.eventName
