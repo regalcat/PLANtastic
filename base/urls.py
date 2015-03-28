@@ -24,7 +24,7 @@ urlpatterns = patterns('',
 
 	#Urls pertaining to email invites
 	url(r'^(?P<eventid>\d+)/invite', InviteView.as_view(), name=('base.invite.html')),
-	url(r'^(?P<eventid>\d+)/invite-action', InviteView.as_view(), name=('invite')),
+	url(r'^(?P<eventid>\d+)/invite-action', forms.InviteForm, name=('invite-action')),
 
 
 )
