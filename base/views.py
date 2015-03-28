@@ -13,7 +13,7 @@ from os import listdir
 from os.path import isfile, join
 
 #imported from our project
-from base.events.models import EventModel, HikeEventModel
+from base.events.models import EventModel, HikeEventModel, InviteModel
 from base.invite.models import MembershipModel
 from forms import UserRegistrationForm
 from Helpers import getMenuInfo
@@ -148,3 +148,22 @@ def coverPic(request):
 	files = files[:-1]
 	files += "]}"
 	return HttpResponse(files)
+
+@login_required(login_url = '/loginRequired/')  # User have to be logged in to see this view - if not: redirects to login_url
+def join_event(request):
+	if (request.method == "POST"):
+		# TODO - add error checking
+		string = request.POST['string']
+		invite = InviteModel.objects.filter(inviteString = string)
+		print invite.count()
+		print invite[0].inviteEmail
+		print request.user.email
+		if (invite.count() != 1 or invite[0].inviteEmail != request.user.email):
+			return render(request, 'invite/join.html', { 'menu' : getMenuInfo(request), \
+				'title' : "Join Event" , 'error': True, 'error_message' : "Invalid Confirmation String" })
+		invite = invite[0]
+		if (MembershipModel.objects.filter(event=invite.inviteEvent, user=request.user).count() == 0):
+			member = MembershipModel(event=invite.inviteEvent, user=request.user, status=MembershipModel.COPLANNER)
+			member.save()
+		return HttpResponseRedirect('http://'+str(request.get_host())+'/'+str(invite.inviteEvent.eventid))
+	return render(request, 'invite/join.html', { 'menu' : getMenuInfo(request), 'title' : "Join Event" })
