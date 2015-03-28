@@ -30,6 +30,7 @@ class EventModel(models.Model):
 		return ('Dinner', 'Hike', 'Other Trip', 'Other Gathering')
 
 class HikeEventModel(EventModel):
+	
 	eventType = 'Hike'
 	eventDateEnd = models.DateTimeField(auto_now=False,auto_now_add=False)
 	eventDateEnd.blank = True
@@ -38,21 +39,13 @@ class HikeEventModel(EventModel):
 	eventDifficulty = ('Unknown','Easy','Moderate','Difficult','Strenuous','Technical')
 	eventDistance = models.FloatField()
         eventDistance.blank = True
-	eventDuration = models.DateTimeField(auto_now=False,auto_now_add=False)
+	eventDuration = models.CharField(max_length=30)
 	eventDuration.blank = True
     
 	#Template for the description about the trip.
 	eventDescriptionTemplate = 'events/hike_description.html'
 
-	def createEvent(self, eventName, eventLocation, eventDateStart, eventType, eventDescription, eventDateEnd, eventElevation, eventDifficulty, eventDistance, eventDuration):
-		super(HikeEventModel, self).__init__(eventName, eventLocation, eventDateStart, eventType, eventDescription)
-		self.eventDateEnd = eventDateEnd
-		self.eventElevation = eventElevation
-		self.eventDifficulty = eventDifficulty
-		self.eventDistance = eventDistance
-		self.eventDuration = eventDuration
-		self.save()
-		return self
+
 
 class GenericTripModel(EventModel):
 	eventType = 'Other Trip'
