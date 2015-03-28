@@ -73,8 +73,8 @@ def register(request):
 def new(request):
 	if request.method == "POST":
 		event = EventModel()
-		event.createEvent(request.POST['eventName'],request.POST['eventLocation'], \
-			request.POST['eventDateStart'],request.POST['eventType'],request.POST['eventDescription'])
+		event.createEvent(eventName=request.POST['eventName'],eventLocation=request.POST['eventLocation'], \
+			eventDateStart=request.POST['eventDateStart'],eventType=request.POST['eventType'],eventDescription=request.POST['eventDescription'])
 		event.save()
 		if (request.POST['eventType'] == u'hike'):
 			event = HikeEventModel(event.eventid, \
