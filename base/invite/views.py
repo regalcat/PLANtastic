@@ -38,7 +38,8 @@ class InviteView(FormView):
 		to = request.POST['email']
 		event = EventModel.getEvent(eventid)
 		#instance of InviteModel
-		invite=InviteModel(to, eventid)
+		#TODO - add random string
+		invite=InviteModel(inviteEmail=to, inviteEvent=event, inviteString="TODO")
 		#Sends the email
 		InviteForm.send_email(to, event)
 		#Saves the invite to the table

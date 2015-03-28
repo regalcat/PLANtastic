@@ -32,8 +32,6 @@ class UserRegistrationForm(UserCreationForm):
 class InviteForm(forms.Form):
 	email = forms.EmailField(required=True)
 	
-
-	
 	#A rather long function that sends the email. Takes in the InviteForm object that called it.
 	#Remember to go to gmail and allow access for less secure apps. (Wow. That sounds shady and janky.)
 	@staticmethod
