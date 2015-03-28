@@ -135,7 +135,7 @@ def new(request):
 
 def coverPic(request):
 	files = '{"pics": ['
-	path = '/var/www/planner/base/static/cover_pics/'
+	path = 'base/static/cover_pics/'
 	temp = listdir(path);
 	for f in temp:
 		if isfile(join(path, f)):
