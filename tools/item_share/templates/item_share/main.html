@@ -2,7 +2,7 @@
 {% block content %}
 <script src="{{ STATIC_URL }}item_share/item_share.js"></script>
 <p><button type="button" class="btn btn-default"><a href="add_item">Add Item</a></button>
-<button type="button" class="btn btn-default"><a href="{{menu.server}}/{{eventid}}">Go Back</a></button></p>
+<button type="button" class="btn btn-default"><a href="{{menu.server}}/{{event.eventid}}">Go Back</a></button></p>
 <table class="table"> 
 
 <tr class="table-header">
@@ -35,7 +35,6 @@
 	{% endfor %}
 {% endfor %}
 </table>
-
 
 {% endblock %}
 
