@@ -77,6 +77,6 @@ class GenericGatheringModel(EventModel):
 
 class InviteModel(models.Model):
 	inviteID = models.AutoField(primary_key=True)
-	inviteEventID = models.ForeignKey(EventModel)
+	inviteEvent = models.ForeignKey(EventModel)
 	inviteEmail = models.CharField(max_length=60)
 	inviteString = models.CharField(max_length=50)
