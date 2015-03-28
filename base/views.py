@@ -13,8 +13,7 @@ from os import listdir
 from os.path import isfile, join
 
 #imported from our project
-from base.events.models import EventModel, HikeEventModel, GenericTripModel, GenericGatheringModel, DinnerEventModel
-from forms import InviteForm
+from base.events.models import EventModel, HikeEventModel
 from forms import UserRegistrationForm
 from Helpers import getMenuInfo
 
