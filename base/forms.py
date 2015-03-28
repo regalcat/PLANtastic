@@ -47,7 +47,8 @@ class InviteForm(forms.Form):
 		header = 'To:' + to +'\n' + gmail_user + '\n' + 'Subject: Plantastic Test Invite \n'
 		#print header
 		#TODO Generate strings for confirmation
-		msg = header + '\n You have been invited to ' + event.eventName + '! \n\n'
+		ename = event.eventName
+		msg = header + '\n You have been invited to ' + ename + '! \n\n'
 		smtpserver.sendmail(gmail_user, to, msg)
 		#print 'Email sent!'
 		smtpserver.close()

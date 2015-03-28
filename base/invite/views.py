@@ -8,6 +8,7 @@ from django.views.generic.edit import FormView
 from base.forms import InviteForm
 from base.events.models import EventModel
 from base.Helpers import getMenuInfo
+from base.events.models import InviteModel
 
 
 def test(request):
@@ -36,10 +37,14 @@ class InviteView(FormView):
 	def post(self, request, eventid):
 		to = request.POST['email']
 		event = EventModel.getEvent(eventid)
+		#instance of InviteModel
+		invite=InviteModel(to, eventid)
+		#Sends the email
 		InviteForm.send_email(to, event)
+		#Saves the invite to the table
+		invite.save()
 		#Not happy with this going to the template, but I'll deal for now
-		eventname = event.eventName
 		
 		template = loader.get_template("inviteSuccess.html")
-		context = RequestContext(request, {'event' : event, 'user' : request.user, 'cur_path' : request.get_full_path(), 'title' : eventname, 'menu' : getMenuInfo(request)})
+		context = RequestContext(request, {'event' : event, 'user' : request.user, 'cur_path' : request.get_full_path(), 'title' : "Invite Success", 'menu' : getMenuInfo(request)})
 		return HttpResponse(template.render(context))
