@@ -37,5 +37,9 @@ class InviteView(FormView):
 		to = request.POST['email']
 		event = getEvent(eventid)
 		InviteForm.send_email(to, event)
-		#TODO Make this go to a template that confirms that it worked
-		return HttpResponse("Thank you for inviting people!")
+		#Not happy with this going to the template, but I'll deal for now
+		eventname = event.eventName
+		
+		template = loader.get_template("inviteSuccess.html")
+		context = RequestContext(request, {'event' : event, 'user' : request.user, 'cur_path' : request.get_full_path(), 'title' : eventname, 'menu' : getMenuInfo(request)})
+		return HttpResponse(template.render(context))
