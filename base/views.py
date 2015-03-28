@@ -9,7 +9,7 @@ from django.contrib.auth.hashers import check_password, make_password, is_passwo
 from django.views.generic.edit import FormView
 
 #imported from our project
-from base.events.models import EventModel, HikeEventModel
+from base.events.models import EventModel, HikeEventModel, GenericTripModel, GenericGatheringModel, DinnerEventModel
 from forms import InviteForm
 from forms import UserRegistrationForm
 from Helpers import getMenuInfo
@@ -81,18 +81,50 @@ def new(request):
 			eventDuration=request.POST['eventDuration']
 			eventDistance=request.POST['eventDistance']
 			eventElevation=request.POST['eventElevation']
+			eventDateEnd=request.POST['eventDateEnd']
+
 			if eventDistance == '':
 				eventDistance = None
 			if eventElevation == '':
 				eventElevation = None
+			if eventDateEnd == '':
+				eventDateEnd = None
 			
 			event = HikeEventModel(event.eventid, \
 				eventName=request.POST['eventName'], eventLocation=request.POST['eventLocation'], \
 				eventDateStart=request.POST['eventDateStart'],eventDescription=request.POST['eventDescription'], \
-				eventDateEnd=request.POST['eventDateEnd'], eventDuration=eventDuration, eventDistance=eventDistance, eventElevation=eventElevation)
+				eventDateEnd=eventDateEnd, eventDuration=eventDuration, eventDistance=eventDistance, 					eventElevation=eventElevation)
 			event.save()
 
-		
+		if (request.POST['eventType'] == u'otherTrip'):
+			eventDateEnd=request.POST['eventDateEnd']
+			if eventDateEnd == '':
+				eventDateEnd = None
+
+			event = GenericTripModel(event.eventid, \
+				eventName=request.POST['eventName'], eventLocation=request.POST['eventLocation'], \
+				eventDateStart=request.POST['eventDateStart'],eventDescription=request.POST['eventDescription'], 					eventDateEnd=eventDateEnd)
+			event.save()
+
+		if (request.POST['eventType'] == u'otherGathering'):
+			eventDateEnd=request.POST['eventDateEnd']
+			if eventDateEnd == '':
+				eventDateEnd = None
+
+			event = GenericGatheringModel(event.eventid, \
+				eventName=request.POST['eventName'], eventLocation=request.POST['eventLocation'], \
+				eventDateStart=request.POST['eventDateStart'],eventDescription=request.POST['eventDescription'], 					eventDateEnd=eventDateEnd)
+			event.save()
+
+		if (request.POST['eventType'] == u'dinner'):
+			eventDateEnd=request.POST['eventDateEnd']
+			if eventDateEnd == '':
+				eventDateEnd = None
+
+			event = DinnerEventModel(event.eventid, \
+				eventName=request.POST['eventName'], eventLocation=request.POST['eventLocation'], \
+				eventDateStart=request.POST['eventDateStart'],eventDescription=request.POST['eventDescription'], 					eventDateEnd=eventDateEnd)
+			event.save()
 
 		return HttpResponseRedirect('http://'+str(request.get_host())+'/'+str(event.eventid))
 		
