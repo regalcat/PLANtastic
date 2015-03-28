@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+{% if error %}
+<p>{{ error_message }}</p>
+{% endif %}
+<form method="post" action="">
+{% csrf_token %}
+<p>Confirmation String:  <input name="string" type="text"></input></p>
+<button class="btn btn-default" action="submit">Submit</button>
+</form>
+{% endblock %}
