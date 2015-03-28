@@ -76,6 +76,8 @@ function dinner(){
 	document.getElementById("allergyListLabel").style.display="block";
 
 	//hide other options
+	document.getElementById("eventDateEnd").style.display="none";
+	document.getElementById("eventDateEndLabel").style.display="none";
 	document.getElementById("elevation").style.display="none";
 	document.getElementById("elevationLabel").style.display="none";
 	document.getElementById("difficulty").style.display="none";
@@ -84,4 +86,6 @@ function dinner(){
 	document.getElementById("durationLabel").style.display="none";
 	document.getElementById("distance").style.display="none";
 	document.getElementById("distanceLabel").style.display="none";
+	
+	
 }

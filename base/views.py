@@ -80,23 +80,53 @@ def new(request):
 			eventDuration=request.POST['eventDuration']
 			eventDistance=request.POST['eventDistance']
 			eventElevation=request.POST['eventElevation']
+			eventDateEnd=request.POST['eventDateEnd']
+
 			if eventDistance == '':
 				eventDistance = None
 			if eventElevation == '':
 				eventElevation = None
+			if eventDateEnd == '':
+				eventDateEnd = None
 			
 			event = HikeEventModel(event.eventid, \
 				eventName=request.POST['eventName'], eventLocation=request.POST['eventLocation'], \
 				eventDateStart=request.POST['eventDateStart'],eventDescription=request.POST['eventDescription'], \
-				eventDateEnd=request.POST['eventDateEnd'], eventDuration=eventDuration, eventDistance=eventDistance, eventElevation=eventElevation)
+				eventDateEnd=eventDateEnd, eventDuration=eventDuration, eventDistance=eventDistance, 					eventElevation=eventElevation)
 			event.save()
 
-		
+		if (request.POST['eventType'] == u'otherTrip'):
+			eventDateEnd=request.POST['eventDateEnd']
+			if eventDateEnd == '':
+				eventDateEnd = None
+
+			event = GenericTripModel(event.eventid, \
+				eventName=request.POST['eventName'], eventLocation=request.POST['eventLocation'], \
+				eventDateStart=request.POST['eventDateStart'],eventDescription=request.POST['eventDescription'], 					eventDateEnd=eventDateEnd)
+			event.save()
+
+		if (request.POST['eventType'] == u'otherGathering'):
+			eventDateEnd=request.POST['eventDateEnd']
+			if eventDateEnd == '':
+				eventDateEnd = None
+
+			event = GenericGatheringModel(event.eventid, \
+				eventName=request.POST['eventName'], eventLocation=request.POST['eventLocation'], \
+				eventDateStart=request.POST['eventDateStart'],eventDescription=request.POST['eventDescription'], 					eventDateEnd=eventDateEnd)
+			event.save()
+
+		if (request.POST['eventType'] == u'dinner'):
+			eventDateEnd=request.POST['eventDateEnd']
+			if eventDateEnd == '':
+				eventDateEnd = None
+
+			event = DinnerEventModel(event.eventid, \
+				eventName=request.POST['eventName'], eventLocation=request.POST['eventLocation'], \
+				eventDateStart=request.POST['eventDateStart'],eventDescription=request.POST['eventDescription'], 					eventDateEnd=eventDateEnd)
+			event.save()
 
 		return HttpResponseRedirect('http://'+str(request.get_host())+'/'+str(event.eventid))
 		
-	template = loader.get_template('events/new.html')
-	context = RequestContext(request)
-	return HttpResponse(template.render(context))
+	return render(request, 'events/new.html', { 'menu' : getMenuInfo(request), 'title' : "Create Events"})
 
 
