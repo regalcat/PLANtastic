@@ -44,13 +44,15 @@ class EventModel(models.Model):
 		return ('Dinner', 'Hike', 'Other Trip', 'Other Gathering')
 
 class HikeEventModel(EventModel):
+	LEVELS = (('Unknown', 'Unknown'), ('Easy', 'Easy'), ('Moderate', 'Moderate'), ('Difficult', 'Difficult'),
+	('Strenuous', 'Strenuous'), ('Technical', 'Technical'))
 	
 	eventType = 'Hike'
 	eventDateEnd = models.DateTimeField(auto_now=False,auto_now_add=False, blank=True, null=True)
 	eventDuration = models.CharField(max_length=30, blank=True)
 	eventElevation = models.IntegerField(blank=True, null=True)
 	eventDistance = models.FloatField(blank=True, null=True)
-	eventDifficulty = ('Unknown','Easy','Moderate','Difficult','Strenuous','Technical')
+	eventDifficulty = models.CharField(max_length=10, choices = LEVELS)
     
 	#Template for the description about the trip.
 	eventDescriptionTemplate = 'events/hike_description.html'

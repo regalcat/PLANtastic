@@ -100,7 +100,7 @@ def new(request):
 			event = HikeEventModel(event.eventid, \
 				eventName=request.POST['eventName'], eventLocation=request.POST['eventLocation'], \
 				eventDateStart=request.POST['eventDateStart'],eventDescription=request.POST['eventDescription'], \
-				eventDateEnd=eventDateEnd, eventDuration=eventDuration, eventDistance=eventDistance, 					eventElevation=eventElevation)
+				eventDateEnd=eventDateEnd, eventDuration=eventDuration, eventDistance=eventDistance, 					eventElevation=eventElevation, eventDifficulty=request.POST['difficulty'])
 			event.save()
 
 		if (request.POST['eventType'] == u'otherTrip'):
