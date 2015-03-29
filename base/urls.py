@@ -19,6 +19,7 @@ urlpatterns = patterns('',
 	url(r'^invalid/', views.invalidLogin, name='invalidLogin'),
 	url(r'^registerSuccess/', views.registerSuccess, name='registerSuccess'),
 	url(r'^new', views.new, name='new_event'),
+	url(r'^delete/', views.deleteEvent, name='deleteEvent'), 
 
  	#url(r'^new', event_views.new, name='new_event'),
 

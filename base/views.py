@@ -71,7 +71,24 @@ def register(request):
 
 	args = {}
 	args['form'] = UserRegistrationForm()
-	return render(request, 'register.html', args)			
+	return render(request, 'register.html', args)	
+
+@login_required(login_url = '/loginRequired/')
+def deleteEvent(request):
+	if request.method == "POST":
+		eventid = request.POST['eventid']
+		event = EventModel.objects.filter(eventid=eventid)
+		eventChild = EventModel.getEvent(eventid)
+		eventChild.delete()
+		event.delete()
+		# TODO : delete also from invite table everyone in event
+
+		return HttpResponseRedirect(reverse('base:upcoming'))
+
+	return HttpResponseRedirect(reverse('base:upcoming'))
+		
+
+		
 		
 @login_required(login_url = '/loginRequired/')  # User have to be logged in to see this view - if not: redirects to loginRequired
 def new(request):

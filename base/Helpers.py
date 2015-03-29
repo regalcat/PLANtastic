@@ -6,7 +6,6 @@ from base.events import models as event_models
 from base.invite.models import MembershipModel
 from base.events.models import HikeEventModel, GenericGatheringModel, GenericTripModel
 
-#import datetime
 
 def getUserEvents(user_):
 	membership_entries = MembershipModel.objects.filter(user=user_)
