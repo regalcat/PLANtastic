@@ -73,7 +73,7 @@ def register(request):
 	args['form'] = UserRegistrationForm()
 	return render(request, 'register.html', args)			
 		
-@login_required(login_url = '/loginRequired/')  # User have to be logged in to see this view - if not: redirects to login_url
+@login_required(login_url = '/loginRequired/')  # User have to be logged in to see this view - if not: redirects to loginRequired
 def new(request):
 	if request.method == "POST":
 		event = EventModel()
@@ -149,7 +149,7 @@ def coverPic(request):
 	files += "]}"
 	return HttpResponse(files)
 
-@login_required(login_url = '/loginRequired/')  # User have to be logged in to see this view - if not: redirects to login_url
+@login_required(login_url = '/loginRequired/')  # User have to be logged in to see this view - if not: redirects to loginRequired
 def join_event(request):
 	if (request.method == "POST"):
 		# TODO - add error checking

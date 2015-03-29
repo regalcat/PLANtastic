@@ -1,2 +1,5 @@
 {% extends "events/base_description.html" %}
-{% block end_date %}<p>End Date:  {{ event.eventDateEnd }}</p>{% endblock %}
+
+{% if event.eventDateEnd %}
+{% block end_date %}<p><b>End Date:</b>  {{ event.eventDateEnd }}</p>{% endblock %}
+{% endif %}
