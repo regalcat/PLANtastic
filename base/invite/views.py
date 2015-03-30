@@ -40,11 +40,11 @@ class InviteView(FormView):
 		to = request.POST['email']
 		event = EventModel.getEvent(eventid)
 		rstring = ""
-		for i in range(0,16)
-			rstring.join(random.choice(string.ascii_letters + string.digits))
+		for i in range(0,16):
+			rstring+=random.choice(string.ascii_letters + string.digits)
 		
 		#instance of InviteModel
-		invite=InviteModel(inviteEmail=to, inviteEvent=event, rstring)
+		invite=InviteModel(inviteEmail=to, inviteEvent=event, inviteString=rstring)
 		#Sends the email
 		InviteForm.send_email(to, event, rstring)
 		#Saves the invite to the table
