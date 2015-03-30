@@ -1,10 +1,10 @@
 #Imports from django and/or python
+import string
+import random
 from django.http import HttpResponse
 from django.template import RequestContext, loader
 from django import forms
 from django.views.generic.edit import FormView
-import random
-import string
 
 #Imports from our project
 from base.forms import InviteForm
@@ -39,14 +39,14 @@ class InviteView(FormView):
 	def post(self, request, eventid):
 		to = request.POST['email']
 		event = EventModel.getEvent(eventid)
+		rstring = ""
+		for i in range(0,16)
+			rstring.join(random.choice(string.ascii_letters + string.digits))
 		
-		randstring = ""
-		for i in range(0,16):
-			randstring.join(random.choice(string.ascii_letters + string.digits))
-		
-		invite=InviteModel(inviteEmail=to, inviteEvent=event, randstring)
+		#instance of InviteModel
+		invite=InviteModel(inviteEmail=to, inviteEvent=event, rstring)
 		#Sends the email
-		InviteForm.send_email(to, event, randstring)
+		InviteForm.send_email(to, event, rstring)
 		#Saves the invite to the table
 		invite.save()
 		#Not happy with this going to the template, but I'll deal for now
