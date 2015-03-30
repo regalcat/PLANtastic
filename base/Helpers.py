@@ -6,13 +6,16 @@ from base.events import models as event_models
 from base.invite.models import MembershipModel
 from base.events.models import HikeEventModel, GenericGatheringModel, GenericTripModel
 
-
 def getUserEvents(user_):
 	membership_entries = MembershipModel.objects.filter(user=user_)
 	events = []
 	for entry in membership_entries:
 		events.append(entry.event)
 	return events
+
+def isPreviousEvent(event_):
+	today = timezone.now()
+	return event_.eventDateStart < today
 
 def getPreviousEvents(user_):
 	membership_entries = MembershipModel.objects.filter(user=user_)
@@ -34,14 +37,10 @@ def getUpcomingEvents(user_):
 
 	return events
 
-
-
-
 def getMenuInfo(request):
 	toReturn = {}
 	toReturn['server'] = "http://" + request.get_host()
 	toReturn['prev_events'] = getPreviousEvents(request.user)
 	toReturn['upcoming_events'] = getUpcomingEvents(request.user)
-
 	toReturn['event_types'] = event_models.EventModel.getEventTypes()
 	return toReturn

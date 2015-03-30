@@ -2,7 +2,6 @@
 {% block content %}
 {% include event.eventDescriptionTemplate %}
 <a href="invite"><button type="button" class="btn btn-default">Invite Friends</button></a>
-<!-- TODO - include map to where the event is -->
 {% for tool in tools %}
   {% include tool.tile_template %}
 {% endfor %}

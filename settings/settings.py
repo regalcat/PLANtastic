@@ -43,6 +43,7 @@ INSTALLED_APPS = (
 	'profile',
 	'tools',
 	'tools.item_share',
+	'tools.upload_pics',
 )
 
 MIDDLEWARE_CLASSES = (
