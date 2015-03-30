@@ -6,12 +6,12 @@
 <form action="" method="post" id="mainForm">
 {% csrf_token %}
 <body>
- <!-- <p>Event Name: <input name="eventName" type="text" maxlength="50" size="52" id="eventName"/> </p>
+  <p>Event Name: <input name="eventName" type="text" maxlength="50" size="52" id="eventName"/> </p>
   <p>Event Location: <input name="eventLocation" type="text" maxlength="50" size="52"/> </p>
   
-  <p><label>Event Date:</label> -->
-{{ eventform.as_p }} 
- <!-- <select name="startMonth" id="startMonth">
+  <p><label>Event Date:</label>
+
+ <select name="startMonth" id="startMonth">
         <option value="01">January</option>
         <option value="02">February</option>
         <option value="03">March</option>
@@ -161,7 +161,7 @@
 
   <input name="eventDateStart" id="eventDateStart" style="display:none">
   </p>
-  <p>Event Description:</p> <textarea rows"10" columns="55" maxlength="500" name="eventDescription" type="textarea" id="eventDescription"style ="height:200px;width:500px"> </textarea></p> -->
+  <p>Event Description:</p> <textarea rows"10" columns="55" maxlength="500" name="eventDescription" type="textarea" id="eventDescription"style ="height:200px;width:500px"> </textarea></p> 
   <p>Event Type:</p>
   <input name="eventType" type="radio" value="dinner" onclick="dinner();" id="eventType"/>Dinner </p>
   <input name="eventType" type="radio" value="hike" onclick="hike();" id="eventType"/>Hike </p>
