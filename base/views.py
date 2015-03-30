@@ -96,7 +96,7 @@ def new(request):
 		event = EventModel()
 		event.createEvent(eventName=request.POST['eventName'],eventLocation=request.POST['eventLocation'], \
 			eventDateStart=request.POST['eventDateStart'],eventType=request.POST['eventType'],eventDescription=request.POST['eventDescription'])
-		event.save()
+		#event.save()
 
 		member = MembershipModel(event=event, user=request.user, status=MembershipModel.CREATOR)
 		member.save()

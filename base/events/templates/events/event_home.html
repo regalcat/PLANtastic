@@ -13,9 +13,10 @@
 </div>
 {% endfor %}
 
+<!-- TODO: Move this into the edit event page.-->
 <form action= "{% url 'base:deleteEvent' %}" method= "POST">
 {% csrf_token %}
-
+<!--This hidden field might not be a good idea.-->
 <input type="hidden" name="eventid" value= "{{ event.eventid }}" id="eventid">
 <input type= "submit" value="Delete Event" class="btn btn-danger">
 </form>
