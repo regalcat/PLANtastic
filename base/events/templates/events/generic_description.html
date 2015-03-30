@@ -1,6 +1,18 @@
 {% extends "events/base_description.html" %}
-{% block end_date %}<p>End Date:  {{ event.eventDateEnd }} </p>{% endblock %}
+
+{% if event.eventDateEnd %}
+{% block end_date %}<p><b>End Date:</b>  {{ event.eventDateEnd }} </p>{% endblock %}
+{% endif %}
+
+
 {% block extra_info %}
-<p>Duration:  {{ event.eventDuration }}</p>
-<p>Destination:  {{ event.eventDestination }}<p>
+
+{% if event.eventDuration %}
+<p><b>Duration:</b>  {{ event.eventDuration }}</p>
+{% endif %}
+
+{% if event.eventdestination %}
+<p><b>Destination:</b>  {{ event.eventDestination }}<p>
+{% endif %}
+
 {% endblock %}

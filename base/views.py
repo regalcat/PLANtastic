@@ -13,7 +13,7 @@ from os import listdir
 from os.path import isfile, join
 
 #imported from our project
-from base.events.models import EventModel, HikeEventModel, DinnerEventModel, GenericTripModel, GenericGatheringModel
+from base.events.models import EventModel, HikeEventModel, DinnerEventModel, GenericTripModel, GenericGatheringModel, InviteModel
 from base.invite.models import MembershipModel
 from forms import UserRegistrationForm
 from Helpers import getMenuInfo
@@ -71,9 +71,26 @@ def register(request):
 
 	args = {}
 	args['form'] = UserRegistrationForm()
-	return render(request, 'register.html', args)			
+	return render(request, 'register.html', args)	
+
+@login_required(login_url = '/loginRequired/')
+def deleteEvent(request):
+	if request.method == "POST":
+		eventid = request.POST['eventid']
+		event = EventModel.objects.filter(eventid=eventid)
+		eventChild = EventModel.getEvent(eventid)
+		eventChild.delete()
+		event.delete()
+		# TODO : delete also from invite table everyone in event
+
+		return HttpResponseRedirect(reverse('base:upcoming'))
+
+	return HttpResponseRedirect(reverse('base:upcoming'))
 		
-@login_required(login_url = '/loginRequired/')  # User have to be logged in to see this view - if not: redirects to login_url
+
+		
+		
+@login_required(login_url = '/loginRequired/')  # User have to be logged in to see this view - if not: redirects to loginRequired
 def new(request):
 	if request.method == "POST":
 		event = EventModel()
@@ -100,7 +117,7 @@ def new(request):
 			event = HikeEventModel(event.eventid, \
 				eventName=request.POST['eventName'], eventLocation=request.POST['eventLocation'], \
 				eventDateStart=request.POST['eventDateStart'],eventDescription=request.POST['eventDescription'], \
-				eventDateEnd=eventDateEnd, eventDuration=eventDuration, eventDistance=eventDistance, 					eventElevation=eventElevation)
+				eventDateEnd=eventDateEnd, eventDuration=eventDuration, eventDistance=eventDistance, 					eventElevation=eventElevation, eventDifficulty=request.POST['difficulty'])
 			event.save()
 
 		if (request.POST['eventType'] == u'otherTrip'):
@@ -124,9 +141,6 @@ def new(request):
 			event.save()
 
 		if (request.POST['eventType'] == u'dinner'):
-			eventDateEnd=request.POST['eventDateEnd']
-			if eventDateEnd == '':
-				eventDateEnd = None
 
 			event = DinnerEventModel(event.eventid, \
 				eventName=request.POST['eventName'], eventLocation=request.POST['eventLocation'], \
@@ -150,4 +164,22 @@ def coverPic(request):
 	return HttpResponse(files)
 
 
+@login_required(login_url = '/loginRequired/')  # User have to be logged in to see this view - if not: redirects to loginRequired
+def join_event(request):
+	if (request.method == "POST"):
+		# TODO - add error checking
+		string = request.POST['string']
+		invite = InviteModel.objects.filter(inviteString = string)
+		print invite.count()
+		print invite[0].inviteEmail
+		print request.user.email
+		if (invite.count() != 1 or invite[0].inviteEmail != request.user.email):
+			return render(request, 'invite/join.html', { 'menu' : getMenuInfo(request), \
+				'title' : "Join Event" , 'error': True, 'error_message' : "Invalid Confirmation String" })
+		invite = invite[0]
+		if (MembershipModel.objects.filter(event=invite.inviteEvent, user=request.user).count() == 0):
+			member = MembershipModel(event=invite.inviteEvent, user=request.user, status=MembershipModel.COPLANNER)
+			member.save()
+		return HttpResponseRedirect('http://'+str(request.get_host())+'/'+str(invite.inviteEvent.eventid))
+	return render(request, 'invite/join.html', { 'menu' : getMenuInfo(request), 'title' : "Join Event" })
 

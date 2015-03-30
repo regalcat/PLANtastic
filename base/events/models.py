@@ -50,21 +50,27 @@ class EventModel(models.Model):
 		return ('Dinner', 'Hike', 'Other Trip', 'Other Gathering')
 
 class HikeEventModel(EventModel):
+	LEVELS = (('Unknown', 'Unknown'), ('Easy', 'Easy'), ('Moderate', 'Moderate'), ('Difficult', 'Difficult'),
+	('Strenuous', 'Strenuous'), ('Technical', 'Technical'))
 	
 	eventType = 'Hike'
 	eventDateEnd = models.DateTimeField(auto_now=False,auto_now_add=False, blank=True, null=True)
 	eventDuration = models.CharField(max_length=30, blank=True)
 	eventElevation = models.IntegerField(blank=True, null=True)
 	eventDistance = models.FloatField(blank=True, null=True)
-	EVENT_DIFFICULTIES= (
-		('unknown', 'Unknown'),
-		('easy', 'Easy'),
-		('moderate', 'Moderate'),
-		('difficult', 'Difficult'),
-		('strenuous', 'Strenuous'),
-		('technical', 'Technical'),
-	)
-	eventDifficulty = models.CharField(max_length=9, choices=EVENT_DIFFICULTIES)
+
+	#EVENT_DIFFICULTIES= (
+	#	('unknown', 'Unknown'),
+	#	('easy', 'Easy'),
+	#	('moderate', 'Moderate'),
+	#	('difficult', 'Difficult'),
+	#	('strenuous', 'Strenuous'),
+	#	('technical', 'Technical'),
+	#)
+	#eventDifficulty = models.CharField(max_length=9, choices=EVENT_DIFFICULTIES)
+
+	eventDifficulty = models.CharField(max_length=10, choices = LEVELS)
+
     
 	#Template for the description about the trip.
 	eventDescriptionTemplate = 'events/hike_description.html'
@@ -93,3 +99,4 @@ class InviteModel(models.Model):
 	inviteID = models.AutoField(primary_key=True)
 	inviteEvent = models.ForeignKey(EventModel)
 	inviteEmail = models.CharField(max_length=60)
+	inviteString = models.CharField(max_length=50)

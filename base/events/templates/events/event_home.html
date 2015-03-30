@@ -6,4 +6,12 @@
 {% for tool in tools %}
   {% include tool.tile_template %}
 {% endfor %}
+
+<form action= "{% url 'base:deleteEvent' %}" method= "POST">
+{% csrf_token %}
+
+<input type="hidden" name="eventid" value= "{{ event.eventid }}" id="eventid">
+<input type= "submit" value="Delete Event" class="btn btn-success">
+</form>
+
 {% endblock %}
