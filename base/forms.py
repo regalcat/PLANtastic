@@ -35,7 +35,7 @@ class InviteForm(forms.Form):
 	#A rather long function that sends the email. Takes in the InviteForm object that called it.
 	#Remember to go to gmail and allow access for less secure apps. (Wow. That sounds shady and janky.)
 	@staticmethod
-	def send_email(to, event):
+	def send_email(to, event, rstring):
 		gmail_user = 'mail.plantastic@gmail.com'
 		gmail_passwd = 'QwertyQwerty123' #This seems like a horrible idea. I'll find a better way later.
 		smtpserver = smtplib.SMTP("smtp.gmail.com", 587)
@@ -46,7 +46,7 @@ class InviteForm(forms.Form):
 		#print header
 		#TODO Generate strings for confirmation
 		ename = event.eventName
-		msg = header + '\n You have been invited to ' + ename + '! \n\n'
+		msg = header + '\n You have been invited to ' + ename + '! \n Your confirmation string is '+ rstring +'\nGo to Plantastic and enter this string to join the event!\n\n'
 		smtpserver.sendmail(gmail_user, to, msg)
 		#print 'Email sent!'
 		smtpserver.close()
