@@ -130,7 +130,7 @@ def new(request):
 
 			event = DinnerEventModel(event.eventid, \
 				eventName=request.POST['eventName'], eventLocation=request.POST['eventLocation'], \
-				eventDateStart=request.POST['eventDateStart'],eventDescription=request.POST['eventDescription'], 					eventDateEnd=eventDateEnd)
+				eventDateStart=request.POST['eventDateStart'],eventDescription=request.POST['eventDescription'])
 			event.save()
 
 		return HttpResponseRedirect('http://'+str(request.get_host())+'/'+str(event.eventid))
@@ -148,3 +148,6 @@ def coverPic(request):
 	files = files[:-1]
 	files += "]}"
 	return HttpResponse(files)
+
+
+

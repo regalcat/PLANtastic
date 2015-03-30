@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 {% include event.eventDescriptionTemplate %}
+<a href="editEvent"><button type="button" name="editButton" id="editButton" class="btn btn-default" onclick="">Edit</button></a>
 <a href="invite"><button type="button" class="btn btn-default">Invite Friends</button></a>
 {% for tool in tools %}
   {% include tool.tile_template %}
