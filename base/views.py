@@ -141,13 +141,10 @@ def new(request):
 			event.save()
 
 		if (request.POST['eventType'] == u'dinner'):
-			eventDateEnd=request.POST['eventDateEnd']
-			if eventDateEnd == '':
-				eventDateEnd = None
 
 			event = DinnerEventModel(event.eventid, \
 				eventName=request.POST['eventName'], eventLocation=request.POST['eventLocation'], \
-				eventDateStart=request.POST['eventDateStart'],eventDescription=request.POST['eventDescription'], 					eventDateEnd=eventDateEnd)
+				eventDateStart=request.POST['eventDateStart'],eventDescription=request.POST['eventDescription'])
 			event.save()
 
 		return HttpResponseRedirect('http://'+str(request.get_host())+'/'+str(event.eventid))
