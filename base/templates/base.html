@@ -36,15 +36,9 @@
 	</ul>
 </li>
 <!-- Dropdown for new event -->
-<li class="dropdown">
-	<a href="{{menu.server}}/new" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">New Event <span class="glyphicon glyphicon-plus-sign"></span><span class="carat"></span></a>
-	<ul class="dropdown-menu" role="menu">
-		<li><a href="{{ menu.server }}/new">New Event <span class="glyphicon glyphicon-plus-sign"></span></a></li>
-	{% for event in menu.event_types %}
-		<li><a href="{{ menu.server }}/new?type={{ event }}" >{{ event }}</a></li>
-	{% endfor %}
-	</ul>
-</li>
+<li>
+	<a href="{{menu.server}}/new">New Event <span class="glyphicon glyphicon-plus-sign"></span><span class="carat"></span></a>
+</li>	
 <!-- Join button on menubar-->
 <li><a href="{{ menu.server }}/join">Join Event</a></li>
 <!--Dropdown for the user's profile. Also contains the logout button -->

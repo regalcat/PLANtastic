@@ -1,16 +1,23 @@
 {% extends "base.html" %}
 {% block content %}
-{% include event.eventDescriptionTemplate %}
+<div class="panel panel-default">
+	{% include event.eventDescriptionTemplate %}
+</div>
+<a href="editEvent"><button type="button" name="editButton" id="editButton" class="btn btn-default" onclick="">Edit</button></a>
 <a href="invite"><button type="button" class="btn btn-default">Invite Friends</button></a>
+<br />
 {% for tool in tools %}
-  {% include tool.tile_template %}
+<br />
+<div class="panel panel-default">
+	{% include tool.tile_template %}
+</div>
 {% endfor %}
 
 <form action= "{% url 'base:deleteEvent' %}" method= "POST">
 {% csrf_token %}
 
 <input type="hidden" name="eventid" value= "{{ event.eventid }}" id="eventid">
-<input type= "submit" value="Delete Event" class="btn btn-success">
+<input type= "submit" value="Delete Event" class="btn btn-danger">
 </form>
 
 {% endblock %}

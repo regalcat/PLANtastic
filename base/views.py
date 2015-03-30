@@ -163,6 +163,7 @@ def coverPic(request):
 	files += "]}"
 	return HttpResponse(files)
 
+
 @login_required(login_url = '/loginRequired/')  # User have to be logged in to see this view - if not: redirects to loginRequired
 def join_event(request):
 	if (request.method == "POST"):
@@ -181,3 +182,4 @@ def join_event(request):
 			member.save()
 		return HttpResponseRedirect('http://'+str(request.get_host())+'/'+str(invite.inviteEvent.eventid))
 	return render(request, 'invite/join.html', { 'menu' : getMenuInfo(request), 'title' : "Join Event" })
+
