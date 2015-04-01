@@ -1,3 +1,13 @@
+function startDate(){
+	var year= document.getElementById("startYear").value;
+	var month= document.getElementById("startMonth").value;
+	var day= document.getElementById("startDay").value;
+	var hour= document.getElementById("startHour").value;
+	var minute= document.getElementById("startMin").value;
+	document.getElementById("eventDateStart").value = year+'-'+month+'-'+day+' '+hour+':'+minute;
+	
+}
+
 function hike(){
 	//open hike options
 	document.getElementById("eventDateEnd").style.display="block";

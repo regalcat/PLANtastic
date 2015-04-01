@@ -1,3 +1,4 @@
+<div class="panel-body">
 <p><b>Name:</b>  {{ event.eventName }}</p>
 
 {% if event.eventLocation %}
@@ -11,7 +12,7 @@
 {% if event.eventDescription %}
 <p><b>Description:</b>  {{ event.eventDescription }}</p>
 {% endif %}
-
+</div>
 {% block extra_info %}{% endblock %}
 
 

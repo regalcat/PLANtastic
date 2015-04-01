@@ -8,8 +8,16 @@ class EventModel(models.Model):
 	eventDateStart = models.DateTimeField(auto_now=False,auto_now_add=False)
 	#eventDateStart.blank = True
 	# TODO - Use actual enum type.
-	eventTypes = ('Dinner', 'Hike', 'Other Trip', 'Other Gathering')
-	eventType = 'Other Gathering'
+	#EVENT_TYPES = (
+	#	('Dinner', 'Dinner'), 
+	#	('Hike', 'Hike'), 
+	#	('Other Trip', 'Other Trip'),
+	#	('Other Gathering', 'Other Gathering'),
+	#)
+	eventType = ('Dinner', 'Hike', 'Other Trip', 'Other Gathering')
+	eventType= 'Other Gathering'
+		
+	#eventType = models.CharField(max_length=15, choices=EVENT_TYPES)
 	eventDescription = models.CharField(max_length=500)
 	eventDescription.blank = True
 
@@ -52,7 +60,19 @@ class HikeEventModel(EventModel):
 	eventDuration = models.CharField(max_length=30, blank=True)
 	eventElevation = models.IntegerField(blank=True, null=True)
 	eventDistance = models.FloatField(blank=True, null=True)
+
+	#EVENT_DIFFICULTIES= (
+	#	('unknown', 'Unknown'),
+	#	('easy', 'Easy'),
+	#	('moderate', 'Moderate'),
+	#	('difficult', 'Difficult'),
+	#	('strenuous', 'Strenuous'),
+	#	('technical', 'Technical'),
+	#)
+	#eventDifficulty = models.CharField(max_length=9, choices=EVENT_DIFFICULTIES)
+
 	eventDifficulty = models.CharField(max_length=10, choices = LEVELS)
+
     
 	#Template for the description about the trip.
 	eventDescriptionTemplate = 'events/hike_description.html'
