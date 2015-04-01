@@ -10,8 +10,7 @@ from django.views.generic.edit import FormView
 
 #imported from our project
 from events.models import EventModel
-from base.forms import UserRegistrationForm
-from base.Helpers import getMenuInfo
+from base.helpers import getMenuInfo
 from forms import ProfileForm, UserForm
 
 
