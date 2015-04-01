@@ -1,6 +1,6 @@
 from django.contrib import admin
-from base.events.models import EventModel, HikeEventModel, GenericTripModel, GenericGatheringModel, InviteModel
-from base.invite.models import MembershipModel
+from events.models import EventModel, HikeEventModel, GenericTripModel, GenericGatheringModel, InviteModel
+from invite.models import MembershipModel
 
 
 admin.site.register(EventModel)
