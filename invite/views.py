@@ -26,7 +26,7 @@ class InviteView(FormView):
 	def get(self, request, eventid):
 		user = request.user
 		cur_event = EventModel.getEvent(eventid)
-		template = loader.get_template("invite.html")
+		template = loader.get_template("invite/invite.html")
 		context = RequestContext(request, {'event' : cur_event, 'user' : user, 'cur_path' : request.get_full_path(), 'title' : "Invite friends", 'menu' : getMenuInfo(request)})
 		return HttpResponse(template.render(context))
 
@@ -45,7 +45,7 @@ class InviteView(FormView):
 		invite.save()
 		#Not happy with this going to the template, but I'll deal for now
 		
-		template = loader.get_template("inviteSuccess.html")
+		template = loader.get_template("invite/inviteSuccess.html")
 		context = RequestContext(request, {'event' : event, 'user' : request.user, 'cur_path' : request.get_full_path(), 'title' : "Invite Success", 'menu' : getMenuInfo(request)})
 		return HttpResponse(template.render(context))
 
