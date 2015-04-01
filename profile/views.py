@@ -53,7 +53,7 @@ def checkInformation(request):
 					request.user.save()
 					update_session_auth_hash(request, request.user)
 
-					return HttpResponseRedirect(reverse('profile:ManageAccount'))
+					return HttpResponseRedirect(reverse('profile:manageAccount'))
 	
 	return HttpResponseRedirect(reverse('profile:manageAccount'))
 
