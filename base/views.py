@@ -16,7 +16,7 @@ from os.path import isfile, join
 from base.events.models import EventModel, HikeEventModel, DinnerEventModel, GenericTripModel, GenericGatheringModel, InviteModel
 from base.invite.models import MembershipModel
 from forms import UserRegistrationForm
-from Helpers import getMenuInfo
+from helpers import getMenuInfo
 
 def index(request):
 	return render(request, 'index.html')

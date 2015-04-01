@@ -13,10 +13,11 @@ from os import listdir
 from os.path import isfile, join
 
 #imported from our project
-from events.models import EventModel, HikeEventModel, DinnerEventModel, GenericTripModel, GenericGatheringModel, InviteModel
-from invite.models import MembershipModel
-from forms import UserRegistrationForm
-from Helpers import getMenuInfo
+
+from models import EventModel, HikeEventModel, DinnerEventModel, GenericTripModel, GenericGatheringModel
+from invite.models import InviteModel, MembershipModel
+from users.forms import UserRegistrationForm
+from base.helpers import getMenuInfo
 
 
 def upcoming(request):

@@ -17,7 +17,7 @@ from django.views.generic.edit import FormView
 
 #Imports from our project
 from forms import InviteForm
-from base.Helpers import getMenuInfo
+from base.helpers import getMenuInfo
 from events.models import EventModel, 
 from invite.models import MembershipModel, InviteModel
 
