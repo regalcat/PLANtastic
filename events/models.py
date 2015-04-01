@@ -94,11 +94,5 @@ class GenericTripModel(EventModel):
 class GenericGatheringModel(EventModel):
 	eventType = 'Other Gathering'
 	eventDateEnd = models.DateTimeField(auto_now=False,auto_now_add=False, blank=True, null=True)
-
 	eventDescriptionTemplate = 'events/other_description.html'
 
-class InviteModel(models.Model):
-	inviteID = models.AutoField(primary_key=True)
-	inviteEvent = models.ForeignKey(EventModel)
-	inviteEmail = models.CharField(max_length=60)
-	inviteString = models.CharField(max_length=50)
