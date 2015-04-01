@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, url
 
-from events.EventHomeView import EventHomeView
+from eventHomeView import eventHomeView
 from invite.forms import InviteForm
 from invite.views import InviteView
 
