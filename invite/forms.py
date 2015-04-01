@@ -1,13 +1,9 @@
-
-#python libraries
 import smtplib
-#django libraries
+
 from django import forms
 from django.core.mail import send_mail
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-
-
 
 class InviteForm(forms.Form):
 	email = forms.EmailField(required=True)

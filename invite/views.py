@@ -1,31 +1,16 @@
-#Imports from django and python
 import string
 import random
-from django.http import HttpResponse, HttpResponseRedirect
-from django.template import RequestContext, loader
-from django import forms
-from django.views.generic.edit import FormView
-from os import listdir
-from os.path import isfile, join
-from django.templatetags.static import static
-from django.shortcuts import render
-from django.core.urlresolvers import reverse
+
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.hashers import check_password, make_password, is_password_usable
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render
+from django.template import RequestContext, loader
 from django.views.generic.edit import FormView
 
-
-#Imports from our project
-from forms import InviteForm
 from base.helpers import getMenuInfo
-from events.models import EventModel, 
-from invite.models import MembershipModel, InviteModel
-
-
-def test(request):
-	template = loader.get_template('index.html')
-	context = RequestContext(request)
-	return HttpResponse(template.render(context))
+from events.models import EventModel 
+from .forms import InviteForm
+from .models import MembershipModel, InviteModel
 
 #The class that handles inviting people via email and then displays an html page
 class InviteView(FormView):
