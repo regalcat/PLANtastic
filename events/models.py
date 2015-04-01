@@ -1,6 +1,5 @@
 from django.db import models
 
-
 class EventModel(models.Model):
 	eventid = models.AutoField(primary_key=True)
 	eventName = models.CharField(max_length=50)
