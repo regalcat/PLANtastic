@@ -8,7 +8,8 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import FormView
 
 
-from models import EventModel, HikeEventModel, DinnerEventModel, GenericTripModel, GenericGatheringModel, InviteModel
+from models import EventModel, HikeEventModel, DinnerEventModel, GenericTripModel, GenericGatheringModel
+from invite.models import InviteModel
 from base.helpers import getMenuInfo
 
 
