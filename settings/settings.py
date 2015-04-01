@@ -44,6 +44,7 @@ INSTALLED_APPS = (
 	'tools',
 	'tools.item_share',
 	'tools.upload_pics',
+	'users',
 )
 
 MIDDLEWARE_CLASSES = (
