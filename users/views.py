@@ -13,9 +13,9 @@ from os.path import isfile, join
 
 #imported from our project
 from events.models import EventModel, HikeEventModel, DinnerEventModel, GenericTripModel,\
-	GenericGatheringModel, InviteModel
-from .models import MembershipModel
-from .forms import UserRegistrationForm
+	GenericGatheringModel
+from invite.models import InviteModel, MembershipModel
+from forms import UserRegistrationForm
 from base.helpers import getMenuInfo
 
 def logout(request):
