@@ -12,10 +12,11 @@ from os import listdir
 from os.path import isfile, join
 
 #imported from our project
-from base.events.models import EventModel, HikeEventModel, DinnerEventModel, GenericTripModel, GenericGatheringModel, InviteModel
-from base.invite.models import MembershipModel
-from forms import UserRegistrationForm
-from Helpers import getMenuInfo
+from events.models import EventModel, HikeEventModel, DinnerEventModel, GenericTripModel,\
+	GenericGatheringModel, InviteModel
+from .models import MembershipModel
+from .forms import UserRegistrationForm
+from base.helpers import getMenuInfo
 
 def logout(request):
 	authLogout(request)
