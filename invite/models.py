@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 
-from base.events.models import EventModel, InviteModel
+from events.models import EventModel
 
 class MembershipModel(models.Model):
 	CREATOR = 'CR'
