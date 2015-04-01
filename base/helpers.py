@@ -2,9 +2,9 @@ from django.contrib.sessions.models import Session
 from django.contrib.auth.models import User
 from django.utils import timezone
 
-from base.events import models as event_models
-from base.invite.models import MembershipModel
-from base.events.models import HikeEventModel, GenericGatheringModel, GenericTripModel
+from events import models as event_models
+from invite.models import MembershipModel
+from events.models import HikeEventModel, GenericGatheringModel, GenericTripModel, DinnerModel, EventModel
 
 
 def getUserEvents(user_):
