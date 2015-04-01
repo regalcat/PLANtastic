@@ -1,5 +1,24 @@
 {% extends "base.html" %}
 
+{% block menubar %}
+<head>
+	<title>{{title}}</title>
+	<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}bootstrap-3.3.2-dist/css/bootstrap.css">
+</head>
+<!-- Empty menu bar for prettiness reasons -->
+<nav class="navbar navbar-default">
+<div class="container-fluid">
+<div class="navbar-header">
+<div class="nav navbar-nav">
+<!-- Empty on purpose. Could add a logo later. -->
+{% load static %}
+<img src="{% static 'logosmall.png' %}" alt="PLANtastic Logo">
+</div>
+</div>
+</div>
+</nav>
+{% endblock %}
+
 {% block content %}
 That was not a correct username or password.
 <p><a href="{% url 'base:login' %}"><button>Click here to log in again</button></a></p>
