@@ -5,6 +5,7 @@ from events import views as event_views
 from invite import views as invite_views
 from profile import views as profile_views
 from users import views as users_views
+from events import newEventView as new_event_views
 
 
 urlpatterns = patterns('',
@@ -14,7 +15,7 @@ urlpatterns = patterns('',
 
 	url(r'^upcoming/', event_views.upcoming, name='upcoming'),
 	url(r'^past/', event_views.past, name='past'),
-	url(r'^new', event_views.new, name='new_event'),
+	url(r'^new', new_event_views.new, name='new_event'),
 	#add event id to url	
 	url(r'^delete/', event_views.deleteEvent, name='deleteEvent'), 
 
