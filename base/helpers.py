@@ -2,9 +2,8 @@ from django.contrib.sessions.models import Session
 from django.contrib.auth.models import User
 from django.utils import timezone
 
-from events import models as event_models
 from invite.models import MembershipModel
-from events.models import HikeEventModel, GenericGatheringModel, GenericTripModel, DinnerEventModel, EventModel
+from events.models import EventModel
 
 
 def getUserEvents(user_):
@@ -43,5 +42,5 @@ def getMenuInfo(request):
 	toReturn['server'] = "http://" + request.get_host()
 	toReturn['prev_events'] = getPreviousEvents(request.user)
 	toReturn['upcoming_events'] = getUpcomingEvents(request.user)
-	toReturn['event_types'] = event_models.EventModel.getEventTypes()
+	toReturn['event_types'] = EventModel.getEventTypes()
 	return toReturn
