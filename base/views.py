@@ -12,15 +12,13 @@ from django.views.generic.edit import FormView
 from os import listdir
 from os.path import isfile, join
 
-#imported from our project
-from base.events.models import EventModel, HikeEventModel, DinnerEventModel, GenericTripModel, GenericGatheringModel, InviteModel
-from base.invite.models import MembershipModel
-from forms import UserRegistrationForm
+
 from helpers import getMenuInfo
 
 def index(request):
 	return render(request, 'index.html')
 
+@login_required(login_url = '/loginRequired')
 def home(request):
 	# TODO
 	return render(request, 'home.html', {'menu' : getMenuInfo(request), 'title' : "Home"})
