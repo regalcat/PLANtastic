@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from base.events.models import EventModel
+from events.models import EventModel
 
 class ItemModel(models.Model):
 	event = models.ForeignKey(EventModel)
