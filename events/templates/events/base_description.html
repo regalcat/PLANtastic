@@ -1,0 +1,20 @@
+<div class="panel-body">
+<p><b>Name:</b>  {{ event.eventName }}</p>
+
+{% if event.eventLocation %}
+<p><b>Location:</b>  {{ event.eventLocation }}</p>
+{% endif %}
+
+<p><b>Start Date:</b>  {{ event.eventDateStart }}</p>
+{% block end_date %}{% endblock %}
+<p><b>Type:</b>  {{ event.eventType }}</p>
+
+{% if event.eventDescription %}
+<p><b>Description:</b>  {{ event.eventDescription }}</p>
+{% endif %}
+</div>
+{% block extra_info %}{% endblock %}
+
+
+
+
