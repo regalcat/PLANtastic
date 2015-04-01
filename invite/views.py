@@ -1,36 +1,25 @@
-#Imports from django and/or python
+#Imports from django and python
 import string
 import random
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext, loader
 from django import forms
 from django.views.generic.edit import FormView
-
-#Imports from our project
-from base.forms import InviteForm
-from base.events.models import EventModel
-from base.Helpers import getMenuInfo
-from base.events.models import InviteModel
-
-#imported from django and/or python
-from django.http import HttpResponse, HttpResponseRedirect
-from django.template import RequestContext, loader
+from os import listdir
+from os.path import isfile, join
 from django.templatetags.static import static
-from django.contrib.auth import authenticate, login as authLogin, logout as authLogout, update_session_auth_hash
 from django.shortcuts import render
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import check_password, make_password, is_password_usable
 from django.views.generic.edit import FormView
 
-from os import listdir
-from os.path import isfile, join
 
-#imported from our project
-from base.events.models import EventModel, HikeEventModel, DinnerEventModel, GenericTripModel, GenericGatheringModel, InviteModel
-from base.invite.models import MembershipModel
-from forms import UserRegistrationForm
-from Helpers import getMenuInfo
+#Imports from our project
+from forms import InviteForm
+from base.Helpers import getMenuInfo
+from events.models import EventModel, 
+from invite.models import MembershipModel, InviteModel
 
 
 def test(request):
