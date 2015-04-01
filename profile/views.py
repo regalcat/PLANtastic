@@ -9,9 +9,8 @@ from django.contrib.auth.hashers import check_password, make_password, is_passwo
 from django.views.generic.edit import FormView
 
 #imported from our project
-from base.events.models import EventModel
-from base.forms import UserRegistrationForm
-from base.Helpers import getMenuInfo
+from events.models import EventModel
+from base.helpers import getMenuInfo
 from forms import ProfileForm, UserForm
 
 

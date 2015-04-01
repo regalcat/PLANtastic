@@ -13,9 +13,9 @@ from os.path import isfile, join
 
 #imported from our project
 from events.models import EventModel, HikeEventModel, DinnerEventModel, GenericTripModel,\
-	GenericGatheringModel, InviteModel
-from .models import MembershipModel
-from .forms import UserRegistrationForm
+	GenericGatheringModel
+from invite.models import InviteModel, MembershipModel
+from forms import UserRegistrationForm
 from base.helpers import getMenuInfo
 
 def logout(request):
@@ -23,7 +23,7 @@ def logout(request):
 	return HttpResponseRedirect(reverse('base:index'))
 
 def login(request):
-	return render(request, 'login.html')
+	return render(request, 'users/login.html')
 
 def authView(request):
 	username = request.POST.get('username')
@@ -39,13 +39,13 @@ def authView(request):
 		return HttpResponseRedirect(reverse('base:invalidLogin'))
 
 def invalidLogin(request):
-	return render(request, 'invalidLogin.html')
+	return render(request, 'users/invalidLogin.html')
 
 def loginRequired(request):
-	return render(request, 'loginRequired.html')
+	return render(request, 'users/loginRequired.html')
 
 def registerSuccess(request):
-	return render(request, 'registerSuccess.html')
+	return render(request, 'users/registerSuccess.html')
 
 def register(request):
 	if request.method == "POST":
@@ -56,4 +56,4 @@ def register(request):
 
 	args = {}
 	args['form'] = UserRegistrationForm()
-	return render(request, 'register.html', args)	
+	return render(request, 'users/register.html', args)	
