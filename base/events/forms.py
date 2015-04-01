@@ -7,5 +7,6 @@ class EventForm(forms.ModelForm):
 	class Meta:
 		model = eventModel
 		fields = ('eventName', 'eventLocation', 'eventDateStart', 'eventType',)
-		widgets = {'eventName': forms.Textarea() , 'eventLocation': forms.Textarea(), 'eventDateStart' : SelectDateWidget(), 'eventType' : forms.ChoiceField(choices=EVENT_TYPES, widget=forms.RadioSelect()), }
+		'eventType' : forms.ChoiceField()
+		widgets = {'eventName': forms.Textarea() , 'eventLocation': forms.Textarea(), 'eventDateStart' : SelectDateWidget(), 'eventType' : forms.RadioSelect(choices=EVENT_TYPES), }
 		

@@ -183,3 +183,13 @@ def join_event(request):
 		return HttpResponseRedirect('http://'+str(request.get_host())+'/'+str(invite.inviteEvent.eventid))
 	return render(request, 'invite/join.html', { 'menu' : getMenuInfo(request), 'title' : "Join Event" })
 
+
+@login_required(login_url = '/loginRequired/')  # User have to be logged in to see this view - if not: redirects to loginRequired
+def submit_new(request):
+	if request.method == "POST":
+		eventform = EventForm(request.POST)
+		if eventform.is_valid():
+			eventform.save()
+			return HttpResponseRedirect(reverse('base:eventHome'))
+	return HttpResponseRedirect(reverse('base:new_event'))
+

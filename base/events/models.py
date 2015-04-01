@@ -52,8 +52,8 @@ class EventModel(models.Model):
 		return ('Dinner', 'Hike', 'Other Trip', 'Other Gathering')
 
 class HikeEventModel(EventModel):
-	LEVELS = (('Unknown', 'Unknown'), ('Easy', 'Easy'), ('Moderate', 'Moderate'), ('Difficult', 'Difficult'),
-	('Strenuous', 'Strenuous'), ('Technical', 'Technical'))
+	LEVELS = (('unknown', 'Unknown'), ('easy', 'Easy'), ('moderate', 'Moderate'), ('difficult', 'Difficult'),
+	('strenuous', 'Strenuous'), ('technical', 'Technical'),)
 	
 	eventType = 'Hike'
 	eventDateEnd = models.DateTimeField(auto_now=False,auto_now_add=False, blank=True, null=True)
