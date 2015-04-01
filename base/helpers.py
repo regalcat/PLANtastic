@@ -4,7 +4,7 @@ from django.utils import timezone
 
 from events import models as event_models
 from invite.models import MembershipModel
-from events.models import HikeEventModel, GenericGatheringModel, GenericTripModel, DinnerModel, EventModel
+from events.models import HikeEventModel, GenericGatheringModel, GenericTripModel, DinnerEventModel, EventModel
 
 
 def getUserEvents(user_):
