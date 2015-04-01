@@ -1,7 +1,7 @@
 from django.views.generic.edit import CreateView
 
 from .models import UploadedPicModel
-from base.events.models import EventModel
+from events.models import EventModel
 
 class UploadPicFormView(CreateView):
 	template_name = "upload_pics/upload_pic_form.html"
