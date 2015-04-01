@@ -1,12 +1,12 @@
 from django.conf.urls import patterns, url
-from base import views
-from base.invite.views import InviteView
-from base.events.EventHomeView import EventHomeView
-from base import forms
+
+from events.EventHomeView import EventHomeView
+from invite.forms import InviteForm
+from invite.views import InviteView
 
 urlpatterns = patterns('',
-	url(r'^(?P<eventid>\d+)/$', EventHomeView.as_view(), name='eventHome'),
-	url(r'^(?P<eventid>\d+)/invite', InviteView.as_view(), name=('invite')),
-	url(r'^(?P<eventid>\d+)/invite-action', forms.InviteForm, name=('invite-action')),
-
+	url(r'^$', EventHomeView.as_view(), name='eventHome'),
+	url(r'^invite', InviteView.as_view(), name=('invite')),
+	url(r'^invite-action', InviteForm, name=('invite-action')),
+	url(r'^tools/', include('tools.urls')),
 )

@@ -1,34 +1,30 @@
 from django.conf.urls import patterns, url
 
-from base import views
-from base.invite.views import InviteView
-#from base.events.EventHomeView import EventHomeView
-from base import forms
-from events import EventHomeView
-from events import forms
-from profile import forms
-from profile import views
+from base import views as base_views
+from events import views as event_views 
+from invite import views as invite_views
+from profile import views as profile_views
 
 
 urlpatterns = patterns('',
-	url(r'^$', views.index, name='index'),
-	url(r'^home/', views.home, name='home'),
-	url(r'^upcoming/', views.upcoming, name='upcoming'),
-	url(r'^past/', views.past, name='past'),
-	url(r'^logout/', views.logout, name='logout'),
-	url(r'^login/', views.login, name='login'),
-	url(r'^loginRequired/', views.loginRequired, name='loginrequired'),
-	url(r'^register/', views.register, name='register'),
-	url(r'^auth/', views.authView, name='authView'),
-	url(r'^invalid/', views.invalidLogin, name='invalidLogin'),
-	url(r'^registerSuccess/', views.registerSuccess, name='registerSuccess'),
-	url(r'^new', views.new, name='new_event'),
-	
+	url(r'^$', base_views.index, name='index'),
+	url(r'^home/', base_views.home, name='home'),
+	url(r'^cover-pic/', base_views.coverPic, name='cover-pic'),
+
+	url(r'^upcoming/', event_views.upcoming, name='upcoming'),
+	url(r'^past/', event_views.past, name='past'),
+	url(r'^new', event_views.new, name='new_event'),
 	#add event id to url	
-	url(r'^delete/', views.deleteEvent, name='deleteEvent'), 
+	url(r'^delete/', event_views.deleteEvent, name='deleteEvent'), 
 
-
+	url(r'^logout/', user_views.logout, name='logout'),
+	url(r'^login/', user_views.login, name='login'),
+	url(r'^loginRequired/', user_views.loginRequired, name='loginrequired'),
+	url(r'^register/', user_views.register, name='register'),
+	url(r'^auth/', user_views.authView, name='authView'),
+	url(r'^invalid/', user_views.invalidLogin, name='invalidLogin'),
+	url(r'^registerSuccess/', user_views.registerSuccess, name='registerSuccess'),
+	
 	#Urls pertaining to email invites
-	url(r'^join', views.join_event, name=('join-event')),
-	url(r'^cover-pic/', views.coverPic, name='cover-pic'),
+	url(r'^join', invite_views.join_event, name=('join-event')),
 )
