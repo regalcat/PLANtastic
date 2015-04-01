@@ -12,6 +12,26 @@ from base.events.models import EventModel
 from base.Helpers import getMenuInfo
 from base.events.models import InviteModel
 
+#imported from django and/or python
+from django.http import HttpResponse, HttpResponseRedirect
+from django.template import RequestContext, loader
+from django.templatetags.static import static
+from django.contrib.auth import authenticate, login as authLogin, logout as authLogout, update_session_auth_hash
+from django.shortcuts import render
+from django.core.urlresolvers import reverse
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.hashers import check_password, make_password, is_password_usable
+from django.views.generic.edit import FormView
+
+from os import listdir
+from os.path import isfile, join
+
+#imported from our project
+from base.events.models import EventModel, HikeEventModel, DinnerEventModel, GenericTripModel, GenericGatheringModel, InviteModel
+from base.invite.models import MembershipModel
+from forms import UserRegistrationForm
+from Helpers import getMenuInfo
+
 
 def test(request):
 	template = loader.get_template('index.html')
@@ -54,3 +74,24 @@ class InviteView(FormView):
 		template = loader.get_template("inviteSuccess.html")
 		context = RequestContext(request, {'event' : event, 'user' : request.user, 'cur_path' : request.get_full_path(), 'title' : "Invite Success", 'menu' : getMenuInfo(request)})
 		return HttpResponse(template.render(context))
+
+@login_required(login_url = '/loginRequired/')  # User have to be logged in to see this view - if not: redirects to loginRequired
+def join_event(request):
+	if (request.method == "POST"):
+		# TODO - add error checking
+		string = request.POST['string']
+		invite = InviteModel.objects.filter(inviteString = string)
+		print invite.count()
+		print invite[0].inviteEmail
+		print request.user.email
+		if (invite.count() != 1 or invite[0].inviteEmail != request.user.email):
+			return render(request, 'invite/join.html', { 'menu' : getMenuInfo(request), \
+				'title' : "Join Event" , 'error': True, 'error_message' : "Invalid Confirmation String" })
+		invite = invite[0]
+		if (MembershipModel.objects.filter(event=invite.inviteEvent, user=request.user).count() == 0):
+			member = MembershipModel(event=invite.inviteEvent, user=request.user, status=MembershipModel.COPLANNER)
+			member.save()
+		return HttpResponseRedirect('http://'+str(request.get_host())+'/'+str(invite.inviteEvent.eventid))
+	return render(request, 'invite/join.html', { 'menu' : getMenuInfo(request), 'title' : "Join Event" })
+
+
