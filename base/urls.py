@@ -28,13 +28,6 @@ urlpatterns = patterns('',
 	url(r'^delete/', views.deleteEvent, name='deleteEvent'), 
 
 
-	#urls pertaining to profiles
-	url(r'^$', views.profile, name='profile'),
-	url(r'^manageAccount/$', profile.views.manageAccount, name='manageAccount'),
-	url(r'^checkInformation/$', profile.views.checkInformation, name='checkInformation'),
-	url(r'^editInformation/$', profile.views.editInformation, name='editInformation'),
-
-
 	#Urls pertaining to email invites
 	url(r'^join', views.join_event, name=('join-event')),
 	url(r'^cover-pic/', views.coverPic, name='cover-pic'),
