@@ -7,7 +7,7 @@ from models import EventModel
 from base.helpers import getMenuInfo, isPreviousEvent
 from tools.ToolManager import ToolManager
 
-class EventHomeView(View):
+class eventHomeView(View):
 	def get(self, request, eventid):
 		event = EventModel.getEvent(eventid)
 		tools = ToolManager.getTools(event)
