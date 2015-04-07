@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<p>Do you really want to delete your account?</p>
+
+<a href = "{% url 'profile:executeDelete' %}"><button class="btn btn-success">Yes</button></a>
+
+<a href = "{% url 'profile:manageAccount' %}"><button class="btn btn-success">No</button></a>
+
+
+{% endblock %}

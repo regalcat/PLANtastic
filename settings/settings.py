@@ -38,11 +38,13 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 	'base',
-	'base.events',
-	'base.invite',
+	'events',
+	'invite',
 	'profile',
 	'tools',
 	'tools.item_share',
+	'tools.upload_pics',
+	'users',
 )
 
 MIDDLEWARE_CLASSES = (

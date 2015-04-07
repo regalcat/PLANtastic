@@ -9,11 +9,9 @@ from django.contrib.auth.hashers import check_password, make_password, is_passwo
 from django.views.generic.edit import FormView
 
 #imported from our project
-from base.events.models import EventModel
-from base.forms import UserRegistrationForm
-from base.Helpers import getMenuInfo
+from events.models import EventModel
+from base.helpers import getMenuInfo
 from forms import ProfileForm, UserForm
-
 
 
 
@@ -54,7 +52,7 @@ def checkInformation(request):
 					request.user.save()
 					update_session_auth_hash(request, request.user)
 
-					return HttpResponseRedirect(reverse('profile:ManageAccount'))
+					return HttpResponseRedirect(reverse('profile:manageAccount'))
 	
 	return HttpResponseRedirect(reverse('profile:manageAccount'))
 
@@ -70,5 +68,16 @@ def editInformation(request):
 
 
 	return HttpResponseRedirect(reverse('profile:manageAccount'))
+
+@login_required(login_url = '/loginRequired/')  # User have to be logged in to see this view - if not: redirects to login_url
+def deleteAccount(request):
+	return render(request, "profile/deleteAccount.html", {'menu' : getMenuInfo(request), 'title' : "Delete Account Confirmation"})
+
+@login_required(login_url = '/loginRequired/')  # User have to be logged in to see this view - if not: redirects to login_url
+def executeDelete(request):
+
+	request.user.delete()
+
+	return HttpResponseRedirect(reverse('base:index'))
 
 			
