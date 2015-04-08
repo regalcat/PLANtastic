@@ -7,11 +7,12 @@
 {% csrf_token %}
 
 <body>
-<form action= "" method= "POST">
+<form action= "% url 'events:eventHome' %" method= "POST">
 {% csrf_token %}
 
 {{ eventform.as_p }}
 
+<input type= "submit" value="submit" class="btn btn-default">
 </form>
   <!--<p>Event Name: <input name="eventName" type="text" maxlength="50" size="52" id="eventName"/> </p>
   <p>Event Location: <input name="eventLocation" type="text" maxlength="50" size="52"/> </p>
@@ -168,7 +169,7 @@
 
   <input name="eventDateStart" id="eventDateStart" style="display:none">
   </p>
-  <p>Event Description:</p> <textarea rows"10" columns="55" maxlength="500" name="eventDescription" type="textarea" id="eventDescription"style ="height:200px;width:500px"> </textarea></p> -->
+  <p>Event Description:</p> <textarea rows"10" columns="55" maxlength="500" name="eventDescription" type="textarea" id="eventDescription"style ="height:200px;width:500px"> </textarea></p>
   <p>Event Type:</p>
   <input name="eventType" type="radio" value="dinner" onclick="dinner();" id="eventType"/>Dinner </p>
   <input name="eventType" type="radio" value="hike" onclick="hike();" id="eventType"/>Hike </p>
@@ -211,7 +212,7 @@
 	<p><label for="allergyList" id="allergyListLabel" style="display:none">Allergies:</label>
 	<p><input name="allergyList" type="text" id="allergyList" style="display:none"/></p>
 <input type="submit" onclick="startDate();" value="Next"/>
-</form>
+</form> -->
 
 <!-- TODO <a href=""><button type="button" onclick="">Next</button></a>-->
 </body>
