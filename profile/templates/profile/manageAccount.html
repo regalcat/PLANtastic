@@ -13,14 +13,11 @@
 {{ userform.as_p }}
 {{ profileform.as_p }}
 
-<!--<label for ="birthday"> Birthday:  </label><input type="text" name="birthday" value="" id="birthday"> <br>-->
 
 <input type= "submit" value="Edit information" class="btn btn-success">
 </form>
 
-<!--{% if form.error %}
-<p class="error">Sorry, that was not a the right password or the new passoword is not a valid one.</p>
-{% endif %}-->
+
 <br>
 <p>Here you can change your password.</p>
 <form action= "{% url 'profile:checkInformation' %}" method= "POST">
@@ -33,6 +30,9 @@
 <br>
 <input type= "submit" value="Change Password" class="btn btn-success">
 </form>
+
+<br>
+<a href = "{% url 'profile:deleteAccount' %}"><button class="btn btn-success">Delete Account</button></a>
 
 
 {% endblock %}
