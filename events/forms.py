@@ -8,7 +8,7 @@ class EventForm(forms.ModelForm):
 	class Meta:
 		model = EventModel
 		fields = ('eventName', 'eventLocation', 'eventDateStart', 'eventDescription', 'eventType',)
-		eventType = forms.ChoiceField()
+		eventType = forms.ChoiceField(choices=EventModel.EVENT_TYPES)
 		eventName = forms.CharField()
 		eventDescription = forms.CharField()
 		eventLocation = forms.CharField()

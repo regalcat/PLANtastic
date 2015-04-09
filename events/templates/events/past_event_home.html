@@ -1,7 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
 {% include event.eventDescriptionTemplate %}
-<a href="invite"><button type="button" class="btn btn-default">Invite Friends</button></a>
+<br>
+<b>Members</b><br>
+{% for member in members %}
+{{ member.user.first_name }} {{ member.user.last_name }} Status: {{member.get_status_display}} <br>
+{% endfor %}
+<!--<a href="invite"><button type="button" class="btn btn-default">Invite Friends</button></a>-->
+<br>
 {% for tool in tools %}
   {% include tool.tile_template %}
 {% endfor %}
