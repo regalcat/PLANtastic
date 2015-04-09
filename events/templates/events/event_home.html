@@ -1,16 +1,20 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="panel panel-default">
+	<h4>Description</h4>
 	{% include event.eventDescriptionTemplate %}
 </div>
+
 <a href="editEvent"><button type="button" name="editButton" id="editButton" class="btn btn-default" onclick="">Edit</button></a>
 <a href="invite"><button type="button" class="btn btn-default">Invite Friends</button></a>
-<br>
-<b>Members</b><br>
-{% for member in members %}
-{{ member.user.first_name }} {{ member.user.last_name }} Status: {{member.get_status_display}} <br>
-{% endfor %}
 
+<div class="panel panel-default">
+	<h4>Members</h4>
+	{% for member in members %}
+	<b>Name:</b> {{ member.user.first_name }} {{ member.user.last_name }}
+	<b>Status:</b> 	{{member.get_status_display}} <br>
+	{% endfor %}
+</div>
 <!-- TODO - include map to where the event is -->
 <br />
 {% for tool in tools %}
