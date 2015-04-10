@@ -8,12 +8,13 @@
 <div class="container">
 	<div class="table-responsive">
 	<table class="table">
-		<thead><tr><td><b>#</b></td><td><b>Name</b></td><td><b>Status</b></td><td><b>Change</b></td></thead>
+		<thead><tr><td><b>#</b></td><td><b>Name</b></td><td><b>Status</b></td><td><b>Change status</b></td><td></td></thead>
 		<tbody>
 		{% for member in members %}
 		<tr>
 		<td>{{ forloop.counter }}</td>
 		<td>{{ member.user.first_name }} {{ member.user.last_name }}</td>
+		<td>{{ member.get_status_display }}</td>
 		<td><form action= "editMemberStatus" method= "POST">
 			{% csrf_token %}
 			<select name="status" id="status">

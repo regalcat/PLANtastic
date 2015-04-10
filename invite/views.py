@@ -13,7 +13,7 @@ from django.contrib.auth.models import User
 from base.helpers import getMenuInfo
 from base.permissions import getMemberObject
 from events.models import EventModel 
-from .forms import InviteForm, MembershipForm
+from .forms import InviteForm
 from .models import MembershipModel, InviteModel
 
 #The class that handles inviting people via email and then displays an html page
