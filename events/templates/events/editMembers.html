@@ -1,10 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
 
+<div class="page-header">
+	<font size="6">Edit members</font>
+</div>
 
-<a href="{{menu.server}}/{{event.eventid}}"><button type="button" class="btn btn-default">Go Back</button></a>
-
-
+<div class="panel panel-default">
+<div class="panel-body">
 <div class="container">
 	<div class="table-responsive">
 	<table class="table">
@@ -33,5 +35,8 @@
 		</tbody>
 	</table>
 	</div></div>
+</div></div>
+
+<a href="{{menu.server}}/{{event.eventid}}"><button type="button" class="btn btn-default">Go Back</button></a>
 
 {% endblock %}
