@@ -16,7 +16,7 @@
 	{{ profileform.as_p }}
 
 
-	<input type= "submit" value="Edit information" class="btn btn-success">
+	<input type= "submit" value="Edit information" class="btn btn-default">
 	</form><br>
 </div>
 </div>
@@ -34,11 +34,13 @@
 	<br>
 	<label for ="newpassword2"> New password verification:  </label><input type="password" name="newpassword2" value="" id="newpassword2"><a href="" title="Must be the same password as above"><span class="glyphicon glyphicon-question-sign"></span></a><br>
 	<br>
-	<input type= "submit" value="Change Password" class="btn btn-success">
+	<input type= "submit" value="Change Password" class="btn btn-default">
 	</form></div>
 </div>
-<br>
 <a href = "{% url 'profile:deleteAccount' %}"><button class="btn btn-danger">Delete Account</button></a>
-
+<br>
+<br>
+<br>
+<br>
 
 {% endblock %}
