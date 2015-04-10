@@ -4,21 +4,22 @@
 <h3>Welcome {{ name }}! <a href="{% url 'profile:manageAccount' %}"><span style="font-size:1.5em" class="glyphicon glyphicon-cog"></span></a> </h3>
 <br>
 <div class="panel panel-default">
-<b>Name:</b> {{ fullname }}
-<br><b>Username:</b> {{ username }}
-<br><b>Email:</b> {{ email }}
-{% if birthday %}
-<br><b>Birthday:</b> {{ birthday }}
-{% endif %}
-{% if gender %}
-<br><b>Gender:</b> {{ gender }}
-{% endif %}
-<br><b>Member since:</b> {{ membership }}
-{% if description %}
-<br><b>Description:</b>
-<br>{{ description }}
-{% endif %}
-</div>
+<div class="panel-body">
+	<b>Name:</b> {{ fullname }}
+	<br><b>Username:</b> {{ username }}
+	<br><b>Email:</b> {{ email }}
+	{% if birthday %}
+	<br><b>Birthday:</b> {{ birthday }}
+	{% endif %}
+	{% if gender %}
+	<br><b>Gender:</b> {{ gender }}
+	{% endif %}
+	<br><b>Member since:</b> {{ membership }}
+	{% if description %}
+	<br><b>Description:</b>
+	<br>{{ description }}
+	{% endif %}
+</div></div>
 
 
 

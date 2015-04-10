@@ -15,10 +15,11 @@
 	<div class="panel-heading">
 			<h3 class="panel-title">Members</h3>
 		</div>
-	<br>{% for member in members %} 
+	<div class="panel-body">	
+	{% for member in members %} 
 	<b>Name:</b> {{ member.user.first_name }} {{ member.user.last_name }}
 	<b>Status:</b> 	{{member.get_status_display}} <br>
-	{% endfor %} <br>
+	{% endfor %} </div>
 </div>
 <!-- TODO - include map to where the event is -->
 <br />
