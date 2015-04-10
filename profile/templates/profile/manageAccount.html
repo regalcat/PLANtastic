@@ -1,11 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
+<div class="page-header">
+	<font size="6">Manage Account</font> <a href="{% url 'profile:profile' %}"><span style="font-size:1.5em" class="glyphicon glyphicon-user"></span></a></div>
 
-<font size="6">Manage Account</font> <a href="{% url 'profile:profile' %}"><span style="font-size:1.3em" class="glyphicon glyphicon-user"></span></a>
-
-<br>
-<br>
 <div class="panel panel-default">
 <div class="panel-heading">
 			<h3 class="panel-title">Edit Information</h3>

@@ -23,7 +23,7 @@
 {% for tool in tools %}
   {% include tool.tile_template %}
 {% endfor %}
-
+<br>
 <form action= "{% url 'base:deleteEvent' %}" method= "POST">
 {% csrf_token %}
 

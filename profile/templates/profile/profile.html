@@ -1,12 +1,17 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h3>Welcome {{ name }}! <a href="{% url 'profile:manageAccount' %}"><span style="font-size:1.5em" class="glyphicon glyphicon-cog"></span></a> </h3>
-<br>
+<div class="page-header">
+	<font size="6">{{ fullname }}</font>
+  	<a href="{% url 'profile:manageAccount' %}"><span style="font-size:1.7em" class="glyphicon glyphicon-cog"></span></a>
+</div>
+
 <div class="panel panel-default">
+<div class="panel-heading">
+<h3 class="panel-title">Information</h3>
+</div>
 <div class="panel-body">
-	<b>Name:</b> {{ fullname }}
-	<br><b>Username:</b> {{ username }}
+	<b>Username:</b> {{ username }}
 	<br><b>Email:</b> {{ email }}
 	{% if birthday %}
 	<br><b>Birthday:</b> {{ birthday }}
