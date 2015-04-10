@@ -1,17 +1,21 @@
 {% extends 'base.html' %}
 {% block content %}
 <link rel="stylesheet" type="text/css" href="{{ STATIC_URL}}upload_pics.css">
+<script src="{{ STATIC_URL }}upload_pics.js
 <a href="upload_pic"><button type="button" class="btn btn-default">Upload Pictures</button></a><br>
-
+<select id="select">
+{% for pic in pics %}
+	<option value='{{ pic.filename }}'>{{ pic.filename }}</option>
+{% endfor %}
+</select>
 {% for pic in pics %}
 <div class="thumbnail">
-	<img class="img-rounded" src="/{{ pic.file }}"><br>
+	<img class="img-rounded pic" src="/{{ pic.file }}" id = "{{ pic.file }} onclick="select({{ pic.file }});"><br>
 	<div class="caption"
 		<!-- TODO (Susan) Support for image titles -->
 		<p>{{ pic.caption }}</p>
 	</div>
-<div>
 </div>
 {% endfor %}
-
+</div>
 {% endblock %}
