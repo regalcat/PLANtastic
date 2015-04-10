@@ -4,6 +4,7 @@ from eventHomeView import eventHomeView
 from invite.forms import InviteForm
 from invite.views import InviteView
 from events import views
+from invite import views as invite_views
 
 urlpatterns = patterns('',
 	url(r'^$', eventHomeView.as_view(), name='eventHome'),
@@ -11,5 +12,6 @@ urlpatterns = patterns('',
 	url(r'^invite-action', InviteForm, name='invite-action'),
 	url(r'^tools/', include('tools.urls')),
 	url(r'^editMembers', views.editMembers, name='editMembers'),
+	url(r'^editMemberStatus', invite_views.editMemberStatus, name='editMemberStatus'),
 
 )

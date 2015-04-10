@@ -5,6 +5,8 @@ from django.core.mail import send_mail
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
+from invite.models import MembershipModel
+
 class InviteForm(forms.Form):
 	email = forms.EmailField(required=True)
 	
@@ -27,3 +29,5 @@ class InviteForm(forms.Form):
 		smtpserver.close()
 		#Uncomment to use the Django send_mail function. (Doesn't work right now)
 		#send_mail('Invitation to join a PLANtastic event!', msg, 'mail.plantastic@gmail.com', [to], fail_silently=False)
+
+

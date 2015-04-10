@@ -15,6 +15,13 @@ def memberCheck(user_, event_):
 			return False
 	return False
 	
+def getMemberObject(user_, event_):
+	membership = MembershipModel.objects.filter(user=user_, event=event_)
+	member = []
+	for entry in membership:
+		member.append(entry)
+	return member[0]
+
 def getMemberStatus(user_, event_):
 	membership = MembershipModel.objects.filter(user=user_, event=event_)
 	return membership.status

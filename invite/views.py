@@ -4,13 +4,16 @@ import random
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+from django.core.urlresolvers import reverse
 from django.template import RequestContext, loader
 from django.views.generic.edit import FormView
 from django.utils.decorators import method_decorator
+from django.contrib.auth.models import User
 
 from base.helpers import getMenuInfo
+from base.permissions import getMemberObject
 from events.models import EventModel 
-from .forms import InviteForm
+from .forms import InviteForm, MembershipForm
 from .models import MembershipModel, InviteModel
 
 #The class that handles inviting people via email and then displays an html page
@@ -71,5 +74,23 @@ def join_event(request):
 			member.save()
 		return HttpResponseRedirect('http://'+str(request.get_host())+'/'+str(invite.inviteEvent.eventid))
 	return render(request, 'invite/join.html', { 'menu' : getMenuInfo(request), 'title' : "Join Event" })
+
+
+def editMemberStatus(request, eventid):
+	if request.method == "POST":
+		username = request.POST['user']
+		eventid = request.POST['event']
+		status = request.POST['status']
+		user = User.objects.filter(username = username)
+		event = EventModel.objects.filter(eventid = eventid)
+		member = getMemberObject(user, event)
+		member.status = status
+		member.save()
+			
+		return HttpResponseRedirect("editMembers.html")
+
+
+	return HttpResponseRedirect("editMembers.html")	
+
 
 
