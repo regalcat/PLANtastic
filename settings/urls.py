@@ -9,6 +9,6 @@ urlpatterns = patterns('',
 
 	url(r'^admin/', include(admin.site.urls)),
 	url(r'^', include('base.urls', namespace='base')),
-	url(r'^(?P<eventid>\d+)/', include('events.urls')),
+	url(r'^(?P<eventid>\d+)/', include('events.urls', namespace='events')),
 	url(r'^profile/', include('profile.urls', namespace='profile')),
 )
