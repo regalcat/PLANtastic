@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL}}upload_pics.css">
+<a href="upload_pic"><button type="button" class="btn btn-default">Upload Pictures</button></a><br>
+
+{% for pic in pics %}
+<img class="pic" src="/{{ pic.file }}"><br>
+{% endfor %}
+
+{% endblock %}

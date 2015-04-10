@@ -1,3 +1,4 @@
+from django.http import HttpResponseRedirect
 from django.views.generic.edit import CreateView
 
 from .models import UploadedPicModel
@@ -14,7 +15,9 @@ class UploadPicFormView(CreateView):
 
 	def post(self, request, eventid):
 		self.eventid = eventid
-		return super(UploadPicFormView, self).post(self, request)
+		#TODO - error checking on uploads
+		super(UploadPicFormView, self).post(self, request)
+		return HttpResponseRedirect("../")
 
 	def form_valid(self, form):
 		print form.instance.caption

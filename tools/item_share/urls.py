@@ -1,6 +1,8 @@
 from django.conf.urls import patterns, url
-from tools.item_share.AddItemView import AddItemView
-from tools.item_share.ItemShareView import ItemShareView
+from .AddItemView import AddItemView
+from .ItemShareView import ItemShareView
+
+#TODO (Susan): remove need for CSRF exemption for Ajax requests
 from django.views.decorators.csrf import csrf_exempt
 
 urlpatterns = patterns('', 

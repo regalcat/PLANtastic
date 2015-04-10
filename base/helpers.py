@@ -3,9 +3,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from invite.models import MembershipModel
 
-
 from events.models import EventModel
-
 
 def getUserEvents(user_):
 	membership_entries = MembershipModel.objects.filter(user=user_)
@@ -16,14 +14,21 @@ def getUserEvents(user_):
 
 def isPreviousEvent(event_):
 	today = timezone.now()
+	if event_.eventDateStart == None:
+		return True
 	return event_.eventDateStart < today
+
+def isUpcomingEvent(event_):
+	today = timezone.now()
+	if event_.eventDateStart == None:
+		return True
+	return event_.eventDateStart >= today
 
 def getPreviousEvents(user_):
 	membership_entries = MembershipModel.objects.filter(user=user_)
 	events = []
 	for entry in membership_entries:
-		today = timezone.now()
-		if entry.event.eventDateStart < today:
+		if isPreviousEvent(entry.event):
 			events.append(entry.event)
 	
 	return events
@@ -33,7 +38,7 @@ def getUpcomingEvents(user_):
 	events = []
 	today = timezone.now()
 	for entry in membership_entries:
-		if entry.event.eventDateStart >= today:
+		if isUpcomingEvent(entry.event):
 			events.append(entry.event)
 
 	return events
