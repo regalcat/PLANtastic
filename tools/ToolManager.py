@@ -8,8 +8,11 @@ class ToolManager:
 	def getTools(event):
 		eventType = event.eventType
 		tools = []
+		context = {}
 		if isPreviousEvent(event):
 			tools.append(UploadPicsView)
+			context['upload_pics'] = UploadPicsView.getContext(event)
 		if isUpcomingEvent(event):
 			tools.append(ItemShareView)
-		return tools
+			context['item_share'] = ItemShareView.getContext(event)
+		return {'tools' : tools, 'context' : context}

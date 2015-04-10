@@ -1,6 +1,22 @@
-<a href="tools/upload_pics">
 <div class="tool-tile">
+<a href="tools/upload_pics">
 <button type="button" class="btn btn-default">Upload Pictures</button>
-</div>
 </a>
+<div id="upload_carousel" class="carousel slide" date-ride="carousel">
+
+<ol class="carousel-indicators">
+	{% for pic in upload_pics.pics %}
+	<li data-target="#upload_carousel" data-slide-to="{{ forloop-counter0 }}"
+		{% if forloop.counter0 = 0 %}class="active"{% endif %}
+		></li>
+	{% endfor %}
+</ol>
+<div class="carousel-inner" role="listbox">
+{% for pic in upload_pics.pics %}
+	<div class="item{% if forloop.counter0 = 0 %} active{% endif %}">
+		<img src="/{{ pic.file }}">
+	</div>
+{% endfor %}
+</div>
+</div>
 
