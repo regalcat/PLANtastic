@@ -1,8 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
+
+<div class="page-header">
+	<font size="6">Item Share</font>
+</div>
+
 <script src="{{ STATIC_URL }}item_share/item_share.js"></script>
-<p><button type="button" class="btn btn-default"><a href="add_item">Add Item</a></button>
-<button type="button" class="btn btn-default"><a href="{{menu.server}}/{{event.eventid}}">Go Back</a></button></p>
+<p><a href="add_item"><button type="button" class="btn btn-default">Add Item</button></a>
+<a href="{{menu.server}}/{{event.eventid}}"><button type="button" class="btn btn-default">Go Back</button></a></p>
 <table class="table"> 
 
 <tr class="table-header">
