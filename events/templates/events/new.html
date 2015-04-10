@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+
 <script src="{{ STATIC_URL }}create_event.js"></script>
 
 <h1>New Event</h1>
@@ -8,31 +9,22 @@
 <div class="page-header">
 	<font size="6">Create new event</font>
 </div>
-<!--<form action="" method="post" id="mainForm">-->
-{% csrf_token %}
-
 
 <body>
-<form  method= "POST">
+<form action="{{ current_path }}" method= "POST">
 {% csrf_token %}
 
-{{ eventform.as_p }}
-</form>
-<form action="event();" method = "POST">	
-<!--{{ eventtypeform.as_p }}-->
-</form>	
-<!--<script>
 
-function event():
-	if(document.getElementById("eventType").value == 'Hike')
-		return "hike();"
-	else if(document.getElementById("eventType").value == 'Dinner')
-		return "dinner();"
-	else if(document.getElementById("eventType").value == 'Other Trip')
-		return "otherTrip();"
-	else "otherGathering();"
-</script>-->
-<input type= "submit" value="Create Event" class="btn btn-default">
+{{ eventform.as_p }}
+
+
+ <p>Event Type:</p>
+  <input name="eventType" type="radio" value="dinner" onclick="dinner();" id="eventType"/>Dinner </p>
+  <input name="eventType" type="radio" value="hike" onclick="hike();" id="eventType"/>Hike </p>
+  <input name="eventType" type="radio" value="otherTrip" onclick="otherTrip();" id="eventType"/>Other Trip </p>
+  <input name="eventType" type="radio" value="otherGathering" onclick="otherGathering();" id="eventType"/>Other Gathering </p>
+
+	
 
 
 	<p><label for="eventDateEnd" id="eventDateEndLabel" style="display:none">Event End Date:</label>
@@ -68,10 +60,11 @@ function event():
 
 	<p><label for="allergyList" id="allergyListLabel" style="display:none">Allergies:</label>
 	<p><input name="allergyList" type="text" id="allergyList" style="display:none"/></p>
-<input type="submit" onclick="startDate();" value="Next"/>
-</form> -->
 
-<!-- TODO <a href=""><button type="button" onclick="">Next</button></a>-->
+ 
+<a href=""><input type= "submit" value="Create Event" class="btn btn-default">
+</form>
+<!-- TODO <button type="button" onclick="">Next</button></a>-->
 </body>
 </html>
 {% endblock %}
