@@ -6,7 +6,10 @@
 
 <br>
 <br>
-
+<div class="panel panel-default">
+<div class="panel-heading">
+			<h3 class="panel-title">Edit Information</h3>
+		</div><br>
 <form action= "{% url 'profile:editInformation' %}" method= "POST">
 {% csrf_token %}
 
@@ -15,11 +18,13 @@
 
 
 <input type= "submit" value="Edit information" class="btn btn-success">
-</form>
+</form><br>
+</div>
 
-
-<br>
-<p>Here you can change your password.</p>
+<div class="panel panel-default">
+<div class="panel-heading">
+			<h3 class="panel-title">Change Password</h3>
+		</div><br>
 <form action= "{% url 'profile:checkInformation' %}" method= "POST">
 {% csrf_token %}
 
@@ -29,10 +34,10 @@
 <label for ="newpassword2"> New password verification:  </label><input type="password" name="newpassword2" value="" id="newpassword2"><a href="" title="Must be the same password as above"><span class="glyphicon glyphicon-question-sign"></span></a><br>
 <br>
 <input type= "submit" value="Change Password" class="btn btn-success">
-</form>
-
+</form><br>
+</div>
 <br>
-<a href = "{% url 'profile:deleteAccount' %}"><button class="btn btn-success">Delete Account</button></a>
+<a href = "{% url 'profile:deleteAccount' %}"><button class="btn btn-danger">Delete Account</button></a>
 
 
 {% endblock %}
