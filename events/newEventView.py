@@ -13,21 +13,25 @@ from models import EventModel, HikeEventModel, DinnerEventModel, GenericTripMode
 from invite.models import InviteModel
 from base.helpers import getMenuInfo
 
-from forms import EventForm, HikeForm, DinnerForm, GenericGatheringForm
+
+from forms import EventForm, HikeForm, DinnerForm, GenericTripForm, GenericGatheringForm, EventTypeForm
+
 
 
 @login_required(login_url = '/loginRequired/')  # User have to be logged in to see this view - if not: redirects to loginRequired
 def new(request):
 	if request.method == "GET":
 		eventform = EventForm()
-		return render(request, 'events/new.html', {'eventform' :eventform,  'menu' : getMenuInfo(request), 'title' : "New Event"})
+		typeform = EventTypeForm()
+		return render(request, 'events/new.html', {'eventform' :eventform, 'eventtypeform':typeform, 'menu' : getMenuInfo(request), 'title' : "New Event"})
 	if request.method == "POST":
 
-		eventform = EventForm(request.POST, instance = request.event)
+		eventform = EventForm(request.POST)
+		typeform = EventTypeForm(request.POST)
 		if eventform.is_valid():
 			eventform.save()
-			return render(request, 'events/eventHome/'+str(event.eventid))
-			#return HttpResponseRedirect('http://'+str(request.get_host())+'/'+str(event.eventid))	
+			#return render(request, 'events/eventHome/'+str(event.eventid))
+			return HttpResponseRedirect('http://'+str(request.get_host())+'/'+str(event.eventid))	
 			
 		event = EventModel()
 		event.createEvent(eventName=request.POST['eventName'],eventLocation=request.POST['eventLocation'], \
