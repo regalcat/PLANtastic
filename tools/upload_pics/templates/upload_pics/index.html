@@ -10,7 +10,7 @@
 </select>
 {% for pic in pics %}
 <div class="thumbnail">
-	<img class="img-rounded pic" src="/{{ pic.file }}" id = "{{ pic.file }} onclick="select({{ pic.file }});"><br>
+	<img class="img-rounded pic" src="/{{ pic.file }}" id="{{ forloop.counter0 }} onclick="select({{ forloop.counter0 }});"><br>
 	<div class="caption"
 		<!-- TODO (Susan) Support for image titles -->
 		<p>{{ pic.caption }}</p>
