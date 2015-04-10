@@ -32,16 +32,17 @@ def new(request):
 		eventType= request.POST['eventType']
 		event.createEvent(eventName=request.POST['eventName'],eventLocation=request.POST['eventLocation'],eventDateStart=eventDateStart,eventType=eventType,eventDescription=request.POST['eventDescription'])
 		event.save()
-		if eventform.is_valid():
-			eventform.save()
+		member = MembershipModel(event=event, user=request.user, status=MembershipModel.CREATOR)
+		member.save()
+		if not eventform.is_valid():
+			#eventform.save()
 			#return render(request, 'events/eventHome/'+str(event.eventid))
 			return HttpResponseRedirect('http://'+str(request.get_host())+'/'+str(event.eventid))	
 			#return HttpResponseRedirect(reverse('events:eventHome'))
 		
 		
 
-		member = MembershipModel(event=event, user=request.user, status=MembershipModel.CREATOR)
-		member.save()
+		
 
 		if (request.POST['eventType'] == u'hike'):
 			eventDuration=request.POST['eventDuration']
@@ -58,7 +59,7 @@ def new(request):
 			
 			event = HikeEventModel(event.eventid, \
 				eventName=request.POST['eventName'], eventLocation=request.POST['eventLocation'], \
-				eventDateStart=request.POST['eventDateStart'],eventDescription=request.POST['eventDescription'], \
+				eventDateStart=eventDateStart,eventDescription=request.POST['eventDescription'], \
 				eventDateEnd=eventDateEnd, eventDuration=eventDuration, eventDistance=eventDistance, 					eventElevation=eventElevation, eventDifficulty=request.POST['difficulty'])
 			event.save()
 
@@ -69,7 +70,7 @@ def new(request):
 
 			event = GenericTripModel(event.eventid, \
 				eventName=request.POST['eventName'], eventLocation=request.POST['eventLocation'], \
-				eventDateStart=request.POST['eventDateStart'],eventDescription=request.POST['eventDescription'], 					eventDateEnd=eventDateEnd)
+				eventDateStart=eventDateStart,eventDescription=request.POST['eventDescription'], 					eventDateEnd=eventDateEnd)
 			event.save()
 
 		if (request.POST['eventType'] == u'otherGathering'):
@@ -79,14 +80,14 @@ def new(request):
 
 			event = GenericGatheringModel(event.eventid, \
 				eventName=request.POST['eventName'], eventLocation=request.POST['eventLocation'], \
-				eventDateStart=request.POST['eventDateStart'],eventDescription=request.POST['eventDescription'], 					eventDateEnd=eventDateEnd)
+				eventDateStart=eventDateStart,eventDescription=request.POST['eventDescription'], 					eventDateEnd=eventDateEnd)
 			event.save()
 
 		if (request.POST['eventType'] == u'dinner'):
 
 			event = DinnerEventModel(event.eventid, \
 				eventName=request.POST['eventName'], eventLocation=request.POST['eventLocation'], \
-				eventDateStart=request.POST['eventDateStart'],eventDescription=request.POST['eventDescription'])
+				eventDateStart=eventDateStart,eventDescription=request.POST['eventDescription'])
 			event.save()
 
 		return HttpResponseRedirect('http://'+str(request.get_host())+'/'+str(event.eventid))
