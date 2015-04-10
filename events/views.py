@@ -19,7 +19,7 @@ from invite.models import InviteModel, MembershipModel
 from users.forms import UserRegistrationForm
 from base.helpers import getMenuInfo
 
-
+@login_required(login_url = '/loginRequired/')
 def upcoming(request):
 	return render(request, 'events/upcoming.html', {'menu' : getMenuInfo(request), 'title' : "Upcoming Events"})
 
