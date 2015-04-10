@@ -4,8 +4,6 @@ from django.utils import timezone
 from invite.models import MembershipModel
 
 
-
-
 from events.models import EventModel
 
 

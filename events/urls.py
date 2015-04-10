@@ -9,4 +9,5 @@ urlpatterns = patterns('',
 	url(r'^invite', InviteView.as_view(), name=('invite')),
 	url(r'^invite-action', InviteForm, name=('invite-action')),
 	url(r'^tools/', include('tools.urls')),
+
 )

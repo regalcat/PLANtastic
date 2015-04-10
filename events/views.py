@@ -28,6 +28,7 @@ def past(request):
 	
 	return render(request, 'events/past.html', { 'menu' : getMenuInfo(request), 'title' : "Past Events"})
 
+
 @login_required(login_url = '/loginRequired/')
 def deleteEvent(request):
 	if request.method == "POST":
