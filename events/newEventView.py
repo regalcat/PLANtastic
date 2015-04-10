@@ -8,14 +8,27 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import FormView
 
 
+
 from models import EventModel, HikeEventModel, DinnerEventModel, GenericTripModel, GenericGatheringModel
 from invite.models import InviteModel
 from base.helpers import getMenuInfo
 
+from forms import EventForm, HikeForm, DinnerForm, GenericGatheringForm
+
 
 @login_required(login_url = '/loginRequired/')  # User have to be logged in to see this view - if not: redirects to loginRequired
 def new(request):
+	if request.method == "GET":
+		eventform = EventForm()
+		return render(request, 'events/new.html', {'eventform' :eventform,  'menu' : getMenuInfo(request), 'title' : "New Event"})
 	if request.method == "POST":
+
+		eventform = EventForm(request.POST, instance = request.event)
+		if eventform.is_valid():
+			eventform.save()
+			return render(request, 'events/eventHome/'+str(event.eventid))
+			#return HttpResponseRedirect('http://'+str(request.get_host())+'/'+str(event.eventid))	
+			
 		event = EventModel()
 		event.createEvent(eventName=request.POST['eventName'],eventLocation=request.POST['eventLocation'], \
 			eventDateStart=request.POST['eventDateStart'],eventType=request.POST['eventType'],eventDescription=request.POST['eventDescription'])

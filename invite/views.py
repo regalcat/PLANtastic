@@ -4,10 +4,14 @@ import random
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+from django.core.urlresolvers import reverse
 from django.template import RequestContext, loader
 from django.views.generic.edit import FormView
+from django.utils.decorators import method_decorator
+from django.contrib.auth.models import User
 
 from base.helpers import getMenuInfo
+from base.permissions import getMemberObject
 from events.models import EventModel 
 from .forms import InviteForm
 from .models import MembershipModel, InviteModel
@@ -18,11 +22,13 @@ class InviteView(FormView):
 	form_class = InviteForm
 	success_url = r'^(?P<eventid>\d+)/$'
 	
+	@method_decorator(login_required(login_url = '/loginRequired/'))
 	def valid_email(self, form):
 		
 		form.send_invite()
 		return super(InviteView, self).valid_email(form)
 
+	@method_decorator(login_required(login_url = '/loginRequired/'))
 	def get(self, request, eventid):
 		user = request.user
 		cur_event = EventModel.getEvent(eventid)
@@ -30,6 +36,7 @@ class InviteView(FormView):
 		context = RequestContext(request, {'event' : cur_event, 'user' : user, 'cur_path' : request.get_full_path(), 'title' : "Invite friends", 'menu' : getMenuInfo(request)})
 		return HttpResponse(template.render(context))
 
+	@method_decorator(login_required(login_url = '/loginRequired/'))
 	def post(self, request, eventid):
 		to = request.POST['email']
 		event = EventModel.getEvent(eventid)
@@ -67,5 +74,23 @@ def join_event(request):
 			member.save()
 		return HttpResponseRedirect('http://'+str(request.get_host())+'/'+str(invite.inviteEvent.eventid))
 	return render(request, 'invite/join.html', { 'menu' : getMenuInfo(request), 'title' : "Join Event" })
+
+
+def editMemberStatus(request, eventid):
+	if request.method == "POST":
+		username = request.POST['user']
+		eventid = request.POST['event']
+		status = request.POST['status']
+		user = User.objects.filter(username = username)
+		event = EventModel.objects.filter(eventid = eventid)
+		member = getMemberObject(user, event)
+		member.status = status
+		member.save()
+			
+		return HttpResponseRedirect("editMembers.html")
+
+
+	return HttpResponseRedirect("editMembers.html")	
+
 
 

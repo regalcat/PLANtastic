@@ -20,6 +20,7 @@ from users.forms import UserRegistrationForm
 from base.helpers import getMenuInfo
 
 
+@login_required(login_url = '/loginRequired/')
 def upcoming(request):
 	return render(request, 'events/upcoming.html', {'menu' : getMenuInfo(request), 'title' : "Upcoming Events"})
 
@@ -27,6 +28,19 @@ def upcoming(request):
 def past(request):
 	
 	return render(request, 'events/past.html', { 'menu' : getMenuInfo(request), 'title' : "Past Events"})
+
+@login_required(login_url = '/loginRequired/')
+def editMembers(request, eventid):
+	event = EventModel.getEvent(eventid)
+	members = MembershipModel.objects.filter(event = event)
+
+	if request.method == 'POST':
+		return render(request, 'events/editMembers.html', { 'menu' : getMenuInfo(request), 'title' : "Edit Members", 'event' : event, 'members' : members})
+
+	if request.method == 'GET':
+		return render(request, 'events/editMembers.html', { 'menu' : getMenuInfo(request), 'title' : "Edit Members", 'event' : event, 'members' : members})
+
+
 
 @login_required(login_url = '/loginRequired/')
 def deleteEvent(request):

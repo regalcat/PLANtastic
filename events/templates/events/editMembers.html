@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="page-header">
+	<font size="6">Edit members</font>
+</div>
+
+<div class="panel panel-default">
+<div class="panel-body">
+<div class="container">
+	<div class="table-responsive">
+	<table class="table">
+		<thead><tr><td><b>#</b></td><td><b>Name</b></td><td><b>Status</b></td><td><b>Change status</b></td><td></td></thead>
+		<tbody>
+		{% for member in members %}
+		<tr>
+		<td>{{ forloop.counter }}</td>
+		<td>{{ member.user.first_name }} {{ member.user.last_name }}</td>
+		<td>{{ member.get_status_display }}</td>
+		<td><form action= "editMemberStatus" method= "POST">
+			{% csrf_token %}
+			<select name="status" id="status">
+			<option value="CR">Creator</option>
+			<option value="CP">Coplanner</option>
+			<option value="MEM">Member</option>
+		</td>
+		<td>
+			<input type="hidden" name="event" id="event" value="{{event.eventid}}">
+			<input type="hidden" name="user" id="user" value="{{member.user.username}}">	
+			<input type= "submit" value="Edit status" class="btn btn-default"></form>
+
+		</td>
+		</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+	</div></div>
+</div></div>
+
+<a href="{{menu.server}}/{{event.eventid}}"><button type="button" class="btn btn-default">Go Back</button></a>
+
+{% endblock %}

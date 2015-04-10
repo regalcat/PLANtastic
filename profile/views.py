@@ -15,7 +15,6 @@ from forms import ProfileForm, UserForm
 
 
 
-
 @login_required(login_url = '/loginRequired/')  # User have to be logged in to see this view - if not: redirects to login_url
 def profile(request):
 	user1 = request.user
@@ -69,5 +68,16 @@ def editInformation(request):
 
 
 	return HttpResponseRedirect(reverse('profile:manageAccount'))
+
+@login_required(login_url = '/loginRequired/')  # User have to be logged in to see this view - if not: redirects to login_url
+def deleteAccount(request):
+	return render(request, "profile/deleteAccount.html", {'menu' : getMenuInfo(request), 'title' : "Delete Account Confirmation"})
+
+@login_required(login_url = '/loginRequired/')  # User have to be logged in to see this view - if not: redirects to login_url
+def executeDelete(request):
+
+	request.user.delete()
+
+	return HttpResponseRedirect(reverse('base:index'))
 
 			

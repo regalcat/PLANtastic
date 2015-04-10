@@ -7,17 +7,20 @@ class EventModel(models.Model):
 	eventLocation.blank = True
 	eventDateStart = models.DateTimeField(auto_now=False,auto_now_add=False)
 	#eventDateStart.blank = True
-	# TODO - Use actual enum type.
-	#EVENT_TYPES = (
-	#	('Dinner', 'Dinner'), 
-	#	('Hike', 'Hike'), 
-	#	('Other Trip', 'Other Trip'),
-	#	('Other Gathering', 'Other Gathering'),
-	#)
-	eventType = ('Dinner', 'Hike', 'Other Trip', 'Other Gathering')
-	eventType= 'Other Gathering'
+	
+	EVENT_TYPES = (
+		('Dinner', 'Dinner'), 
+		('Hike', 'Hike'), 
+		('Other Trip', 'Other Trip'),
+		('Other Gathering', 'Other Gathering'),
+	)
+	#eventType = ('Dinner', 'Hike', 'Other Trip', 'Other Gathering')
+	#eventType= 'Other Gathering'
 		
 	#eventType = models.CharField(max_length=15, choices=EVENT_TYPES)
+	#eventType.blank = False
+	#eventType.default = None
+	eventType = models.CharField(max_length=20, choices=EVENT_TYPES, blank=False, default=None)
 	eventDescription = models.CharField(max_length=500)
 	eventDescription.blank = True
 

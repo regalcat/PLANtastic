@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="page-header">
-	<h2>Upcoming Events</h2>
+	<font size="6">Upcoming Events</font>
 </div>
-{% for e in menu.prev_events %}
+{% for e in menu.upcoming_events %}
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h3 class="panel-title">{{ e.eventName }}</h3>
