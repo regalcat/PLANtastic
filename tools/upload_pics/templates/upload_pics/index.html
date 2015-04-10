@@ -4,7 +4,14 @@
 <a href="upload_pic"><button type="button" class="btn btn-default">Upload Pictures</button></a><br>
 
 {% for pic in pics %}
-<img class="pic" src="/{{ pic.file }}"><br>
+<div class="thumbnail">
+	<img class="img-rounded" src="/{{ pic.file }}"><br>
+	<div class="caption"
+		<!-- TODO (Susan) Support for image titles -->
+		<p>{{ pic.caption }}</p>
+	</div>
+<div>
+</div>
 {% endfor %}
 
 {% endblock %}
