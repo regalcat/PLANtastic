@@ -5,7 +5,7 @@ class EventModel(models.Model):
 	eventName = models.CharField(max_length=50)
 	eventLocation = models.CharField(max_length=50)
 	eventLocation.blank = True
-	eventDateStart = models.DateTimeField(auto_now=False,auto_now_add=False)
+	eventDateStart = models.DateField(auto_now=False,auto_now_add=False)
 	#eventDateStart.blank = True
 	
 	EVENT_TYPES = (
@@ -14,16 +14,12 @@ class EventModel(models.Model):
 		('Other Trip', 'Other Trip'),
 		('Other Gathering', 'Other Gathering'),
 	)
-	#eventType = ('Dinner', 'Hike', 'Other Trip', 'Other Gathering')
-	#eventType= 'Other Gathering'
-		
-	#eventType = models.CharField(max_length=15, choices=EVENT_TYPES)
-	#eventType.blank = False
-	#eventType.default = None
+
+	
 	eventType = models.CharField(max_length=20, choices=EVENT_TYPES, blank=False, default=None)
 	eventDescription = models.CharField(max_length=500)
 	eventDescription.blank = True
-
+	eventType.default = None
 	#Base template for showing the event description.
 	eventDescriptionTemplate = 'events/base_description.html'
 

@@ -11,7 +11,7 @@
 </div>
 
 <body>
-<form action="{% url 'events:eventHome' %}" method= "POST">
+<form action="{{ current_path }}" method= "POST">
 {% csrf_token %}
 
 
@@ -60,11 +60,11 @@
 
 	<p><label for="allergyList" id="allergyListLabel" style="display:none">Allergies:</label>
 	<p><input name="allergyList" type="text" id="allergyList" style="display:none"/></p>
-<input type="submit" onclick="startDate();" value="Next"/>
+
  
-<input type= "submit" value="Create Event" class="btn btn-default">
+<a href=""><input type= "submit" value="Create Event" class="btn btn-default">
 </form>
-<!-- TODO <a href=""><button type="button" onclick="">Next</button></a>-->
+<!-- TODO <button type="button" onclick="">Next</button></a>-->
 </body>
 </html>
 {% endblock %}

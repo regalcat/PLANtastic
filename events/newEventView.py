@@ -10,7 +10,7 @@ from django.views.generic.edit import FormView
 
 
 from models import EventModel, HikeEventModel, DinnerEventModel, GenericTripModel, GenericGatheringModel
-from invite.models import InviteModel
+from invite.models import InviteModel, MembershipModel
 from base.helpers import getMenuInfo
 
 
@@ -27,16 +27,18 @@ def new(request):
 	if request.method == "POST":
 
 		eventform = EventForm(request.POST)
-		
+		event = EventModel()
+		eventDateStart=request.POST['eventDateStart_year']+"-"+request.POST['eventDateStart_month']+"-"+request.POST['eventDateStart_day']
+		eventType= request.POST['eventType']
+		event.createEvent(eventName=request.POST['eventName'],eventLocation=request.POST['eventLocation'],eventDateStart=eventDateStart,eventType=eventType,eventDescription=request.POST['eventDescription'])
+		event.save()
 		if eventform.is_valid():
 			eventform.save()
 			#return render(request, 'events/eventHome/'+str(event.eventid))
 			return HttpResponseRedirect('http://'+str(request.get_host())+'/'+str(event.eventid))	
-			
-		event = EventModel()
-		event.createEvent(eventName=request.POST['eventName'],eventLocation=request.POST['eventLocation'], \
-			eventDateStart=request.POST['eventDateStart'],eventType=request.POST['eventType'],eventDescription=request.POST['eventDescription'])
-		event.save()
+			#return HttpResponseRedirect(reverse('events:eventHome'))
+		
+		
 
 		member = MembershipModel(event=event, user=request.user, status=MembershipModel.CREATOR)
 		member.save()
@@ -88,6 +90,7 @@ def new(request):
 			event.save()
 
 		return HttpResponseRedirect('http://'+str(request.get_host())+'/'+str(event.eventid))
+		#return HttpResponseRedirect(reverse('events:eventHome'))
 		
 	return render(request, 'events/new.html', { 'menu' : getMenuInfo(request), 'title' : "Create Events"})
 
