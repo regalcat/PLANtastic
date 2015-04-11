@@ -16,6 +16,10 @@
 			<div class="item{% if forloop.counter0 = 0 %} active{% endif %}">
 				<img class="image-responsive thumbnail"src="/{{ pic.file }}">
 			</div>
+		{% empty %}
+			<div class="item active">
+				<center>No pictures uploaded yet.</center>
+			</div>
 	{% endfor %}
 	</div>
 
