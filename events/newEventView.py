@@ -30,21 +30,14 @@ def new(request):
 		event = EventModel()
 		eventDateStart=request.POST['eventDateStart_year']+"-"+request.POST['eventDateStart_month']+"-"+request.POST['eventDateStart_day']
 		eventType= request.POST['eventType']
-		event.createEvent(eventName=request.POST['eventName'],eventLocation=request.POST['eventLocation'],eventDateStart=eventDateStart,eventType=eventType,eventDescription=request.POST['eventDescription'])
+		event.createEvent(eventName=request.POST['eventName'],eventLocation=request.POST['eventLocation'], \ 				eventDateStart=eventDateStart,eventType=eventType,eventDescription=request.POST['eventDescription'])
 		event.save()
 		member = MembershipModel(event=event, user=request.user, status=MembershipModel.CREATOR)
 		member.save()
-		if not eventform.is_valid():
-			#eventform.save()
-			#return render(request, 'events/eventHome/'+str(event.eventid))
-			return HttpResponseRedirect('http://'+str(request.get_host())+'/'+str(event.eventid))	
-			#return HttpResponseRedirect(reverse('events:eventHome'))
 		
 		
 
-		
-
-		if (request.POST['eventType'] == u'hike'):
+		if (eventType == u'hike'):
 			eventDuration=request.POST['eventDuration']
 			eventDistance=request.POST['eventDistance']
 			eventElevation=request.POST['eventElevation']
@@ -63,7 +56,7 @@ def new(request):
 				eventDateEnd=eventDateEnd, eventDuration=eventDuration, eventDistance=eventDistance, 					eventElevation=eventElevation, eventDifficulty=request.POST['difficulty'])
 			event.save()
 
-		if (request.POST['eventType'] == u'otherTrip'):
+		if (eventType == u'otherTrip'):
 			eventDateEnd=request.POST['eventDateEnd']
 			if eventDateEnd == '':
 				eventDateEnd = None
@@ -73,7 +66,7 @@ def new(request):
 				eventDateStart=eventDateStart,eventDescription=request.POST['eventDescription'], 					eventDateEnd=eventDateEnd)
 			event.save()
 
-		if (request.POST['eventType'] == u'otherGathering'):
+		if (eventType == u'otherGathering'):
 			eventDateEnd=request.POST['eventDateEnd']
 			if eventDateEnd == '':
 				eventDateEnd = None
@@ -83,8 +76,7 @@ def new(request):
 				eventDateStart=eventDateStart,eventDescription=request.POST['eventDescription'], 					eventDateEnd=eventDateEnd)
 			event.save()
 
-		if (request.POST['eventType'] == u'dinner'):
-
+		if (eventType == u'dinner'):
 			event = DinnerEventModel(event.eventid, \
 				eventName=request.POST['eventName'], eventLocation=request.POST['eventLocation'], \
 				eventDateStart=eventDateStart,eventDescription=request.POST['eventDescription'])

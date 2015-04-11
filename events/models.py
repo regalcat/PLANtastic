@@ -9,10 +9,10 @@ class EventModel(models.Model):
 	#eventDateStart.blank = True
 	
 	EVENT_TYPES = (
-		('Dinner', 'Dinner'), 
-		('Hike', 'Hike'), 
-		('Other Trip', 'Other Trip'),
-		('Other Gathering', 'Other Gathering'),
+		('dinner', 'Dinner'), 
+		('hike', 'Hike'), 
+		('otherTrip', 'Other Trip'),
+		('otherGathering', 'Other Gathering'),
 	)
 
 	
