@@ -4,19 +4,30 @@
 </a>
 <div id="upload_carousel" class="carousel slide" date-ride="carousel">
 
-<ol class="carousel-indicators">
+	<ol class="carousel-indicators">
+		{% for pic in upload_pics.pics %}
+		<li data-target="#upload_carousel" data-slide-to="{{ forloop.counter0 }}"
+			{% if forloop.counter0 = 0 %}class="active"{% endif %}
+			></li>
+		{% endfor %}
+	</ol>
+	<div class="carousel-inner" role="listbox">
 	{% for pic in upload_pics.pics %}
-	<li data-target="#upload_carousel" data-slide-to="{{ forloop-counter0 }}"
-		{% if forloop.counter0 = 0 %}class="active"{% endif %}
-		></li>
+			<div class="item{% if forloop.counter0 = 0 %} active{% endif %}">
+				<img class="image-responsive thumbnail"src="/{{ pic.file }}">
+			</div>
 	{% endfor %}
-</ol>
-<div class="carousel-inner" role="listbox">
-{% for pic in upload_pics.pics %}
-	<div class="item{% if forloop.counter0 = 0 %} active{% endif %}">
-		<img src="/{{ pic.file }}">
 	</div>
-{% endfor %}
+
+	<a class="left carousel-control" href="#upload_carousel" role="button" data-slide="prev">
+    	<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+	    <span class="sr-only">Previous</span>
+	</a>
+	<a class="right carousel-control" href="#upload_carousel" role="button" data-slide="next">
+	    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+	    <span class="sr-only">Next</span>
+	</a>
 </div>
+
 </div>
 
