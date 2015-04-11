@@ -1,8 +1,9 @@
 <div class="tool-tile">
+<link rel="stylesheet" type="text/css">
 <a href="tools/upload_pics">
 <button type="button" class="btn btn-default">Upload Pictures</button>
 </a>
-<div id="upload_carousel" class="carousel slide" date-ride="carousel" style="height: 300px; width: 400px;">
+<div id="upload_carousel" class="carousel slide pic-carousel" date-ride="carousel">
 
 	<ol class="carousel-indicators">
 		{% for pic in upload_pics.pics %}
@@ -11,14 +12,14 @@
 			></li>
 		{% endfor %}
 	</ol>
-	<div class="carousel-inner" role="listbox" style="width: 100%; height: 100%;">
+	<div class="carousel-inner fill" role="listbox">
 	{% for pic in upload_pics.pics %}
 			<div class="item{% if forloop.counter0 = 0 %} active{% endif %}">
 				<img class="image-responsive thumbnail"src="/{{ pic.file }}">
 			</div>
 		{% empty %}
-			<div class="item active" style="width: 100%; height: 100%;">
-				<center style="position: relative; top: 50%;">No pictures uploaded yet.</center>
+			<div class="item active fill">
+				<center>No pictures uploaded yet.</center>
 			</div>
 	{% endfor %}
 	</div>

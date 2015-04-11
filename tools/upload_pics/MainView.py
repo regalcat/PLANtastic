@@ -24,6 +24,7 @@ class MainView(View):
 		if 'delete' in request.POST:
 			UploadedPicModel.objects.get(file=request.POST['selected']).delete()
 			os.remove(os.path.join(settings.BASE_DIR,request.POST['selected']))
+			return self.get(request, eventid)
 		if 'edit' in request.POST:
 			pic = UploadedPicModel.objects.get(file=request.POST['selected'])
 			return redirect("edit_pic/"+str(pic.id))
