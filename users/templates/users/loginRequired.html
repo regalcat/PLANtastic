@@ -26,15 +26,15 @@
 <form action= "{% url 'base:authView' %}" method= "POST">
 {% csrf_token %}
 
-<label for ="username"> Username: </label><input type="text" name="username" value="" id="username">
-<label for ="password"> Password: </label><input type="password" name="password" value="" id="password">
+<label for ="username"> <b>Username:</b> </label><input type="text" name="username" value="" id="username">
+<label for ="password"> <b>Password:</b> </label><input type="password" name="password" value="" id="password">
 
-<input type= "submit" value="Log in" class="btn btn-success">
+<input type= "submit" value="Log in" class="btn btn-default">
 </form>
 <br>
 
-<a href="{% url 'base:register' %}"><button type="button" class="btn btn-success">Click here to register for a new account</button></a>
+<a href="{% url 'base:register' %}"><button type="button" class="btn btn-default">Click here to register for a new account</button></a>
 
-<a href = "{% url 'base:index' %}"><button type="button" class="btn btn-success">Go back to index page</button></a>
+<a href = "{% url 'base:index' %}"><button type="button" class="btn btn-default">Go back to index page</button></a>
 
 {% endblock %}

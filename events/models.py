@@ -6,7 +6,6 @@ class EventModel(models.Model):
 	eventLocation = models.CharField(max_length=50)
 	eventLocation.blank = True
 	eventDateStart = models.DateField(auto_now=False,auto_now_add=False)
-	#eventDateStart.blank = True
 	
 	EVENT_TYPES = (
 		('Dinner', 'Dinner'), 
@@ -30,10 +29,13 @@ class EventModel(models.Model):
 		if (events.count() == 1):
 			return events[0]
 		events = GenericTripModel.objects.filter(eventid=event_id)
-		if (events.count == 1):
+		if (events.count() == 1):
 			return events[0]
 		events = GenericGatheringModel.objects.filter(eventid=event_id)
-		if events.count == 1:
+		if events.count() == 1:
+			return events[0]
+		events = DinnerEventModel.objects.filter(eventid=event_id)
+		if (events.count() == 1):
 			return events[0]
 		return EventModel.objects.get(eventid=event_id)
 
@@ -55,7 +57,7 @@ class HikeEventModel(EventModel):
 	('strenuous', 'Strenuous'), ('technical', 'Technical'),)
 	
 	eventType = 'Hike'
-	eventDateEnd = models.DateTimeField(auto_now=False,auto_now_add=False, blank=True, null=True)
+	eventDateEnd = models.DateField(auto_now=False,auto_now_add=False, blank=True, null=True)
 	eventDuration = models.CharField(max_length=30, blank=True)
 	eventElevation = models.IntegerField(blank=True, null=True)
 	eventDistance = models.FloatField(blank=True, null=True)
@@ -82,7 +84,7 @@ class DinnerEventModel(EventModel): # How do we implement this?
 
 class GenericTripModel(EventModel):
 	eventType = 'Other Trip'
-	eventDateEnd = models.DateTimeField(auto_now=False,auto_now_add=False, blank=True, null=True)
+	eventDateEnd = models.DateField(auto_now=False,auto_now_add=False, blank=True, null=True)
 	#eventDuration = models.CharField(max_length=30, blank=True)
 	#eventDestination = models.CharField(max_length=200, blank=True)
 	#should this be TextField? How do we want to implement multidestinations?
@@ -92,6 +94,6 @@ class GenericTripModel(EventModel):
 
 class GenericGatheringModel(EventModel):
 	eventType = 'Other Gathering'
-	eventDateEnd = models.DateTimeField(auto_now=False,auto_now_add=False, blank=True, null=True)
+	eventDateEnd = models.DateField(auto_now=False,auto_now_add=False, blank=True, null=True)
 	eventDescriptionTemplate = 'events/other_description.html'
 
