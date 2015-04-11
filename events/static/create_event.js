@@ -1,3 +1,13 @@
+function event2(){
+		if(document.getElementById("eventType")=='Hike')
+			return 'hike();';
+		else if(document.getElementById("eventType")=='Dinner')
+			return 'dinner();';
+		else if(document.getElementById("eventType")=='Other Trip')
+			return 'otherTrip();';
+		else
+			return 'otherGathering();';
+}
 function startDate(){
 	var year= document.getElementById("startYear").value;
 	var month= document.getElementById("startMonth").value;
@@ -8,16 +18,28 @@ function startDate(){
 	
 }
 
-function event(){
-		if(document.getElementsByName("eventType").value=='Hike')
-			return 'hike();'
-		else if(document.getElementsByName("eventType").value=='Dinner')
-			return 'dinner();'
-		else if(document.getElementsByName("eventType").value=='Other Trip')
-			return 'otherTrip();'
-		else
-			return 'otherGathering();'
+
+function event3(){
+	var t = document.getElementsByName("eventType");
+	for(var i=0;i<(document.getElementsByName("eventType").length; i++){
+		if(t[i].checked){
+			if(t[i].value=='Hike')
+				//return 'hike();'
+				return {{ hikeform.as_p }}
+			else if(t[i].value=='Dinner')
+				//return 'dinner();'
+				return {{ dinnerform.as_p }}
+			else if(t[i].value=='Other Trip')
+				//return 'otherTrip();'
+				return {{ othertripform.as_p }}
+			else if(t[i].value=='Other Gathering')
+				//return 'otherGathering();'
+				return {{ othergatheringform.as_p }}
+		}
+	}
 }
+
+
 function hike(){
 	//open hike options
 	document.getElementById("eventDateEnd").style.display="block";

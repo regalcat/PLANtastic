@@ -8,31 +8,22 @@
 <div class="page-header">
 	<font size="6">Create new event</font>
 </div>
-<!--<form action="" method="post" id="mainForm">-->
-{% csrf_token %}
-
 
 <body>
-<form  method= "POST">
+<form action="{% url 'profile:editInformation' %}" method= "POST">
 {% csrf_token %}
 
-{{ eventform.as_p }}
-</form>
-<form action="event();" method = "POST">	
-<!--{{ eventtypeform.as_p }}-->
-</form>	
-<script>
 
-function event2():
-	if(document.getElementsByName("eventType").value == 'Hike')
-		return "hike();"
-	else if(document.getElementsByName("eventType").value == 'Dinner')
-		return "dinner();"
-	else if(document.getElementsByName("eventType").value == 'Other Trip')
-		return "otherTrip();"
-	else "otherGathering();"
-</script>
-<input type= "submit" value="Create Event" class="btn btn-default">
+{{ eventform.as_p }}
+
+
+ <p>Event Type:</p>
+  <input name="eventType" type="radio" value="dinner" onclick="dinner();" id="eventType"/>Dinner </p>
+  <input name="eventType" type="radio" value="hike" onclick="hike();" id="eventType"/>Hike </p>
+  <input name="eventType" type="radio" value="otherTrip" onclick="otherTrip();" id="eventType"/>Other Trip </p>
+  <input name="eventType" type="radio" value="otherGathering" onclick="otherGathering();" id="eventType"/>Other Gathering </p>
+
+	
 
 
 	<p><label for="eventDateEnd" id="eventDateEndLabel" style="display:none">Event End Date:</label>
@@ -69,8 +60,9 @@ function event2():
 	<p><label for="allergyList" id="allergyListLabel" style="display:none">Allergies:</label>
 	<p><input name="allergyList" type="text" id="allergyList" style="display:none"/></p>
 <input type="submit" onclick="startDate();" value="Next"/>
-</form> -->
-
+ 
+<input type= "submit" value="Create Event" class="btn btn-default">
+</form>
 <!-- TODO <a href=""><button type="button" onclick="">Next</button></a>-->
 </body>
 </html>

@@ -6,14 +6,11 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 
-
 from invite.models import MembershipModel
 from models import EventModel
 from base.helpers import getMenuInfo, isPreviousEvent
 from tools.ToolManager import ToolManager
 from base.permissions import memberCheck
-
-
 
 class eventHomeView(View):
 	@method_decorator(login_required(login_url = '/loginRequired/'))
@@ -23,13 +20,15 @@ class eventHomeView(View):
 		if memberCheck(request.user, event) == False:
 			return render(request, 'invite/notMember.html')
 	
-		tools = ToolManager.getTools(event)
 		members = MembershipModel.objects.filter(event = event)
+		tools_data = ToolManager.getTools(event)
+		context = tools_data['context']
+		context.update({'menu' : getMenuInfo(request), 'event' : event, \
+			'tools' : tools_data['tools'], 'members' : members})
+		print context['upload_pics']['pics']
 		if isPreviousEvent(event):
-			return render(request, 'events/past_event_home.html', {'menu' : getMenuInfo(request), \
-				'event' : event, 'tools' : tools, 'members' : members})
-		return render(request, 'events/event_home.html', \
-			{'menu' : getMenuInfo(request), 'event': event, 'tools' : tools, 'members' : members})
+			return render(request, 'events/past_event_home.html', context)
+		return render(request, 'events/event_home.html', context)
 
 	@method_decorator(login_required(login_url = '/loginRequired/'))
 	def post(self, request, eventid):
