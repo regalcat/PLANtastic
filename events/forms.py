@@ -32,7 +32,7 @@ class EventForm(forms.ModelForm):
 		eventName = forms.CharField()
 		eventDescription = forms.CharField()
 		eventLocation = forms.CharField()
-		widgets = {'eventName': forms.TextInput(attrs={'label':'Event Name'}) , 'eventLocation': forms.TextInput(attrs={'label':'Location'}), 'eventDateStart' : SelectDateWidget(), 'eventDescription': forms.TextInput(attrs={'label':'Description','max_length': 500}), 'eventType' : forms.RadioSelect(choices=EventModel.EVENT_TYPES)}
+		widgets = {'eventName': forms.TextInput(attrs={'label':"Event Name"}) , 'eventLocation': forms.TextInput(attrs={'label':'Location'}), 'eventDateStart' : SelectDateWidget(attrs={'label': "Start Date",}), 'eventDescription': forms.TextInput(attrs={'label':'Description','max_length': 500}), 'eventType' : forms.RadioSelect(attrs={"id":"eventType","onclick":"event();",})}
 
 
 class HikeForm(EventForm):

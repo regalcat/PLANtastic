@@ -9,11 +9,11 @@ function startDate(){
 }
 
 function event(){
-		if(document.getElementById("eventType")=='Hike')
+		if(document.getElementsByName("eventType").value=='Hike')
 			return 'hike();'
-		else if(document.getElementById("eventType")=='Dinner')
+		else if(document.getElementsByName("eventType").value=='Dinner')
 			return 'dinner();'
-		else if(document.getElementById("eventType")=='Other Trip')
+		else if(document.getElementsByName("eventType").value=='Other Trip')
 			return 'otherTrip();'
 		else
 			return 'otherGathering();'

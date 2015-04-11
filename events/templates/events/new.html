@@ -21,17 +21,17 @@
 <form action="event();" method = "POST">	
 <!--{{ eventtypeform.as_p }}-->
 </form>	
-<!--<script>
+<script>
 
-function event():
-	if(document.getElementById("eventType").value == 'Hike')
+function event2():
+	if(document.getElementsByName("eventType").value == 'Hike')
 		return "hike();"
-	else if(document.getElementById("eventType").value == 'Dinner')
+	else if(document.getElementsByName("eventType").value == 'Dinner')
 		return "dinner();"
-	else if(document.getElementById("eventType").value == 'Other Trip')
+	else if(document.getElementsByName("eventType").value == 'Other Trip')
 		return "otherTrip();"
 	else "otherGathering();"
-</script>-->
+</script>
 <input type= "submit" value="Create Event" class="btn btn-default">
 
 

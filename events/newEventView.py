@@ -14,7 +14,7 @@ from invite.models import InviteModel
 from base.helpers import getMenuInfo
 
 
-from forms import EventForm, HikeForm, DinnerForm, GenericTripForm, GenericGatheringForm, EventTypeForm
+from forms import EventForm, HikeForm, DinnerForm, GenericTripForm, GenericGatheringForm
 
 
 
@@ -22,12 +22,12 @@ from forms import EventForm, HikeForm, DinnerForm, GenericTripForm, GenericGathe
 def new(request):
 	if request.method == "GET":
 		eventform = EventForm()
-		typeform = EventTypeForm()
-		return render(request, 'events/new.html', {'eventform' :eventform, 'eventtypeform':typeform, 'menu' : getMenuInfo(request), 'title' : "New Event"})
+		
+		return render(request, 'events/new.html', {'eventform' :eventform, 'menu' : getMenuInfo(request), 'title' : "New Event"})
 	if request.method == "POST":
 
 		eventform = EventForm(request.POST)
-		typeform = EventTypeForm(request.POST)
+		
 		if eventform.is_valid():
 			eventform.save()
 			#return render(request, 'events/eventHome/'+str(event.eventid))
