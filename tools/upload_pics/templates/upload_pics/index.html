@@ -8,7 +8,7 @@
 <select id="select" name="selected">
 	<option value='None'></option>
 {% for pic in pics %}
-	<option value='{{ pic.title }}'>{{ pic.title }}</option>
+	<option value='{{ pic.file }}'>{{ pic.title }}</option>
 {% endfor %}
 </select>
 	<button type="submit" class="btn btn-default" name="delete">Delete Picture</button>
@@ -16,13 +16,14 @@
 </form>
 {% for pic in pics %}
 <div class="thumbnail">
-	<img class="img-rounded pic" src="/{{ pic.file }}" id="{{ forloop.counter }}" onclick="select({{ forloop.counter }});"><br>
+	<img class="img-rounded pic" src="/{{ pic.file }}" id="{{ forloop.counter }}" onclick="select({{ forloop.counter }});" alt="{{ pic.title}}: {{ pic.caption}}"><br>
 	<div class="caption">
 		<h2>{{ pic.title }}</h2>
 		<p>{{ pic.caption }}</p>
+		<p>Uploaded By: {{ pic.uploader.username }}</p>
 	</div>
 </div>
-{% empty $}
+{% empty %}
 <h2> No pictures have been uploaded yet.</h2>
 {% endfor %}
 </div>
