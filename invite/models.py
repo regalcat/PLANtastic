@@ -8,9 +8,9 @@ class MembershipModel(models.Model):
 	COPLANNER = 'CP'
 	MEMBER = 'MEM'
 	STATUSES = (
-		(CREATOR, 'CREATOR'),
-		(COPLANNER, 'COPLANNER'),
-		(MEMBER, 'MEMBER')
+		(CREATOR, 'Creator'),
+		(COPLANNER, 'Coplanner'),
+		(MEMBER, 'Member')
 	)
 	event = models.ForeignKey(EventModel)
 	user = models.ForeignKey(User)

@@ -13,7 +13,9 @@ from models import EventModel, HikeEventModel, DinnerEventModel, GenericTripMode
 from invite.models import InviteModel
 from base.helpers import getMenuInfo
 
+
 from forms import EventForm, HikeForm, DinnerForm, GenericTripForm, GenericGatheringForm, EventTypeForm
+
 
 
 @login_required(login_url = '/loginRequired/')  # User have to be logged in to see this view - if not: redirects to loginRequired

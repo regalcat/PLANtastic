@@ -1,4 +1,4 @@
-from tools.Tool import ToolView
+from tools.ToolView import ToolView
 
 class UploadPicsView(ToolView):
 	tile_template = "upload_pics/upload_pics_tile.html"

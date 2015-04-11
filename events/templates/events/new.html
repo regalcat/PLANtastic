@@ -2,7 +2,15 @@
 
 {% block content %}
 <script src="{{ STATIC_URL }}create_event.js"></script>
+
 <h1>New Event</h1>
+
+<div class="page-header">
+	<font size="6">Create new event</font>
+</div>
+<!--<form action="" method="post" id="mainForm">-->
+{% csrf_token %}
+
 
 <body>
 <form  method= "POST">
@@ -11,7 +19,7 @@
 {{ eventform.as_p }}
 </form>
 <form action="event();" method = "POST">	
-{{ eventtypeform.as_p }}
+<!--{{ eventtypeform.as_p }}-->
 </form>	
 <!--<script>
 
