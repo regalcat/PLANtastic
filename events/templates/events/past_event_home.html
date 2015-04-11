@@ -1,8 +1,4 @@
 {% extends 'events/base_event_home.html'%}
 {% block middle %}
-<form action= "{% url 'base:deleteEvent' %}" method= "POST">
-{% csrf_token %}
-<input type="hidden" name="eventid" value= "{{ event.eventid }}" id="eventid">
-<input type= "submit" value="Delete Event" class="btn btn-danger">
-</form>
+<a href="delete"><button type="button" class="btn btn-danger">Delete Event</button></a>
 {% endblock %}
