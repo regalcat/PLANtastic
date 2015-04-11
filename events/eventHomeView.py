@@ -8,7 +8,7 @@ from django.core.urlresolvers import reverse
 
 from invite.models import MembershipModel
 from models import EventModel
-from base.helpers import getMenuInfo, isPreviousEvent
+from base.helpers import getMenuInfo, isPreviousEvent, isUpcomingEvent
 from tools.ToolManager import ToolManager
 from base.permissions import memberCheck
 
@@ -25,8 +25,7 @@ class eventHomeView(View):
 		context = tools_data['context']
 		context.update({'menu' : getMenuInfo(request), 'event' : event, \
 			'tools' : tools_data['tools'], 'members' : members})
-		print context['upload_pics']['pics']
-		if isPreviousEvent(event):
+		if not isUpcomingEvent(event):
 			return render(request, 'events/past_event_home.html', context)
 		return render(request, 'events/event_home.html', context)
 
