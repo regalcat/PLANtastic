@@ -8,6 +8,16 @@ function startDate(){
 	
 }
 
+function event(){
+		if(document.getElementById("eventType")=='Hike')
+			return 'hike();'
+		else if(document.getElementById("eventType")=='Dinner')
+			return 'dinner();'
+		else if(document.getElementById("eventType")=='Other Trip')
+			return 'otherTrip();'
+		else
+			return 'otherGathering();'
+}
 function hike(){
 	//open hike options
 	document.getElementById("eventDateEnd").style.display="block";
