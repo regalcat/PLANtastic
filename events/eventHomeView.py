@@ -25,7 +25,7 @@ class eventHomeView(View):
 		context = tools_data['context']
 		context.update({'menu' : getMenuInfo(request), 'event' : event, \
 			'tools' : tools_data['tools'], 'members' : members})
-		print context['upload_pics']['pics']
+		
 		if isPreviousEvent(event):
 			return render(request, 'events/past_event_home.html', context)
 		return render(request, 'events/event_home.html', context)
