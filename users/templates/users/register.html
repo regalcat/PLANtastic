@@ -25,13 +25,14 @@
 {% block content %}
 
 
-<a href="{% url 'base:index' %}"><button type="button" class="btn btn-success">Go back to index page</button></a>
+<a href="{% url 'base:index' %}"><button type="button" class="btn btn-default">Go back to index page</button></a>
 <br><br>
 <form action="{% url 'base:register' %}" method= "POST">
 {% csrf_token %}
-{{ form|linebreaksbr }}
+
+{{ form.as_p }}
 <br><br>
-<input type="submit" value="Register now!" class="btn btn-success">
+<input type="submit" value="Register now!" class="btn btn-default">
 </form>
 
 

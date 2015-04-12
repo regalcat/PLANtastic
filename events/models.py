@@ -6,7 +6,6 @@ class EventModel(models.Model):
 	eventLocation = models.CharField(max_length=50)
 	eventLocation.blank = True
 	eventDateStart = models.DateField(auto_now=False,auto_now_add=False)
-	#eventDateStart.blank = True
 	
 	EVENT_TYPES = (
 		('Dinner', 'Dinner'), 
