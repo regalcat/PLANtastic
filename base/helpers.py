@@ -2,7 +2,7 @@ from django.contrib.sessions.models import Session
 from django.contrib.auth.models import User
 from django.utils import timezone
 from invite.models import MembershipModel
-import datetime
+
 
 from events.models import EventModel
 
@@ -15,20 +15,25 @@ def getUserEvents(user_):
 
 def isPreviousEvent(event_):
 	today = timezone.now().date()
-	#today = datetime.datetime.now().date()
 	if event_.eventDateStart == None:
 		return True
+
+	subevent = event_.getEvent(event_.eventid)
+	if subevent.eventType != u'dinner':
+		if subevent.eventDateEnd:
+			return subevent.eventDateEnd < today
+
 	return event_.eventDateStart < today
 
 def isUpcomingEvent(event_):
 	today = timezone.now().date()
-	#today = datetime.today.date()
 	if event_.eventDateStart == None:
 		return True
 	
-	#subevent = event_.getEvent(event_.eventid)
-	#if subevent.eventDateEnd:
-	#	return subevent.eventDateEnd >= today
+	subevent = event_.getEvent(event_.eventid)
+	if subevent.eventType != u'dinner':
+		if subevent.eventDateEnd:
+			return subevent.eventDateEnd >= today
 
 	return event_.eventDateStart >= today
 
