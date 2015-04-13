@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import check_password, make_password, is_password_usable
 from django.views.generic.edit import FormView
 
+
 #imported from our project
 from events.models import EventModel
 from base.helpers import getMenuInfo
@@ -20,7 +21,7 @@ def profile(request):
 	user1 = request.user
 	profile = user1.profile
 	
-	context = {'menu' : getMenuInfo(request), 'title' : "Profile", 'membership' : request.user.date_joined, 'name' : request.user.get_short_name(), 'fullname' : request.user.get_full_name(), 'email' : request.user.email, 'username' : request.user.username, 'birthday' : request.user.profile.getBirthday(), 'gender' : request.user.profile.gender, 'description' : request.user.profile.description}
+	context = {'menu' : getMenuInfo(request), 'title' : "Profile", 'membership' : request.user.date_joined, 'name' : request.user.get_short_name(), 'fullname' : request.user.get_full_name(), 'email' : request.user.email, 'username' : request.user.username, 'birthday' : request.user.profile.getBirthday(), 'gender' : request.user.profile.gender, 'description' : request.user.profile.description, 'avatar' : request.user.profile.avatar }
 	
 	return render(request, 'profile/profile.html', context)
 
@@ -59,11 +60,15 @@ def checkInformation(request):
 @login_required(login_url = '/loginRequired/')  # User have to be logged in to see this view - if not: redirects to login_url
 def editInformation(request):
 	if request.method == "POST":
-		profileform = ProfileForm(request.POST, instance = request.user.profile)
+		profileform = ProfileForm(request.POST, request.FILES, instance = request.user.profile)
 		userform = UserForm(request.POST, instance = request.user)
 		if userform.is_valid() and profileform.is_valid():
+			avatar = profileform.cleaned_data['avatar']
 			profileform.save()
 			userform.save()
+			profile = request.user.profile
+			profile.avatar = avatar
+			profile.save()
 			return HttpResponseRedirect(reverse('profile:manageAccount'))
 
 
