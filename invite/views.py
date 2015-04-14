@@ -79,7 +79,6 @@ def join_event(request):
 def editMemberStatus(request, eventid):
 	if request.method == "POST":
 		username = request.POST['user']
-		eventid = request.POST['event']
 		status = request.POST['status']
 		user = User.objects.filter(username = username)
 		event = EventModel.objects.filter(eventid = eventid)

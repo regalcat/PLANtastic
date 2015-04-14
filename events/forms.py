@@ -50,3 +50,5 @@ class GenericGatheringForm(EventForm):
 		model = GenericGatheringModel
 		fields = ('eventDateEnd',)
 		widgets = {'eventDateEnd' : SelectDateWidget(), }
+
+

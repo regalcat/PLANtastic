@@ -1,4 +1,6 @@
 {% extends 'events/base_event_home.html'%}
 {% block middle %}
+{% if creatorpermission %}
 <a href="delete"><button type="button" class="btn btn-danger">Delete Event</button></a>
+{% endif %}
 {% endblock %}
