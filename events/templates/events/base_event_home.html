@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}event_home.css">
+<div class="panel panel-default">
+	<div class="panel-heading">
+			<h3 class="panel-title">Description</h3>
+		</div>
+	{% include event.eventDescriptionTemplate %}
+</div>
+
+{% block top %}{% endblock %}
+<div class="panel panel-default">
+	<div class="panel-heading">
+			<h3 class="panel-title">Members</h3>
+		</div>
+	<div class="panel-body">
+
+	<div class="container">
+	<div class="table-responsive">
+	<table class="table">
+		<thead><tr><td><b>#</b></td><td><b>Name</b></td><td><b>Status</b></td></thead>
+		<tbody>
+		{% for member in members %}
+		<tr>
+		<td>{{ forloop.counter }}</td>
+		<td>{{ member.user.first_name }} {{ member.user.last_name }}</td>
+		<td>{{member.get_status_display}}</td>
+		</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+	</div></div>
+</div>
+</div>
+{% block middle %}{% endblock %}
+{% for tool in tools %}
+<br />
+<div class="panel panel-default">
+	{% include tool.tile_template %}
+</div>
+{% endfor %}
+{% block bottom %}{% endblock %}
+{% endblock %}
