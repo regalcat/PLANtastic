@@ -73,7 +73,7 @@ def new(request):
 				eventDateEnd=eventDateEnd, eventType=eventType)
 			event.save()
 
-	elif (request.POST['eventType'] == u'otherGathering'):
+		elif (request.POST['eventType'] == u'otherGathering'):
 
 			eventDateEnd=request.POST['eventDateEnd']
 			if eventDateEnd == '':
