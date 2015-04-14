@@ -27,13 +27,16 @@ class eventHomeView(View):
 		context.update({'menu' : getMenuInfo(request), 'event' : event, \
 			'tools' : tools_data['tools'], 'members' : members})
 
-		permissionevent = EventModel.objects.filter(eventid=eventid)
+		#print context['upload_pics']['pics']
+		if isPreviousEvent(event):
+			permissionevent = EventModel.objects.filter(eventid=eventid)
 		if isCreator(request.user, permissionevent[0]):
 			context['creator'] =  True
 		if isCoplanner(request.user, permissionevent[0]):
 			context['coplanner'] = True
 
 		if not isUpcomingEvent(event):
+
 			return render(request, 'events/past_event_home.html', context)
 		return render(request, 'events/event_home.html', context)
 

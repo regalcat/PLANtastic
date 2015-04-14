@@ -8,10 +8,10 @@ class EventModel(models.Model):
 	eventDateStart = models.DateField(auto_now=False,auto_now_add=False)
 	
 	EVENT_TYPES = (
-		('Dinner', 'Dinner'), 
-		('Hike', 'Hike'), 
-		('Other Trip', 'Other Trip'),
-		('Other Gathering', 'Other Gathering'),
+		('dinner', 'Dinner'), 
+		('hike', 'Hike'), 
+		('otherTrip', 'Other Trip'),
+		('otherGathering', 'Other Gathering'),
 	)
 
 	
