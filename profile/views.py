@@ -67,7 +67,8 @@ def editInformation(request):
 			profileform.save()
 			userform.save()
 			profile = request.user.profile
-			profile.avatar = avatar
+			if avatar:
+				profile.avatar = avatar
 			profile.save()
 			return HttpResponseRedirect(reverse('profile:manageAccount'))
 
