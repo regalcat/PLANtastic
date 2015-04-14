@@ -44,6 +44,8 @@
 </div>
 {% endfor %}
 
+<a href="tools/allergy_list"><button type="button" class="btn btn-default">Allergy List Tool</button></a>
+<br><br>
 <!-- TODO: Move this into the edit event page.-->
 <form action= "{% url 'base:deleteEvent' %}" method= "POST">
 {% csrf_token %}
