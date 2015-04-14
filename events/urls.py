@@ -14,5 +14,6 @@ urlpatterns = patterns('',
 	url(r'^tools/', include('tools.urls', namespace='tools')),
 	url(r'^editMembers', views.editMembers, name='editMembers'),
 	url(r'^editMemberStatus', invite_views.editMemberStatus, name='editMemberStatus'),
+	url(r'^editEvent', views.editEvent, name='editEvent'),
 
 )

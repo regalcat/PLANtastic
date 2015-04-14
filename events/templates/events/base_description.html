@@ -7,7 +7,7 @@
 
 <p><b>Start Date:</b>  {{ event.eventDateStart }}</p>
 {% block end_date %}{% endblock %}
-<p><b>Type:</b>  {{ event.eventType }}</p>
+<p><b>Type:</b>  {{ event.get_eventType_display }}</p>
 
 {% if event.eventDescription %}
 <p><b>Description:</b>  {{ event.eventDescription }}</p>
