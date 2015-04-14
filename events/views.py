@@ -32,6 +32,12 @@ def past(request):
 
 @login_required(login_url = '/loginRequired/')
 def editMembers(request, eventid):
+	event = EventModel.objects.filter(eventid=eventid)
+	if memberCheck(request.user, event[0]) == False:
+		return render(request, 'invite/notMember.html', {'menu' : getMenuInfo(request), 'title' : 'Not Member'})
+	if isCreator(request.user, event[0]) == False:
+		return render(request, 'events/notPermission.html', {'menu' : getMenuInfo(request), 'title' : 'Not Permission'})
+
 	event = EventModel.getEvent(eventid)
 	members = MembershipModel.objects.filter(event = event)
 
