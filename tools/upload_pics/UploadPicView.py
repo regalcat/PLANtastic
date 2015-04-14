@@ -7,7 +7,7 @@ from events.models import EventModel
 class UploadPicFormView(CreateView):
 	template_name = "upload_pics/upload_pic_form.html"
 	model = UploadedPicModel
-	fields = ['caption', 'file']
+	fields = ['title', 'caption', 'file']
 
 	def get(self, request, eventid):
 		self.eventid = eventid

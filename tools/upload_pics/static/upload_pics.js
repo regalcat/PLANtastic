@@ -1,16 +1,19 @@
 function select(index) {
 	picture = document.getElementById(index);
-	select = document.getElementById("select");
-	oldSelectedIndex = select.selectedIndex;
-	select.selectedIndex = index;
+	selectObj = document.getElementById("select");
+	oldSelectedIndex = selectObj.selectedIndex;
+	selectObj.selectedIndex = index;
 	deoutline(document.getElementById(oldSelectedIndex));
 	outline(picture);
 }
 
-deoutline(pic) {
-
+function deoutline(pic) {
+	// Needed because "None" option does not have an associated element.
+	if (pic != null) {
+		pic.style.border = "0px solid #000000";
+	}
 }
 
-outline(pic) {
-
+function outline(pic) {
+	pic.style.border = "thick solid #5555FF";
 }

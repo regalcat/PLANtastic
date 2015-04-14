@@ -29,21 +29,21 @@ def getMemberStatus(user_, event_):
 
 def isMember(user_, event_):
 	membership = MembershipModel.objects.filter(user=user_, event=event_)
-	if membership.status == "Member":
+	if membership[0].status == "MEM":
 		return True
 	else:
 		return False
 
 def isCoplanner(user_, event_):
 	membership = MembershipModel.objects.filter(user=user_, event=event_)
-	if membership.status == "Coplanner":
+	if membership[0].status == "CP":
 		return True
 	else:
 		return False
 
 def isCreator(user_, event_):
 	membership = MembershipModel.objects.filter(user=user_, event=event_)
-	if membership.status == "Creator":
+	if membership[0].status == "CR":
 		return True
 	else:
 		return False

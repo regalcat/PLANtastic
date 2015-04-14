@@ -12,4 +12,5 @@ class UploadedPicModel(models.Model):
 	caption = models.CharField(max_length=200, blank=True, null=True)
 	file = models.FileField(upload_to=getUploadDir)
 	uploader = models.ForeignKey(User)
+	title = models.CharField(max_length=50)
 

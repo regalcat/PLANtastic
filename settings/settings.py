@@ -44,6 +44,7 @@ INSTALLED_APPS = (
 	'tools',
 	'tools.item_share',
 	'tools.upload_pics',
+	'tools.allergy_list',
 	'users',
 )
 
@@ -98,3 +99,12 @@ STATICFILES_DIRS = (
 	'/var/www/planner/static/',
 )
 STATIC_URL = '/static/'
+
+
+## MEDIA
+
+MEDIA_ROOT = '/var/www/planner/cs309_g27_grouptripplanner/base/static/avatar_pics/'
+
+
+MEDIA_URL = '/profile/media/'
+

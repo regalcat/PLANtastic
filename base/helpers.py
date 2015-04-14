@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from invite.models import MembershipModel
 
+
 from events.models import EventModel
 
 def getUserEvents(user_):
@@ -13,15 +14,27 @@ def getUserEvents(user_):
 	return events
 
 def isPreviousEvent(event_):
-	today = timezone.now()
+	today = timezone.now().date()
 	if event_.eventDateStart == None:
 		return True
+
+	subevent = event_.getEvent(event_.eventid)
+	if subevent.eventType != u'dinner':
+		if subevent.eventDateEnd:
+			return subevent.eventDateEnd < today
+
 	return event_.eventDateStart < today
 
 def isUpcomingEvent(event_):
-	today = timezone.now()
+	today = timezone.now().date()
 	if event_.eventDateStart == None:
 		return True
+	
+	subevent = event_.getEvent(event_.eventid)
+	if subevent.eventType != u'dinner':
+		if subevent.eventDateEnd:
+			return subevent.eventDateEnd >= today
+
 	return event_.eventDateStart >= today
 
 def getPreviousEvents(user_):

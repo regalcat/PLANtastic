@@ -18,6 +18,7 @@ from models import EventModel, HikeEventModel, DinnerEventModel, GenericTripMode
 from invite.models import InviteModel, MembershipModel
 from users.forms import UserRegistrationForm
 from base.helpers import getMenuInfo
+from base.permissions import memberCheck, isCreator
 
 
 @login_required(login_url = '/loginRequired/')
@@ -31,6 +32,12 @@ def past(request):
 
 @login_required(login_url = '/loginRequired/')
 def editMembers(request, eventid):
+	event = EventModel.objects.filter(eventid=eventid)
+	if memberCheck(request.user, event[0]) == False:
+		return render(request, 'invite/notMember.html', {'menu' : getMenuInfo(request), 'title' : 'Not Member'})
+	if isCreator(request.user, event[0]) == False:
+		return render(request, 'events/notPermission.html', {'menu' : getMenuInfo(request), 'title' : 'Not Permission'})
+
 	event = EventModel.getEvent(eventid)
 	members = MembershipModel.objects.filter(event = event)
 
@@ -43,20 +50,20 @@ def editMembers(request, eventid):
 
 
 @login_required(login_url = '/loginRequired/')
-def deleteEvent(request):
-	if request.method == "POST":
-		eventid = request.POST['eventid']
-		event = EventModel.objects.filter(eventid=eventid)
-		eventChild = EventModel.getEvent(eventid)
-		eventChild.delete()
-		event.delete()
-		# TODO : delete also from invite table everyone in event
-
-		return HttpResponseRedirect(reverse('base:upcoming'))
+def deleteEvent(request, eventid):
+	
+	event = EventModel.objects.filter(eventid=eventid)
+	if memberCheck(request.user, event[0]) == False:
+		return render(request, 'invite/notMember.html', {'menu' : getMenuInfo(request), 'title' : 'Not Member'})
+	if isCreator(request.user, event[0]) == False:
+		return render(request, 'events/notPermission.html', {'menu' : getMenuInfo(request), 'title' : 'Not Permission'})
+	
+	eventChild = EventModel.getEvent(eventid)
+	eventChild.delete()
+	event.delete()
+	# TODO : delete also from invite table everyone in event
 
 	return HttpResponseRedirect(reverse('base:upcoming'))
-		
-	
 
 @login_required(login_url = '/loginRequired/')  # User have to be logged in to see this view - if not: redirects to loginRequired
 def submit_new(request):

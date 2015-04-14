@@ -9,7 +9,7 @@
 			<h3 class="panel-title">Edit Information</h3>
 		</div>
 <div class="panel-body">
-	<form action= "{% url 'profile:editInformation' %}" method= "POST">
+	<form enctype = "multipart/form-data" action= "{% url 'profile:editInformation' %}"  method= "POST">
 	{% csrf_token %}
 
 	{{ userform.as_p }}

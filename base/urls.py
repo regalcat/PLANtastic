@@ -16,8 +16,6 @@ urlpatterns = patterns('',
 	url(r'^upcoming/', event_views.upcoming, name='upcoming'),
 	url(r'^past/', event_views.past, name='past'),
 	url(r'^new', new_event_views.new, name='new_event'),
-	#add event id to url	
-	url(r'^delete/', event_views.deleteEvent, name='deleteEvent'), 
 
 	url(r'^logout/', users_views.logout, name='logout'),
 	url(r'^login/', users_views.login, name='login'),
