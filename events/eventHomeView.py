@@ -30,10 +30,10 @@ class eventHomeView(View):
 		#print context['upload_pics']['pics']
 		if isPreviousEvent(event):
 			permissionevent = EventModel.objects.filter(eventid=eventid)
-		if isCreator(request.user, permissionevent[0]):
-			context['creator'] =  True
-		if isCoplanner(request.user, permissionevent[0]):
-			context['coplanner'] = True
+			if isCreator(request.user, permissionevent[0]):
+				context['creator'] =  True
+			if isCoplanner(request.user, permissionevent[0]):
+				context['coplanner'] = True
 
 		if not isUpcomingEvent(event):
 
