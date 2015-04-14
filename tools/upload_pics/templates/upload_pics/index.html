@@ -14,7 +14,10 @@
 	<button type="submit" class="btn btn-default" name="delete">Delete Picture</button>
 	<button type="submit" class="btn btn-default" name="edit">Edit Image</button>
 </form>
+<table>
+<tr>
 {% for pic in pics %}
+<td>
 <div class="thumbnail">
 	<img class="img-rounded uploaded-pic" src="/{{ pic.file }}" id="{{ forloop.counter }}" onclick="select({{ forloop.counter }});" alt="{{ pic.title}}: {{ pic.caption}}"><br>
 	<div class="caption">
@@ -23,6 +26,11 @@
 		<p>Uploaded By: {{ pic.uploader.username }}</p>
 	</div>
 </div>
+<td>
+{% if forloop.counter|divisibleby:"3" %}
+</tr>
+<tr>
+{% endif %}
 {% empty %}
 <h2> No pictures have been uploaded yet.</h2>
 {% endfor %}
