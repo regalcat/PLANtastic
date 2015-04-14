@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 
-from tools.allergy_list.models import AllergyModel
+from tools.allergy_list.models import *
 from events.models import EventModel
 from base.helpers import getMenuInfo
 from base.permissions import memberCheck
@@ -17,8 +17,14 @@ def allergyindex(request, eventid):
 			return render(request, 'invite/notMember.html')
 
 	persons = AllergyModel.objects.filter(event = event)
+	vegetarian = getCountVegetarian(eventid)
+	vegan = getCountVegan(eventid)
+	lactose = getCountLactose(eventid)
+	gluten = getCountGluten(eventid)
+	nuts = getCountNuts(eventid)
 	
-	context = {'menu' : getMenuInfo(request), 'title' : "Allergy List", 'list' : persons, 'event' : event }
+	context = {'menu' : getMenuInfo(request), 'title' : "Allergy List", 'list' : persons, 'event' : event, \
+		'vegetarian' : vegetarian, 'vegan' : vegan, 'lactose' : lactose, 'gluten' : gluten, 'nuts' : nuts}
 	return render(request, 'allergy_list/allergyIndex.html', context)
 
 @login_required(login_url = '/loginRequired/')
