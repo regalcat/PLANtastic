@@ -15,10 +15,6 @@ class ItemShareView(ToolView):
 	def getIdentifier():
 		return "item_share"
 
-	@staticmethod
-	def getMainView():
-		return ItemShareView
-
 	def get(self, request, eventid):
 		user = request.user
 		cur_event = EventModel.getEvent(eventid)
