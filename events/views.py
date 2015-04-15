@@ -112,8 +112,16 @@ def editMembers(request, eventid):
 
 
 
+
 @login_required(login_url = '/loginRequired/')
 def deleteEvent(request, eventid):
+	event = EventModel.getEvent(eventid)
+	context = {'menu' : getMenuInfo(request), 'title' : 'Delete Event', 'event':event}
+	return render(request, "events/deleteEvent.html", context)
+
+
+@login_required(login_url = '/loginRequired/')
+def executeDeleteEvent(request, eventid):
 	
 	event = EventModel.objects.filter(eventid=eventid)
 	if memberCheck(request.user, event[0]) == False:
