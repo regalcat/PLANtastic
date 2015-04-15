@@ -11,10 +11,6 @@ class UploadPicsView(ToolView):
 		return "upload_pics"
 	
 	@staticmethod
-	def getMainView():
-		return UploadPicView
-
-	@staticmethod
 	def getContext(event_):
 		context = {}
 		context['pics'] = UploadedPicModel.objects.filter(event_id = event_.eventid)
