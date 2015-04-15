@@ -72,6 +72,7 @@ def join_event(request):
 		if (MembershipModel.objects.filter(event=invite.inviteEvent, user=request.user).count() == 0):
 			member = MembershipModel(event=invite.inviteEvent, user=request.user, status=MembershipModel.COPLANNER)
 			member.save()
+			invite.delete()
 		return HttpResponseRedirect('http://'+str(request.get_host())+'/'+str(invite.inviteEvent.eventid))
 	return render(request, 'invite/join.html', { 'menu' : getMenuInfo(request), 'title' : "Join Event" })
 
