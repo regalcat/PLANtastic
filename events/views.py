@@ -18,7 +18,8 @@ from models import EventModel, HikeEventModel, DinnerEventModel, GenericTripMode
 from invite.models import InviteModel, MembershipModel
 from users.forms import UserRegistrationForm
 from base.helpers import getMenuInfo
-from base.permissions import memberCheck, isCreator
+from base.permissions import memberCheck, isCreator, isCoplanner
+from forms import EventForm, HikeForm, GenericTripForm, GenericGatheringForm
 
 
 @login_required(login_url = '/loginRequired/')
@@ -29,6 +30,66 @@ def upcoming(request):
 def past(request):
 	
 	return render(request, 'events/past.html', { 'menu' : getMenuInfo(request), 'title' : "Past Events"})
+
+@login_required(login_url = '/loginRequired/')
+def editEvent(request, eventid):
+	event = EventModel.objects.filter(eventid=eventid)
+	if memberCheck(request.user, event[0]) == False:
+		return render(request, 'invite/notMember.html', {'menu' : getMenuInfo(request), 'title' : 'Not Member'})
+	if isCreator(request.user, event[0]) == False:
+		if isCoplanner(request.user, event[0]) == False:
+			return render(request, 'events/notPermission.html', \
+			{'menu' : getMenuInfo(request), 'title' : 'Not Permission'})
+	
+	
+	event = EventModel.getEvent(eventid)
+
+	if request.method == 'GET':
+		editeventform = EventForm(instance = event)
+		context = {'menu' : getMenuInfo(request), 'title' : 'Edit Event', \
+			'editeventform' : editeventform, 'event' : event}
+
+		if event.eventType == u'hike':
+			hikeform = HikeForm(instance = event)
+			context['hikeform'] = hikeform
+		elif event.eventType == u'otherTrip':
+			tripform = GenericTripForm(instance = event)
+			context['tripform'] = tripform
+
+		elif event.eventType == u'otherGathering':
+			otherform = GenericGatheringForm(instance = event)
+			context['otherform'] = otherform
+		
+		return render(request, 'events/editEvent.html', context)
+		
+	if request.method == 'POST':
+		editeventform = EventForm(request.POST, instance = event)
+		context = {'menu' : getMenuInfo(request), 'title' : 'Edit Event', \
+			'editeventform' : editeventform, 'event' : event}
+		if editeventform.is_valid():
+			if event.eventType == u'hike':
+				hikeform = HikeForm(request.POST, instance = event)
+				if hikeform.is_valid():
+					editeventform.save()
+					hikeform.save()
+				context['hikeform'] = hikeform
+			elif event.eventType == u'otherTrip':
+				tripform = GenericTripForm(request.POST, instance = event)
+				if tripform.is_valid():
+					editeventform.save()
+					tripform.save()
+				context['tripform'] = tripform
+			elif event.eventType == u'otherGathering':
+				otherform = GenericGatheringForm(request.POST, instance = event)
+				if otherform.is_valid():
+					editeventform.save()
+					otherform.save()
+				context['otherform'] = otherform
+
+		return render(request, 'events/editEvent.html', context)
+
+
+
 
 @login_required(login_url = '/loginRequired/')
 def editMembers(request, eventid):

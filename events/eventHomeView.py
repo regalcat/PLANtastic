@@ -32,13 +32,10 @@ class eventHomeView(View):
 			context['creator'] =  True
 		if isCoplanner(request.user, permissionevent[0]):
 			context['coplanner'] = True
-
-		#print context['upload_pics']['pics']
-		#if isPreviousEvent(event):
 			
 		if not isUpcomingEvent(event):
-
 			return render(request, 'events/past_event_home.html', context)
+
 		return render(request, 'events/event_home.html', context)
 
 	@method_decorator(login_required(login_url = '/loginRequired/'))

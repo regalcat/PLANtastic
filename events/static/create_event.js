@@ -21,20 +21,21 @@ function startDate(){
 
 function event3(){
 	var t = document.getElementsByName("eventType");
-	for(var i=0;i<(document.getElementsByName("eventType").length; i++){
+	var i =0;
+	for(i=0; i<document.getElementsByName("eventType").length; i++){
 		if(t[i].checked){
 			if(t[i].value=='Hike')
-				//return 'hike();'
-				return {{ hikeform.as_p }}
+				return 'hike();'
+				//return {{ hikeform.as_p }}
 			else if(t[i].value=='Dinner')
-				//return 'dinner();'
-				return {{ dinnerform.as_p }}
+				return 'dinner();'
+				//return {{ dinnerform.as_p }}
 			else if(t[i].value=='Other Trip')
-				//return 'otherTrip();'
-				return {{ othertripform.as_p }}
+				return 'otherTrip();'
+				//return {{ othertripform.as_p }}
 			else if(t[i].value=='Other Gathering')
-				//return 'otherGathering();'
-				return {{ othergatheringform.as_p }}
+				return 'otherGathering();'
+				//return {{ othergatheringform.as_p }}
 		}
 	}
 }

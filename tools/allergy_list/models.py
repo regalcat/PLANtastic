@@ -15,4 +15,49 @@ class AllergyModel(models.Model):
 	gluten = models.BooleanField(blank = True, default = False, choices = CHOICES)
 	nuts = models.BooleanField(blank = True, default = False, choices = CHOICES)
 	other = models.CharField(max_length = 50, blank = True, null = True)
-	
+
+
+def getCountVegetarian(eventid):
+	event = EventModel.objects.filter(eventid=eventid)
+	entries = AllergyModel.objects.filter(event=event[0])
+	counter = 0
+	for entry in entries:
+		if entry.vegetarian == True:
+			counter += 1
+	return counter
+
+def getCountVegan(eventid):
+	event = EventModel.objects.filter(eventid=eventid)
+	entries = AllergyModel.objects.filter(event=event[0])
+	counter = 0
+	for entry in entries:
+		if entry.vegan == True:
+			counter += 1
+	return counter
+
+def getCountLactose(eventid):
+	event = EventModel.objects.filter(eventid=eventid)
+	entries = AllergyModel.objects.filter(event=event[0])
+	counter = 0
+	for entry in entries:
+		if entry.lactose == True:
+			counter += 1
+	return counter
+
+def getCountGluten(eventid):
+	event = EventModel.objects.filter(eventid=eventid)
+	entries = AllergyModel.objects.filter(event=event[0])
+	counter = 0
+	for entry in entries:
+		if entry.gluten == True:
+			counter += 1
+	return counter
+
+def getCountNuts(eventid):
+	event = EventModel.objects.filter(eventid=eventid)
+	entries = AllergyModel.objects.filter(event=event[0])
+	counter = 0
+	for entry in entries:
+		if entry.nuts == True:
+			counter += 1
+	return counter
