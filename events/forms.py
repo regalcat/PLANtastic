@@ -27,8 +27,11 @@ class HikeForm(EventForm):
 		model = HikeEventModel
 		fields = ('eventDateEnd', 'eventDuration', 'eventElevation', 'eventDistance', 'eventDifficulty',)
 		eventDifficulty = forms.ChoiceField()
+		eventElevation = forms.FloatField()
+		eventDistance = forms.FloatField()
+		eventDuration = forms.TextInput(attrs={'label':'Duration'})
 
-		widgets = {'eventDateEnd' : SelectDateWidget(), 'eventDuration': forms.TextInput(attrs={'label':'Duration'}) , 'eventElevation': forms.FloatField(), 'eventDistance': forms.FloatField() , 'eventDifficulty' : forms.Select(choices=HikeEventModel.LEVELS,)}
+		widgets = {'eventDateEnd' : SelectDateWidget(),  'eventDifficulty' : forms.Select(choices=HikeEventModel.LEVELS,)}
 
 
 class DinnerForm(EventForm):
@@ -50,3 +53,5 @@ class GenericGatheringForm(EventForm):
 		model = GenericGatheringModel
 		fields = ('eventDateEnd',)
 		widgets = {'eventDateEnd' : SelectDateWidget(), }
+
+

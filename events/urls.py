@@ -9,10 +9,12 @@ from invite import views as invite_views
 urlpatterns = patterns('',
 	url(r'^$', eventHomeView.as_view(), name='eventHome'),
 	url(r'^delete', views.deleteEvent, name='deleteEvent'),
+	url(r'^executeDelete', views.executeDeleteEvent, name='executeDeleteEvent'),
 	url(r'^invite', InviteView.as_view(), name='invite'),
 	url(r'^invite-action', InviteForm, name='invite-action'),
-	url(r'^tools/', include('tools.urls')),
+	url(r'^tools/', include('tools.urls', namespace='tools')),
 	url(r'^editMembers', views.editMembers, name='editMembers'),
 	url(r'^editMemberStatus', invite_views.editMemberStatus, name='editMemberStatus'),
+	url(r'^editEvent', views.editEvent, name='editEvent'),
 
 )

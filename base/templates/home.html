@@ -15,11 +15,14 @@
 	<td>
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<a href="/{{ e.eventid }}"><h3 class="panel-title">{{e.eventName}}</h3></a>
+				<h3 class="panel-title">{{e.eventName}}</h3>
 			</div>
 			<div class="panel-body">
 				<p><b>Start Date:</b> {{e.eventDateStart}}</p>
 				<p><b>Description:</b> {{e.eventDescription}}</p>
+			</div>
+			<div class="panel-footer">
+				<center><a href="/{{e.eventid}}"><button class="btn btn-default">Go to event</button></a></center>
 			</div>
 		</div>
 	</td>
@@ -28,15 +31,20 @@
 <tr>
 {% endif %}
 {% endfor %}
+</tr>
+<tr>
 {% for f in menu.prev_events %}
 	<td>                                                                                                                          
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<a href="/{{ f.eventid }}"><h3 class="panel-title">{{f.eventName}}</h3></a>
+				<h3 class="panel-title">{{f.eventName}}</h3>
 			</div>
 			<div class="panel-body">
-				<p><b>Start Date:</b> {{f.eventDateStart}}</p>
-				<p><b>Description:</b> {{f.eventDescription}}</p>
+				<p><strong>Start Date:</strong> {{f.eventDateStart}}</p>
+				<p><strong>Description:</strong> {{f.eventDescription}}</p>
+			</div>
+			<div class="panel-footer">
+					<center><a href="/{{f.eventid}}"><button class="btn btn-default">Go to Event</button></a></center>
 			</div>
 		</div>
 	</td>

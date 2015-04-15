@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="page-header">
+	<font size="6">Edit event</font>
+</div>
+
+<div class="panel panel-default">
+<div class="panel-body">
+
+	<form action= "" method= "POST">
+	{% csrf_token %}
+	{{ editeventform.as_p }}
+
+	{% if hikeform %}
+	{{ hikeform.as_p }}
+	{% endif %}
+
+	{% if tripform %}
+	{{ tripform.as_p }}
+	{% endif %}
+
+	{% if otherform %}
+	{{ otherform.as_p }}
+	{% endif %}
+
+	<input type= "submit" value="Edit event" class="btn btn-default">	
+	</form>
+
+</div></div>
+
+{% if creator %}
+<a href="{{menu.server}}/{{event.eventid}}/
+delete"><button type="button" class="btn btn-danger">Delete Event</button></a>
+{% endif %}
+<br><br>
+<a href="{{menu.server}}/{{event.eventid}}"><button type="button" class="btn btn-default">Go Back</button></a>
+
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="page-header">
+	<font size="6">Allergy and Foodpreference List</font></div>
+
+<div class="panel-body">
+<div class="container">
+	<div class="table-responsive">
+	<table class="table">
+	
+	<thead><tr><td><b>Name</b></td><td><b>Vegetarian</b></td><td><b>Vegan</b></td>
+	<td><b>Lactose</b></td><td><b>Gluten</b></td><td><b>Nuts</b></td><td><b>Other</b></td></thead>
+	
+	<tbody>
+		{% for person in list %}
+		<tr>
+		<td>{{ person.user.first_name }} {{ person.user.last_name }}</td>
+		<td>{{ person.get_vegetarian_display }}</td>
+		<td>{{ person.get_vegan_display }}</td>
+		<td>{{ person.get_lactose_display }}</td>
+		<td>{{ person.get_gluten_display }}</td>
+		<td>{{ person.get_nuts_display }}</td>
+		<td>{{ person.other }}</td>
+		</tr>
+		{% endfor %}
+
+		<tr>
+		<td><b>Total Allergies:</b></td>
+		<td><b>{{ vegetarian }} vegetarians</b></td>
+		<td><b>{{ vegan }} vegans</b></td>
+		<td><b>{{ lactose }} lactose</b></td>
+		<td><b>{{ gluten }} gluten</b></td>
+		<td><b>{{ nuts }} nuts</b></td>
+		<td></td>
+		</tr>
+	</tbody>
+
+
+</table></div></div>
+</div>
+<a href="addAllergy"><button type="button" class="btn btn-default">Add allergies</button></a>
+<a href="{{menu.server}}/{{event.eventid}}"><button type="button" class="btn btn-default">Go Back</button></a>
+
+{% endblock %}

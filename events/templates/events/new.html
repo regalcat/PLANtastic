@@ -17,12 +17,12 @@
 
 {{ eventform.as_p }}
 
-
+<html>
  <p>Event Type:</p>
-  <input name="eventType" type="radio" value="dinner" onclick="dinner();" id="eventType"/>Dinner </p>
-  <input name="eventType" type="radio" value="hike" onclick="hike();" id="eventType"/>Hike </p>
-  <input name="eventType" type="radio" value="otherTrip" onclick="otherTrip();" id="eventType"/>Other Trip </p>
-  <input name="eventType" type="radio" value="otherGathering" onclick="otherGathering();" id="eventType"/>Other Gathering </p>
+  <input name="eventType" type="radio" value="dinner" onclick="dinner()" id="eventType"/>Dinner </p>
+  <input name="eventType" type="radio" value="hike" onclick="hike()" id="eventType"/>Hike </p>
+  <input name="eventType" type="radio" value="otherTrip" onclick="otherTrip()" id="eventType"/>Other Trip </p>
+  <input name="eventType" type="radio" value="otherGathering" onclick="otherGathering()" id="eventType"/>Other Gathering </p>
 
 	
 
@@ -64,8 +64,8 @@
  
 <a href=""><input type= "submit" value="Create Event" class="btn btn-default">
 </form>
-<!-- TODO <button type="button" onclick="">Next</button></a>-->
 </body>
 </html>
+
 {% endblock %}
 
