@@ -36,8 +36,10 @@ def editEvent(request, eventid):
 	event = EventModel.objects.filter(eventid=eventid)
 	if memberCheck(request.user, event[0]) == False:
 		return render(request, 'invite/notMember.html', {'menu' : getMenuInfo(request), 'title' : 'Not Member'})
-	if isCreator(request.user, event[0]) == False:
-		if isCoplanner(request.user, event[0]) == False:
+	creator = isCreator(request.user, event[0])
+	coplanner = isCoplanner(request.user, event[0])
+	if creator == False:
+		if coplanner == False:
 			return render(request, 'events/notPermission.html', \
 			{'menu' : getMenuInfo(request), 'title' : 'Not Permission'})
 	
@@ -47,7 +49,7 @@ def editEvent(request, eventid):
 	if request.method == 'GET':
 		editeventform = EventForm(instance = event)
 		context = {'menu' : getMenuInfo(request), 'title' : 'Edit Event', \
-			'editeventform' : editeventform, 'event' : event}
+			'editeventform' : editeventform, 'event' : event, 'creator' : creator, 'coplanner' : coplanner}
 
 		if event.eventType == u'hike':
 			hikeform = HikeForm(instance = event)
@@ -65,7 +67,7 @@ def editEvent(request, eventid):
 	if request.method == 'POST':
 		editeventform = EventForm(request.POST, instance = event)
 		context = {'menu' : getMenuInfo(request), 'title' : 'Edit Event', \
-			'editeventform' : editeventform, 'event' : event}
+			'editeventform' : editeventform, 'event' : event, 'creator' : creator, 'coplanner' : coplanner}
 		if editeventform.is_valid():
 			if event.eventType == u'hike':
 				hikeform = HikeForm(request.POST, instance = event)
