@@ -18,6 +18,13 @@ class ThreadModel(models.Model):
 	forum = models.ForeignKey(Forum)
 	threads = models.Manager()
 
+	def num_posts(self):
+		return self.post_set.count()
+
+	def last_post(self):
+		if self.post_set.count():
+			return self.post_set.order_by("created")[0]
+
 class PostModel(models.Model):
 	title = models.CharField(max_length = 100)
 	created = models.DateTimeField(auto_now_add=True)

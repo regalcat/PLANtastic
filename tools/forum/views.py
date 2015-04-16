@@ -16,6 +16,10 @@ class ForumView(ToolView):
 	def getIdentifier():
 		return "forum"
 	
+	def numPosts(cur_thread):
+		num = PostModel.posts.filter(thread = cur_thread)
+		return num
+
 	def get(self, request, eventid):
 		user = request.user
 		cur_event = EventModel.getEvent(eventid)
