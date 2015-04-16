@@ -32,7 +32,7 @@ class EventModel(models.Model):
 		if (events.count() == 1):
 			return events[0]
 		events = GenericGatheringModel.objects.filter(eventid=event_id)
-		if events.count() == 1:
+		if (events.count() == 1):
 			return events[0]
 		events = DinnerEventModel.objects.filter(eventid=event_id)
 		if (events.count() == 1):

@@ -6,7 +6,9 @@
 {% endif %}
 
 <p><b>Start Date:</b>  {{ event.eventDateStart }}</p>
+{% if event.eventDateEnd %}
 {% block end_date %}{% endblock %}
+{% endif %}
 <p><b>Type:</b>  {{ event.get_eventType_display }}</p>
 
 {% if event.eventDescription %}
