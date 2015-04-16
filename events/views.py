@@ -8,6 +8,8 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import check_password, make_password, is_password_usable
 from django.views.generic.edit import FormView
+from django.contrib.auth.models import User
+from base.permissions import getMemberObject
 
 from os import listdir
 from os.path import isfile, join
@@ -116,8 +118,8 @@ def editMembers(request, eventid):
 		member = getMemberObject(user, event)
 		member.status = status
 		member.save()
-			
-		return render(request, 'events/editMembers.html', { 'menu' : getMenuInfo(request), 'title' : "Edit Members", 'event' : event, 'members' : members})
+		
+		return HttpResponseRedirect("")	
 
 
 
