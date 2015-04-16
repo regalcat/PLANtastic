@@ -1,6 +1,16 @@
 {% extends "base.html" %}
 {% block content %}
 <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}event_home.css">
+
+<div class="page-header">
+	<font size="6">{{event.eventName}}</font>
+</div>
+
+<div class="panel panel-default"><div class="panel-body">
+<center><img src="{{ event.picture.url }}" alt="event picture"></center>
+</div></div>
+
+
 <div class="panel panel-default">
 	<div class="panel-heading">
 			<h3 class="panel-title">Description</h3>

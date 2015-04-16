@@ -105,7 +105,7 @@ STATIC_URL = '/static/'
 
 ## MEDIA
 
-MEDIA_ROOT = '/var/www/planner/cs309_g27_grouptripplanner/base/static/avatar_pics/'
+MEDIA_ROOT = '/var/www/planner/cs309_g27_grouptripplanner/base/static/'
 
 
 MEDIA_URL = '/profile/media/'

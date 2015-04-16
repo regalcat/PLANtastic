@@ -21,7 +21,7 @@ from invite.models import InviteModel, MembershipModel
 from users.forms import UserRegistrationForm
 from base.helpers import getMenuInfo
 from base.permissions import memberCheck, isCreator, isCoplanner
-from forms import EventForm, HikeForm, GenericTripForm, GenericGatheringForm
+from forms import EventForm, HikeForm, GenericTripForm, GenericGatheringForm, DinnerForm
 
 
 @login_required(login_url = '/loginRequired/')
@@ -54,15 +54,18 @@ def editEvent(request, eventid):
 			'editeventform' : editeventform, 'event' : event, 'creator' : creator, 'coplanner' : coplanner}
 
 		if event.eventType == u'hike':
-			hikeform = HikeForm(instance = event)
-			context['hikeform'] = hikeform
+			subform = HikeForm(instance = event)
+			
 		elif event.eventType == u'otherTrip':
-			tripform = GenericTripForm(instance = event)
-			context['tripform'] = tripform
+			subform = GenericTripForm(instance = event)
 
 		elif event.eventType == u'otherGathering':
-			otherform = GenericGatheringForm(instance = event)
-			context['otherform'] = otherform
+			subform = GenericGatheringForm(instance = event)
+
+		elif event.eventType == u'dinner':
+			subform = DinnerForm(instance = event)
+
+		context['subform'] = subform
 		
 		return render(request, 'events/editEvent.html', context)
 		
@@ -70,27 +73,27 @@ def editEvent(request, eventid):
 		editeventform = EventForm(request.POST, instance = event)
 		context = {'menu' : getMenuInfo(request), 'title' : 'Edit Event', \
 			'editeventform' : editeventform, 'event' : event, 'creator' : creator, 'coplanner' : coplanner}
+
 		if editeventform.is_valid():
 			if event.eventType == u'hike':
-				hikeform = HikeForm(request.POST, instance = event)
-				if hikeform.is_valid():
-					editeventform.save()
-					hikeform.save()
-				context['hikeform'] = hikeform
+				subform = HikeForm(request.POST, instance = event)
+				
 			elif event.eventType == u'otherTrip':
-				tripform = GenericTripForm(request.POST, instance = event)
-				if tripform.is_valid():
-					editeventform.save()
-					tripform.save()
-				context['tripform'] = tripform
+				subform = GenericTripForm(request.POST, instance = event)
+				
 			elif event.eventType == u'otherGathering':
-				otherform = GenericGatheringForm(request.POST, instance = event)
-				if otherform.is_valid():
-					editeventform.save()
-					otherform.save()
-				context['otherform'] = otherform
+				subform = GenericGatheringForm(request.POST, instance = event)
+				
+			elif event.eventType == u'dinner':
+				subform = DinnerForm(request.POST, instance = event)
 
-		return render(request, 'events/editEvent.html', context)
+			if subform.is_valid():
+					editeventform.save()
+					subform.save()
+
+			context['subform'] = subform
+
+		return HttpResponseRedirect("")
 
 
 

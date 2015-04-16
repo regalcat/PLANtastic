@@ -1,5 +1,8 @@
 from django.db import models
 
+def getUploadFileName(instance, filename):
+	return "event_pics/%s" % (filename)
+
 class EventModel(models.Model):
 	eventid = models.AutoField(primary_key=True)
 	eventName = models.CharField(max_length=50)
@@ -61,6 +64,7 @@ class HikeEventModel(EventModel):
 	eventDuration = models.CharField(max_length=30, blank=True)
 	eventElevation = models.IntegerField(blank=True, null=True)
 	eventDistance = models.FloatField(blank=True, null=True)
+	picture = models.ImageField(upload_to = getUploadFileName, default='event_pics/default-event.jpg', blank = True, null = True)
 
 	#EVENT_DIFFICULTIES= (
 	#	('unknown', 'Unknown'),
@@ -80,11 +84,12 @@ class HikeEventModel(EventModel):
 
 class DinnerEventModel(EventModel): # How do we implement this?
 	eventType = 'Dinner'
-
+	picture = models.ImageField(upload_to = getUploadFileName, default='event_pics/default-event.jpg', blank = True, null = True)
 
 class GenericTripModel(EventModel):
 	eventType = 'Other Trip'
 	eventDateEnd = models.DateField(auto_now=False,auto_now_add=False, blank=True, null=True)
+	picture = models.ImageField(upload_to = getUploadFileName, default='event_pics/default-event.jpg', blank = True, null = True)
 	#eventDuration = models.CharField(max_length=30, blank=True)
 	#eventDestination = models.CharField(max_length=200, blank=True)
 	#should this be TextField? How do we want to implement multidestinations?
@@ -95,5 +100,6 @@ class GenericTripModel(EventModel):
 class GenericGatheringModel(EventModel):
 	eventType = 'Other Gathering'
 	eventDateEnd = models.DateField(auto_now=False,auto_now_add=False, blank=True, null=True)
+	picture = models.ImageField(upload_to = getUploadFileName, default='event_pics/default-event.jpg', blank = True, null = True)
 	eventDescriptionTemplate = 'events/other_description.html'
 
