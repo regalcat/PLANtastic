@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<form action= "" method= "POST">
+{% csrf_token %}
+{{ weatherform.as_p }}
+
+<input type= "submit" value="Edit weather information" class="btn btn-default"></form>
+
+
+<a href="{{menu.server}}/{{event.eventid}}/tools/weather"><button type="button" class="btn btn-default">Go Back</button></a>
+{% endblock %}
