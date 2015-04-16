@@ -3,8 +3,12 @@ from django.contrib.auth.models import User
 from django.contrib import admin
 from string import join
 
+#Imported from our code
+from event.models import EventModel
+
 class Forum(models.Model):
 	title = models.CharField(max_length = 100)
+	event = models.ForeignKey(EventModel)
 
 class Thread(models.Model):
 	title = models.CharField(max_length = 100)
