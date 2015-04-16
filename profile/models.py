@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 def getUploadFileName(instance, filename):
-	return "%s" % (filename)
+	return "avatar_pics/%s" % (filename)
 
 class Profile(models.Model):
 
@@ -10,7 +10,7 @@ class Profile(models.Model):
 	birthday = models.DateField(blank=True, null=True)
 	description = models.CharField(max_length = 500, blank = True, null = True)
 	gender = models.CharField(max_length=10, blank=True, null=True, choices = (('Female','Female'), ('Male', 'Male'),))
-	avatar = models.ImageField(upload_to = getUploadFileName, default='default-profile.png', blank = True, null = True)
+	avatar = models.ImageField(upload_to = getUploadFileName, default='avatar_pics/default-profile.png', blank = True, null = True)
 
 	def getBirthday(self):
 		return self.birthday

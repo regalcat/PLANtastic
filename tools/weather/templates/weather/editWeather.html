@@ -2,12 +2,17 @@
 
 {% block content %}
 
+<div class="page-header">
+	<font size="6">Edit weather information</font>
+</div>
+<div class="panel panel-default">
+<div class="panel-body">
 <form action= "" method= "POST">
 {% csrf_token %}
 {{ weatherform.as_p }}
 
 <input type= "submit" value="Edit weather information" class="btn btn-default"></form>
-
+</div></div>
 
 <a href="{{menu.server}}/{{event.eventid}}/tools/weather"><button type="button" class="btn btn-default">Go Back</button></a>
 {% endblock %}
