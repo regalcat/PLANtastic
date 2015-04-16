@@ -17,7 +17,7 @@
 		<td>{{ forloop.counter }}</td>
 		<td>{{ member.user.first_name }} {{ member.user.last_name }}</td>
 		<td>{{ member.get_status_display }}</td>
-		<td><form action= "editMemberStatus" method= "POST">
+		<td><form action= "" method= "POST">
 			{% csrf_token %}
 			<select name="status" id="status">
 			<option value="CR">Creator</option>
