@@ -9,6 +9,7 @@ from django.views.generic.edit import FormView
 from models import EventModel, HikeEventModel, DinnerEventModel, GenericTripModel, GenericGatheringModel
 from invite.models import InviteModel, MembershipModel
 from base.helpers import getMenuInfo
+from tools.weather.models import WeatherModel
 
 
 from forms import EventForm, HikeForm, DinnerForm, GenericTripForm, GenericGatheringForm
@@ -37,7 +38,8 @@ def new(request):
 		member = MembershipModel(event=event, user=request.user, status=MembershipModel.CREATOR)
 		member.save()
 		
-
+		weather = WeatherModel(event = event)
+		weather.save()
 		
 
 		if (request.POST['eventType'] == u'hike'):
@@ -92,6 +94,8 @@ def new(request):
 				eventDateStart=eventDateStart,eventDescription=request.POST['eventDescription'], \
 				eventType=eventType)
 			event.save()
+
+		
 
 		return HttpResponseRedirect('http://'+str(request.get_host())+'/'+str(event.eventid))
 		#return HttpResponseRedirect(reverse('events:eventHome'))

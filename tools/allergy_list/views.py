@@ -14,7 +14,7 @@ from forms import AllergyForm
 def allergyindex(request, eventid):
 	event = EventModel.getEvent(eventid)
 	if memberCheck(request.user, event) == False:
-			return render(request, 'invite/notMember.html')
+			return render(request, 'invite/notMember.html', {'menu' : getMenuInfo(request), 'title' : "Not Member"})
 
 	persons = AllergyModel.objects.filter(event = event)
 	vegetarian = getCountVegetarian(eventid)

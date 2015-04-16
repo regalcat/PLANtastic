@@ -4,4 +4,5 @@ urlpatterns = patterns('',
 	url(r'^item_share/', include('tools.item_share.urls')),
 	url(r'^upload_pics/', include('tools.upload_pics.urls')),
 	url(r'^allergy_list/', include('tools.allergy_list.urls', namespace = 'allergylist')),
+	url(r'^weather/', include('tools.weather.urls', namespace = 'weather')),
 )
