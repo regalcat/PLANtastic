@@ -3,6 +3,7 @@ from base.helpers import isPreviousEvent, isUpcomingEvent
 from tools.item_share.ItemShareView import ItemShareView
 from tools.upload_pics.UploadPicsTool import UploadPicsView
 from tools.weather.weatherTool import WeatherView
+from tools.allergy_list.allergyListTool import AllergyListView
 
 class ToolManager:
 	@staticmethod
@@ -18,4 +19,6 @@ class ToolManager:
 			context['item_share'] = ItemShareView.getContext(event)
 			tools.append(WeatherView)
 			context['weather'] = WeatherView.getContext(event)
+			tools.append(AllergyListView)
+			context['allergy_list'] = AllergyListView.getContext(event)
 		return {'tools' : tools, 'context' : context}

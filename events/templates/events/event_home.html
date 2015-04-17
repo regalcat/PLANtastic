@@ -1,21 +1,15 @@
 {% extends "events/base_event_home.html" %}
 {% block top %}
-{% if creator or coplanner %}
-<a href="editEvent"><button type="button" name="editButton" id="editButton" class="btn btn-default" onclick="">Edit</button></a>
-{% endif %}
+
 <a href="invite"><button type="button" class="btn btn-default">Invite Friends</button></a>
 <br>
 <br>
 {% endblock %}
 
 {% block middle %}
-{% if creator %}
-<a href="editMembers"><button type="button" class="btn btn-default">Edit Members</button></a>
-{% endif %}
+
 <!-- TODO - include map to where the event is -->
-<br />
-<br>
-<a href="tools/allergy_list"><button type="button" class="btn btn-default">Allergy List Tool</button></a>
+
 <br><br>
 
 <!-- include forum.forumTemplate -->

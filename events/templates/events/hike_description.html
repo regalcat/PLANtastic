@@ -11,11 +11,9 @@
 <p><b>Elevation Change:</b>  {{ event.elevation }}<p>
 {% endif %}
 
-
-<!--<p><b>Difficulty:</b>  {{ event.difficulty }}<p>-->
-
-<p><b>Difficulty:</b>  {{ event.get_eventDifficulty_display }}<p>
-
+{% if event.difficulty %}
+<p><b>Difficulty:</b>  {{ event.get_difficulty_display }}<p>
+{% endif %}
 
 {% if event.distance %}
 <p><b>Distance:</b>  {{ event.distance }}</p>

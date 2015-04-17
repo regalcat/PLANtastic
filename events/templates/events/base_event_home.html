@@ -3,7 +3,7 @@
 <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}event_home.css">
 
 <div class="page-header">
-	<font size="6">{{event.eventName}}</font>
+	<font size="6">{{event.name}}</font>
 </div>
 
 <div class="panel panel-default"><div class="panel-body">
@@ -19,7 +19,9 @@
 		{% include event.eventDescriptionTemplate %}
 	</div>
 </div>
-
+{% if creator or coplanner %}
+<a href="editEvent"><button type="button" name="editButton" id="editButton" class="btn btn-default" onclick="">Edit Event</button></a><br><br>
+{% endif %}
 {% block top %}{% endblock %}
 <div class="panel panel-default">
 	<div class="panel-heading">
