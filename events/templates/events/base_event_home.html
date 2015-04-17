@@ -48,10 +48,9 @@
 </div>
 {% block middle %}{% endblock %}
 {% for tool in tools %}
-<br />
-<div class="panel panel-default">
+<br>
 	{% include tool.tile_template %}
-</div>
+<br>
 {% endfor %}
 {% block bottom %}{% endblock %}
 {% endblock %}
