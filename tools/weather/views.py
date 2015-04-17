@@ -12,34 +12,6 @@ from forms import WeatherForm
 
 
 @login_required(login_url = '/loginRequired/')
-def showWeather(request, eventid):
-	event = EventModel.getEvent(eventid)
-	if memberCheck(request.user, event) == False:
-			return render(request, 'invite/notMember.html', {'menu' : getMenuInfo(request), 'title' : "Not Member"})
-
-	context = {'menu' : getMenuInfo(request), 'title' : "Show Weather", 'event' : event}
-	
-	information = WeatherModel.objects.filter(event = event)
-	if information.count() == 1:
-		context['state'] = information[0].get_state_display
-		context['degreeType'] = information[0].degreeType
-
-		city = information[0].city.title()
-		new = ""
-		for i in range(len(city)):
-			if city[i] == " ":
-				new = new + "+"
-			else:
-				new = new + city[i]
-
-		context['city'] = new
-
-
-	return render(request, 'weather/showWeather.html', context)
-
-
-
-@login_required(login_url = '/loginRequired/')
 def editWeather(request, eventid):
 	event = EventModel.getEvent(eventid)
 	if memberCheck(request.user, event) == False:
