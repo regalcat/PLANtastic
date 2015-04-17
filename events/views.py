@@ -19,7 +19,7 @@ from os.path import isfile, join
 from models import EventModel, HikeEventModel, DinnerEventModel, GenericTripModel, GenericGatheringModel
 from invite.models import InviteModel, MembershipModel
 from users.forms import UserRegistrationForm
-from base.helpers import getMenuInfo
+from base.helpers import getMenuInfo, isPreviousEvent
 from base.permissions import memberCheck, isCreator, isCoplanner
 from forms import EventForm, HikeForm, GenericTripForm, GenericGatheringForm, DinnerForm
 
@@ -53,6 +53,11 @@ def editEvent(request, eventid):
 		context = {'menu' : getMenuInfo(request), 'title' : 'Edit Event', \
 			'editeventform' : editeventform, 'event' : event, 'creator' : creator, 'coplanner' : coplanner}
 
+		if isPreviousEvent(event):
+			context['previous'] = True
+		else:
+			context['upcoming'] = True
+
 		if event.eventType == u'hike':
 			subform = HikeForm(instance = event)
 			
@@ -71,8 +76,6 @@ def editEvent(request, eventid):
 		
 	if request.method == 'POST':
 		editeventform = EventForm(request.POST, instance = event)
-		context = {'menu' : getMenuInfo(request), 'title' : 'Edit Event', \
-			'editeventform' : editeventform, 'event' : event, 'creator' : creator, 'coplanner' : coplanner}
 
 		if editeventform.is_valid():
 			if event.eventType == u'hike':
@@ -90,8 +93,6 @@ def editEvent(request, eventid):
 			if subform.is_valid():
 					editeventform.save()
 					subform.save()
-
-			context['subform'] = subform
 
 		return HttpResponseRedirect("")
 

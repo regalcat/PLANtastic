@@ -19,7 +19,6 @@ def isPreviousEvent(event_):
 		return True
 
 	subevent = event_.getEvent(event_.eventid)
-	ty=subevent.eventType
 	if (subevent.eventType != u'dinner'):
 	
 		if subevent.event_End_Date != None:

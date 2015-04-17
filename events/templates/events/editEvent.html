@@ -18,11 +18,15 @@
 
 </div></div>
 
+{% if upcoming %}
 <a href="tools/weather/editWeather"><button type="button" class="btn btn-default">Edit Weather Information</button></a>
+{% endif %}
+
 {% if creator %}
 <a href="editMembers"><button type="button" class="btn btn-default">Edit Members</button></a>
 {% endif %}
 <br><br>
+
 {% if creator %}
 <a href="{{menu.server}}/{{event.eventid}}/
 delete"><button type="button" class="btn btn-danger">Delete Event</button></a>
