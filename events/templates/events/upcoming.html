@@ -6,11 +6,11 @@
 {% for e in menu.upcoming_events %}
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<h3 class="panel-title">{{ e.eventName }}</h3>
+			<h3 class="panel-title">{{ e.name }}</h3>
 		</div>
 		<div class="panel-body">
-			<p><b>Date:</b> {{ e.eventDateStart }}</p>
-			<p><b>Location:</b> {{e.eventLocation }}</p>
+			<p><b>Date:</b> {{ e.event_Start_Date }}</p>
+			<p><b>Location:</b> {{e.location }}</p>
 			<a href="{{ menu.server }}/{{ e.eventid }}" role="button"><button class="btn btn-default">Go to Event Page</button></a>
 		</div>
 	</div>

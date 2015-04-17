@@ -17,20 +17,25 @@ from forms import EventForm, HikeForm, DinnerForm, GenericTripForm, GenericGathe
 def new(request):
 	if request.method == "GET":
 		eventform = EventForm()
-		
-		return render(request, 'events/new.html', {'eventform' :eventform, 'menu' : getMenuInfo(request), 'title' : "New Event"})
+		hikeform = HikeForm()
+		dinnerform = DinnerForm()
+		generictripform = GenericTripForm()
+		genericgatheringform = GenericGatheringForm()
+		return render(request, 'events/new.html', {'eventform' :eventform, 'hikeform':hikeform,\
+			 'dinnerform':dinnerform, 'generictripform':generictripform, \
+			'genericgatheringform':genericgatheringform, 'menu' : getMenuInfo(request), 'title' : "New Event"})
 	if request.method == "POST":
 
 		eventform = EventForm(request.POST)
-		eventDateStart=request.POST['eventDateStart_year']+"-"+request.POST['eventDateStart_month']+"-"+request.POST['eventDateStart_day']
+		event_Start_Date=request.POST['event_Start_Date_year']+"-"+request.POST['event_Start_Date_month']+"-"+request.POST['event_Start_Date_day']
 		eventType= request.POST['eventType']
 
 
 		
 		event = EventModel()
-		event.createEvent(eventName=request.POST['eventName'], \
-			eventLocation=request.POST['eventLocation'],eventDateStart=eventDateStart, \
-			eventType=eventType,eventDescription=request.POST['eventDescription'])
+		event.createEvent(name=request.POST['name'], \
+			location=request.POST['location'],event_Start_Date=event_Start_Date, \
+			eventType=eventType,event_Description=request.POST['event_Description'])
 
 		event.save()
 
@@ -42,54 +47,65 @@ def new(request):
 
 		if (request.POST['eventType'] == u'hike'):
 
-			eventDuration=request.POST['eventDuration']
-			eventDistance=request.POST['eventDistance']
-			eventElevation=request.POST['eventElevation']
-			eventDateEnd=request.POST['eventDateEnd']
-
-			if eventDistance == '':
-				eventDistance = None
-			if eventElevation == '':
-				eventElevation = None
-			if eventDateEnd == '':
-				eventDateEnd = None
+			duration=request.POST['eventDuration']
+			distance=request.POST['eventDistance']
+			elevation=request.POST['eventElevation']
 			
+			event_End_Date=request.POST['event_End_Date_year']+"-"+request.POST['event_End_Date_month']+\
+				"-"+request.POST['event_End_Date_day']
+
+			if distance == '':
+				distance = None
+			if elevation == '':
+				elevation = None
+			if event_End_Date == '--':
+				event_End_Date = None
+			
+
+
+
 			event = HikeEventModel(event.eventid, \
-				eventName=request.POST['eventName'], eventLocation=request.POST['eventLocation'], \
-				eventDateStart=eventDateStart,eventDescription=request.POST['eventDescription'], \
-				eventDateEnd=eventDateEnd, eventDuration=eventDuration, eventDistance=eventDistance, 					eventElevation=eventElevation, eventDifficulty=request.POST['difficulty'], eventType=eventType)
+				name=request.POST['name'], location=request.POST['location'], \
+				event_Start_Date=event_Start_Date,event_Description=request.POST['event_Description'], \
+				event_End_Date=event_End_Date, duration=duration, distance=distance, 					elevation=elevation, difficulty=request.POST['difficulty'], eventType=eventType)
 			event.save()
 
 
 		elif (request.POST['eventType'] == u'otherTrip'):
 
-			eventDateEnd=request.POST['eventDateEnd']
-			if eventDateEnd == '':
-				eventDateEnd = None
+
+			event_End_Date=request.POST['event_End_Date_year']+"-"+request.POST['event_End_Date_month']+\
+				"-"+request.POST['event_End_Date_day']
+
+			
+			if event_End_Date == '--':
+				event_End_Date = None
 
 			event = GenericTripModel(event.eventid, \
-				eventName=request.POST['eventName'], eventLocation=request.POST['eventLocation'], \
-				eventDateStart=eventDateStart,eventDescription=request.POST['eventDescription'], \
-				eventDateEnd=eventDateEnd, eventType=eventType)
+				name=request.POST['name'], location=request.POST['location'], \
+				event_Start_Date=event_Start_Date,event_Description=request.POST['event_Description'], \
+				event_End_Date=event_End_Date, eventType=eventType)
 			event.save()
 
 		elif (request.POST['eventType'] == u'otherGathering'):
 
-			eventDateEnd=request.POST['eventDateEnd']
-			if eventDateEnd == '':
-				eventDateEnd = None
+			event_End_Date=request.POST['event_End_Date_year']+"-"+request.POST['event_End_Date_month']+\
+				"-"+request.POST['event_End_Date_day']
+
+			if event_End_Date == '--':
+				event_End_Date = None
 
 			event = GenericGatheringModel(event.eventid, \
-				eventName=request.POST['eventName'], eventLocation=request.POST['eventLocation'], \
-				eventDateStart=eventDateStart,eventDescription=request.POST['eventDescription'], 					eventDateEnd=eventDateEnd, eventType=eventType)
+				name=request.POST['name'], location=request.POST['location'], \
+				event_Start_Date=event_Start_Date,event_Description=request.POST['event_Description'], 					event_End_Date=event_EndDate, eventType=eventType)
 			event.save()
 
 
 		elif (request.POST['eventType'] == u'dinner'):
 
 			event = DinnerEventModel(event.eventid, \
-				eventName=request.POST['eventName'], eventLocation=request.POST['eventLocation'], \
-				eventDateStart=eventDateStart,eventDescription=request.POST['eventDescription'], \
+				name=request.POST['name'], location=request.POST['location'], \
+				event_Start_Date=event_Start_Date,event_Description=request.POST['event_Description'], \
 				eventType=eventType)
 			event.save()
 

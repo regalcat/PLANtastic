@@ -15,27 +15,29 @@ def getUserEvents(user_):
 
 def isPreviousEvent(event_):
 	today = timezone.now().date()
-	if event_.eventDateStart == None:
+	if event_.event_Start_Date == None:
 		return True
 
 	subevent = event_.getEvent(event_.eventid)
-	if subevent.eventType != u'dinner':
-		if subevent.eventDateEnd:
-			return subevent.eventDateEnd < today
-
-	return event_.eventDateStart < today
+	ty=subevent.eventType
+	if (subevent.eventType != u'dinner'):
+	
+		if subevent.event_End_Date != None:
+			return subevent.event_End_Date < today
+		return event_.event_Start_Date < today
+	return event_.event_Start_Date < today
 
 def isUpcomingEvent(event_):
 	today = timezone.now().date()
-	if event_.eventDateStart == None:
+	if event_.event_Start_Date == None:
 		return True
 	
 	subevent = event_.getEvent(event_.eventid)
 	if subevent.eventType != u'dinner':
-		if subevent.eventDateEnd:
-			return subevent.eventDateEnd >= today
+		if subevent.event_End_Date:
+			return subevent.event_End_Date >= today
 
-	return event_.eventDateStart >= today
+	return event_.event_Start_Date >= today
 
 def getPreviousEvents(user_):
 	membership_entries = MembershipModel.objects.filter(user=user_)

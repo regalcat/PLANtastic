@@ -26,16 +26,16 @@ function event3(){
 		if(t[i].checked){
 			if(t[i].value=='Hike')
 				return 'hike();'
-				//return {{ hikeform.as_p }}
+				//hikeform.as_p()
 			else if(t[i].value=='Dinner')
 				return 'dinner();'
-				//return {{ dinnerform.as_p }}
+				//dinnerform.as_p()
 			else if(t[i].value=='Other Trip')
 				return 'otherTrip();'
-				//return {{ othertripform.as_p }}
+				//othertripform.as_p()
 			else if(t[i].value=='Other Gathering')
 				return 'otherGathering();'
-				//return {{ othergatheringform.as_p }}
+				//othergatheringform.as_p()
 		}
 	}
 }
@@ -43,30 +43,27 @@ function event3(){
 
 function hike(){
 	//open hike options
-	document.getElementById("eventDateEnd").style.display="block";
-	document.getElementById("eventDateEndLabel").style.display="block";
-	document.getElementById("elevation").style.display="block";
-	document.getElementById("elevationLabel").style.display="block";
-	document.getElementById("difficulty").style.display="block";
-	document.getElementById("difficultyLabel").style.display="block";
-	document.getElementById("duration").style.display="block";
-	document.getElementById("durationLabel").style.display="block";
-	document.getElementById("distance").style.display="block";
-	document.getElementById("distanceLabel").style.display="block";
+	document.getElementById("event_End_Date").style.display="inline";
+	document.getElementById("event_End_Date_day").style.display="inline";
+	document.getElementById("event_End_Date_month").style.display="inline";
+	document.getElementById("event_End_Date_year").style.display="inline";
+	document.getElementById("elevation").style.display="inline";
+	document.getElementById("elevationLabel").style.display="inline";
+	document.getElementById("difficulty").style.display="inline";
+	document.getElementById("difficultyLabel").style.display="inline";
+	document.getElementById("duration").style.display="inline";
+	document.getElementById("durationLabel").style.display="inline";
+	document.getElementById("distance").style.display="inline";
+	document.getElementById("distanceLabel").style.display="inline";
 
-	//clear other options
-	document.getElementById("vegan").style.display="none";
-	document.getElementById("vegetarian").style.display="none";
-	document.getElementById("allergies").style.display="none";
-	document.getElementById("accommodationsLabel").style.display="none";
-	document.getElementById("allergyList").style.display="none";
-	document.getElementById("allergyListLabel").style.display="none";
 }
 
 function otherTrip(){
 	//show other trip options
-	document.getElementById("eventDateEnd").style.display="block";
-	document.getElementById("eventDateEndLabel").style.display="block";
+	document.getElementById("event_End_Date").style.display="inline";
+	document.getElementById("event_End_Date_day").style.display="inline";
+	document.getElementById("event_End_Date_month").style.display="inline";
+	document.getElementById("event_End_Date_year").style.display="inline";
 
 	//hide other options
 	document.getElementById("elevation").style.display="none";
@@ -78,19 +75,14 @@ function otherTrip(){
 	document.getElementById("distance").style.display="none";
 	document.getElementById("distanceLabel").style.display="none";
 
-	document.getElementById("vegan").style.display="none";
-	document.getElementById("vegetarian").style.display="none";
-	document.getElementById("allergies").style.display="none";
-	document.getElementById("accommodationsLabel").style.display="none";
-	document.getElementById("allergyList").style.display="none";
-	document.getElementById("allergyListLabel").style.display="none";
 }
 
 function otherGathering(){
 	//show other gathering options
-	document.getElementById("eventDateEnd").style.display="block";
-	document.getElementById("eventDateEndLabel").style.display="block";
-
+	document.getElementById("event_End_Date").style.display="inline";
+	document.getElementById("event_End_Date_day").style.display="inline";
+	document.getElementById("event_End_Date_month").style.display="inline";
+	document.getElementById("event_End_Date_year").style.display="inline";
 	//hide other options
 	document.getElementById("elevation").style.display="none";
 	document.getElementById("elevationLabel").style.display="none";
@@ -101,26 +93,13 @@ function otherGathering(){
 	document.getElementById("distance").style.display="none";
 	document.getElementById("distanceLabel").style.display="none";
 
-	document.getElementById("vegan").style.display="none";
-	document.getElementById("vegetarian").style.display="none";
-	document.getElementById("allergies").style.display="none";
-	document.getElementById("accommodationsLabel").style.display="none";
-	document.getElementById("allergyList").style.display="none";
-	document.getElementById("allergyListLabel").style.display="none";
 }
 
 function dinner(){
-	//show dinner options
-	document.getElementById("vegan").style.display="block";
-	document.getElementById("vegetarian").style.display="block";
-	document.getElementById("allergies").style.display="block";
-	document.getElementById("accommodationsLabel").style.display="block";
-	document.getElementById("allergyList").style.display="block";
-	document.getElementById("allergyListLabel").style.display="block";
+	
 
 	//hide other options
-	document.getElementById("eventDateEnd").style.display="none";
-	document.getElementById("eventDateEndLabel").style.display="none";
+
 	document.getElementById("elevation").style.display="none";
 	document.getElementById("elevationLabel").style.display="none";
 	document.getElementById("difficulty").style.display="none";
@@ -129,6 +108,11 @@ function dinner(){
 	document.getElementById("durationLabel").style.display="none";
 	document.getElementById("distance").style.display="none";
 	document.getElementById("distanceLabel").style.display="none";
+
+	document.getElementById("event_End_Date").style.display="none";
+	document.getElementById("event_End_Date_day").style.display="none";
+	document.getElementById("event_End_Date_month").style.display="none";
+	document.getElementById("event_End_Date_year").style.display="none";
 	
 	
 }

@@ -1,11 +1,11 @@
 <div class="panel-body">
-<p><b>Name:</b>  {{ event.eventName }}</p>
+<p><b>Name:</b>  {{ event.name }}</p>
 
 {% if event.eventLocation %}
-<p><b>Location:</b>  {{ event.eventLocation }}</p>
+<p><b>Location:</b>  {{ event.location }}</p>
 {% endif %}
 
-<p><b>Start Date:</b>  {{ event.eventDateStart }}</p>
+<p><b>Start Date:</b>  {{ event.event_Start_Date }}</p>
 {% block end_date %}{% endblock %}
 <p><b>Type:</b>  {{ event.get_eventType_display }}</p>
 

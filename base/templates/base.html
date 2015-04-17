@@ -21,7 +21,7 @@
 	<ul class="dropdown-menu" role="menu">
 		<li><a href="{{ menu.server }}/upcoming">Upcoming</a></li>
 		{% for event in menu.upcoming_events %}
-			<li><a href ="{{ menu.server}}/{{ event.eventid }}">{{ event.eventName }}</a></li>
+			<li><a href ="{{ menu.server}}/{{ event.eventid }}">{{ event.name }}</a></li>
 		{% endfor %}
 	</ul>
 </li>
@@ -31,7 +31,7 @@
 	<ul class="dropdown-menu" role="menu">
 		<li><a href="{{ menu.server }}/past">Past</a></li>
 		{% for event in menu.prev_events %}
-			<li><a href = "{{ menu.server }}/{{ event.eventid }}">{{ event.eventName }}</a></li>
+			<li><a href = "{{ menu.server }}/{{ event.eventid }}">{{ event.name }}</a></li>
 		{% endfor %}
 	</ul>
 </li>
