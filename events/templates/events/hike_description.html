@@ -1,23 +1,27 @@
 
 {% extends "events/base_description.html" %}
 
-{% if event.eventDateEnd %}
+{% if event.event_End_Date %}
 {% block end_date %}<p><b>End Date:</b>  {{ event.event_End_Date }}</p>{% endblock %}
 {% endif %}
 
 {% block extra_info %}
 
-{% if event.eventElevation %}
+{% if event.elevation %}
 <p><b>Elevation Change:</b>  {{ event.elevation }}<p>
 {% endif %}
 
-<p><b>Difficulty:</b>  {{ event.difficulty }}<p>
 
-{% if event.eventDistance %}
+<!--<p><b>Difficulty:</b>  {{ event.difficulty }}<p>-->
+
+<p><b>Difficulty:</b>  {{ event.get_eventDifficulty_display }}<p>
+
+
+{% if event.distance %}
 <p><b>Distance:</b>  {{ event.distance }}</p>
 {% endif %}
 
-{% if event.eventDuration %}
+{% if event.duration %}
 <p><b>Duration:</b>  {{ event.duration }}</p>
 {% endif %}
 {% endblock %}

@@ -17,17 +17,21 @@
 		<td>{{ forloop.counter }}</td>
 		<td>{{ member.user.first_name }} {{ member.user.last_name }}</td>
 		<td>{{ member.get_status_display }}</td>
-		<td><form action= "editMemberStatus" method= "POST">
-			{% csrf_token %}
-			<select name="status" id="status">
-			<option value="CR">Creator</option>
-			<option value="CP">Coplanner</option>
-			<option value="MEM">Member</option>
-		</td>
 		<td>
+			{% if member.get_status_display == "Creator" %}
+				Not editable
+				</td><td>
+			{% else %}
+				<form action= "" method= "POST">
+				{% csrf_token %}
+				<select name="status" id="status">
+				<option value="CP">Coplanner</option>
+				<option value="MEM">Member</option>
+			</td>
+			<td>
 			<input type="hidden" name="user" id="user" value="{{member.user.username}}">	
 			<input type= "submit" value="Edit status" class="btn btn-default"></form>
-
+			{% endif %}
 		</td>
 		</tr>
 		{% endfor %}

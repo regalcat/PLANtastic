@@ -11,18 +11,7 @@
 	<form action= "" method= "POST">
 	{% csrf_token %}
 	{{ editeventform.as_p }}
-
-	{% if hikeform %}
-	{{ hikeform.as_p }}
-	{% endif %}
-
-	{% if tripform %}
-	{{ tripform.as_p }}
-	{% endif %}
-
-	{% if otherform %}
-	{{ otherform.as_p }}
-	{% endif %}
+	{{ subform.as_p }}
 
 	<input type= "submit" value="Edit event" class="btn btn-default">	
 	</form>
