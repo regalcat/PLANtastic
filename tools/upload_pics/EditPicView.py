@@ -1,4 +1,3 @@
-from django.http import HttpResponseRedirect
 from django.views.generic.edit import UpdateView
 
 from .models import UploadedPicModel

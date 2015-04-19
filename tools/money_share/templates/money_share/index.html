@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+<a href="add_item"><button type="button" class="btn btn-default">Add Item</button></a>
+<table>
+<tr>
+	<td>Item</td>
+	<td>Cost</td>
+	<td>Purchaser</td>
+</tr>
+{% for item in items %}
+<tr>
+	<td>{{ item.name }}</td>
+	<td>{{ item.cost }}</td>
+	<td>{{ item.purchaser.username }}</td>
+</tr>
+{% endfor %}
+</table>
+
+{% endblock %}
