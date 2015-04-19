@@ -3,6 +3,8 @@ from base.helpers import isPreviousEvent, isUpcomingEvent
 from tools.item_share.ItemShareView import ItemShareView
 from tools.money_share.MoneyShareTool import MoneyShareTool
 from tools.upload_pics.UploadPicsTool import UploadPicsView
+from tools.weather.weatherTool import WeatherView
+from tools.allergy_list.allergyListTool import AllergyListView
 
 
 class ToolManager:
@@ -19,6 +21,10 @@ class ToolManager:
 		if isUpcomingEvent(event):
 			tools.append(ItemShareView)
 			context['item_share'] = ItemShareView.getContext(event)
+			tools.append(WeatherView)
+			context['weather'] = WeatherView.getContext(event)
+			tools.append(AllergyListView)
+			context['allergy_list'] = AllergyListView.getContext(event)
 		# Tools for both Upcoming and Previous Events
 		tools.append(MoneyShareTool)
 		context['money_share'] = MoneyShareTool.getContext(event)

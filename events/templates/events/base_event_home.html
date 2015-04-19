@@ -1,6 +1,16 @@
 {% extends "base.html" %}
 {% block content %}
 <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}event_home.css">
+
+<div class="page-header">
+	<font size="6">{{event.name}}</font>
+</div>
+
+<div class="panel panel-default"><div class="panel-body">
+<center><img src="{{ event.picture.url }}" alt="event picture"></center>
+</div></div>
+
+
 <div class="panel panel-default">
 	<div class="panel-heading">
 			<h3 class="panel-title">Description</h3>
@@ -9,7 +19,9 @@
 		{% include event.eventDescriptionTemplate %}
 	</div>
 </div>
-
+{% if creator or coplanner %}
+<a href="editEvent"><button type="button" name="editButton" id="editButton" class="btn btn-default" onclick="">Edit Event</button></a><br><br>
+{% endif %}
 {% block top %}{% endblock %}
 <div class="panel panel-default">
 	<div class="panel-heading">
@@ -26,7 +38,7 @@
 		<tr>
 		<td>{{ forloop.counter }}</td>
 		<td>{{ member.user.first_name }} {{ member.user.last_name }}</td>
-		<td>{{member.get_status_display}}</td>
+		<td>{{ member.get_status_display }}</td>
 		</tr>
 		{% endfor %}
 		</tbody>
@@ -36,10 +48,9 @@
 </div>
 {% block middle %}{% endblock %}
 {% for tool in tools %}
-<br />
-<div class="panel panel-default">
+<br>
 	{% include tool.tile_template %}
-</div>
+<br>
 {% endfor %}
 {% block bottom %}{% endblock %}
 {% endblock %}

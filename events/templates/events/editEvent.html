@@ -11,23 +11,21 @@
 	<form action= "" method= "POST">
 	{% csrf_token %}
 	{{ editeventform.as_p }}
-
-	{% if hikeform %}
-	{{ hikeform.as_p }}
-	{% endif %}
-
-	{% if tripform %}
-	{{ tripform.as_p }}
-	{% endif %}
-
-	{% if otherform %}
-	{{ otherform.as_p }}
-	{% endif %}
+	{{ subform.as_p }}
 
 	<input type= "submit" value="Edit event" class="btn btn-default">	
 	</form>
 
 </div></div>
+
+{% if upcoming %}
+<a href="tools/weather/editWeather"><button type="button" class="btn btn-default">Edit Weather Information</button></a>
+{% endif %}
+
+{% if creator %}
+<a href="editMembers"><button type="button" class="btn btn-default">Edit Members</button></a>
+{% endif %}
+<br><br>
 
 {% if creator %}
 <a href="{{menu.server}}/{{event.eventid}}/

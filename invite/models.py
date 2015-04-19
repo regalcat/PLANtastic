@@ -21,3 +21,4 @@ class InviteModel(models.Model):
 	inviteEvent = models.ForeignKey(EventModel)
 	inviteEmail = models.CharField(max_length=60)
 	inviteString = models.CharField(max_length=50)
+

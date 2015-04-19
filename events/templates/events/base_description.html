@@ -1,16 +1,21 @@
 <div class="panel-body">
-<p><b>Name:</b>  {{ event.eventName }}</p>
 
-{% if event.eventLocation %}
-<p><b>Location:</b>  {{ event.eventLocation }}</p>
+
+{% if event.location %}
+<p><b>Location:</b>  {{ event.location }}</p>
 {% endif %}
 
-<p><b>Start Date:</b>  {{ event.eventDateStart }}</p>
+
+<p><b>Start Date:</b>  {{ event.event_Start_Date }}</p>
+
+{% if event.event_End_Date %}
+
 {% block end_date %}{% endblock %}
+{% endif %}
 <p><b>Type:</b>  {{ event.get_eventType_display }}</p>
 
-{% if event.eventDescription %}
-<p><b>Description:</b>  {{ event.eventDescription }}</p>
+{% if event.event_Description %}
+<p><b>Description:</b>  {{ event.event_Description }}</p>
 {% endif %}
 
 {% block extra_info %}{% endblock %}

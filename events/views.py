@@ -8,6 +8,8 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import check_password, make_password, is_password_usable
 from django.views.generic.edit import FormView
+from django.contrib.auth.models import User
+from base.permissions import getMemberObject
 
 from os import listdir
 from os.path import isfile, join
@@ -17,9 +19,9 @@ from os.path import isfile, join
 from models import EventModel, HikeEventModel, DinnerEventModel, GenericTripModel, GenericGatheringModel
 from invite.models import InviteModel, MembershipModel
 from users.forms import UserRegistrationForm
-from base.helpers import getMenuInfo
+from base.helpers import getMenuInfo, isPreviousEvent
 from base.permissions import memberCheck, isCreator, isCoplanner
-from forms import EventForm, HikeForm, GenericTripForm, GenericGatheringForm
+from forms import EventForm, HikeForm, GenericTripForm, GenericGatheringForm, DinnerForm
 
 
 @login_required(login_url = '/loginRequired/')
@@ -51,44 +53,48 @@ def editEvent(request, eventid):
 		context = {'menu' : getMenuInfo(request), 'title' : 'Edit Event', \
 			'editeventform' : editeventform, 'event' : event, 'creator' : creator, 'coplanner' : coplanner}
 
+		if isPreviousEvent(event):
+			context['previous'] = True
+		else:
+			context['upcoming'] = True
+
 		if event.eventType == u'hike':
-			hikeform = HikeForm(instance = event)
-			context['hikeform'] = hikeform
+			subform = HikeForm(instance = event)
+			
 		elif event.eventType == u'otherTrip':
-			tripform = GenericTripForm(instance = event)
-			context['tripform'] = tripform
+			subform = GenericTripForm(instance = event)
 
 		elif event.eventType == u'otherGathering':
-			otherform = GenericGatheringForm(instance = event)
-			context['otherform'] = otherform
+			subform = GenericGatheringForm(instance = event)
+
+		elif event.eventType == u'dinner':
+			subform = DinnerForm(instance = event)
+
+		context['subform'] = subform
 		
 		return render(request, 'events/editEvent.html', context)
 		
 	if request.method == 'POST':
 		editeventform = EventForm(request.POST, instance = event)
-		context = {'menu' : getMenuInfo(request), 'title' : 'Edit Event', \
-			'editeventform' : editeventform, 'event' : event, 'creator' : creator, 'coplanner' : coplanner}
+
 		if editeventform.is_valid():
 			if event.eventType == u'hike':
-				hikeform = HikeForm(request.POST, instance = event)
-				if hikeform.is_valid():
-					editeventform.save()
-					hikeform.save()
-				context['hikeform'] = hikeform
+				subform = HikeForm(request.POST, instance = event)
+				
 			elif event.eventType == u'otherTrip':
-				tripform = GenericTripForm(request.POST, instance = event)
-				if tripform.is_valid():
-					editeventform.save()
-					tripform.save()
-				context['tripform'] = tripform
+				subform = GenericTripForm(request.POST, instance = event)
+				
 			elif event.eventType == u'otherGathering':
-				otherform = GenericGatheringForm(request.POST, instance = event)
-				if otherform.is_valid():
-					editeventform.save()
-					otherform.save()
-				context['otherform'] = otherform
+				subform = GenericGatheringForm(request.POST, instance = event)
+				
+			elif event.eventType == u'dinner':
+				subform = DinnerForm(request.POST, instance = event)
 
-		return render(request, 'events/editEvent.html', context)
+			if subform.is_valid():
+					editeventform.save()
+					subform.save()
+
+		return HttpResponseRedirect("")
 
 
 
@@ -103,12 +109,21 @@ def editMembers(request, eventid):
 
 	event = EventModel.getEvent(eventid)
 	members = MembershipModel.objects.filter(event = event)
-
-	if request.method == 'POST':
-		return render(request, 'events/editMembers.html', { 'menu' : getMenuInfo(request), 'title' : "Edit Members", 'event' : event, 'members' : members})
+		
 
 	if request.method == 'GET':
 		return render(request, 'events/editMembers.html', { 'menu' : getMenuInfo(request), 'title' : "Edit Members", 'event' : event, 'members' : members})
+
+	if request.method == "POST":
+		username = request.POST['user']
+		status = request.POST['status']
+		user = User.objects.filter(username = username)
+		event = EventModel.objects.filter(eventid = eventid)
+		member = getMemberObject(user, event)
+		member.status = status
+		member.save()
+		
+		return HttpResponseRedirect("")	
 
 
 

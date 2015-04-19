@@ -10,48 +10,68 @@ class EventForm(forms.ModelForm):
 
 	class Meta:
 		model = EventModel
-		fields = ('eventName', 'eventLocation', 'eventDateStart', 'eventDescription',)
+		fields = ('name', 'location', 'event_Start_Date', 'event_Description',)
+		exclude = ('eventType',)
 		
-		eventName = forms.CharField()
-		eventDescription = forms.CharField()
-		eventLocation = forms.CharField()
-		eventDateStart = forms.DateField()
-		widgets = {'eventName': forms.TextInput(attrs={'label':'Event Name'}) , 'eventLocation': forms.TextInput(attrs={'label':'Location'}), 'eventDateStart' : SelectDateWidget(attrs={"initial":"datetime.date.today()",}), 'eventDescription': forms.TextInput(attrs={'label':'Description','max_length':'500'}), }
+		name = forms.CharField()
+		event_Description = forms.CharField()
+		location = forms.CharField()
+		event_Start_Date = forms.DateField()
+		widgets = {'name': forms.TextInput() , 'location': forms.TextInput(attrs={'label':'location'}), 'event_Start_Date' : SelectDateWidget(attrs={"initial":"datetime.date.today()","label": "Event Start Date"}), 'event_Description': forms.TextInput(attrs={'label':'Event Description','max_length':'500'}), }
 		
 
 
 
 class HikeForm(EventForm):
+	picture = forms.ImageField()
 
 	class Meta:
 		model = HikeEventModel
-		fields = ('eventDateEnd', 'eventDuration', 'eventElevation', 'eventDistance', 'eventDifficulty',)
+
+		fields = ('event_End_Date', 'duration', 'elevation', 'distance', 'difficulty', 'picture',)
+		exclude = ('eventType',)
+
 		eventDifficulty = forms.ChoiceField()
 		eventElevation = forms.FloatField()
 		eventDistance = forms.FloatField()
 		eventDuration = forms.TextInput(attrs={'label':'Duration'})
 
-		widgets = {'eventDateEnd' : SelectDateWidget(),  'eventDifficulty' : forms.Select(choices=HikeEventModel.LEVELS,)}
+		widgets = {'event_End_Date' : SelectDateWidget(),  'difficulty' : forms.Select(choices=HikeEventModel.LEVELS,)}
 
 
 class DinnerForm(EventForm):
+	picture = forms.ImageField()
 
 	class Meta:
 		model = DinnerEventModel
-		
+
+		exclude = ('eventType',)
+
+		fields = ( 'picture',)
+
 
 class GenericTripForm(EventForm):
+	picture = forms.ImageField()
 
 	class Meta:
 		model = GenericTripModel
-		fields = ('eventDateEnd',)
-		widgets = {'eventDateEnd' : SelectDateWidget(), }
+
+		fields = ('event_End_Date','picture',)
+		exclude = ('eventType',)
+		widgets = {'event_End_Date' : SelectDateWidget(), }
+
+
 
 class GenericGatheringForm(EventForm):
+	picture = forms.ImageField()
 
 	class Meta:
 		model = GenericGatheringModel
-		fields = ('eventDateEnd',)
-		widgets = {'eventDateEnd' : SelectDateWidget(), }
+
+		fields = ('event_End_Date','picture',)
+		exclude = ('eventType',)
+		widgets = {'event_End_Date' : SelectDateWidget(), }
+
+
 
 

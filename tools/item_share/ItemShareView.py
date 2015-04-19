@@ -41,7 +41,7 @@ class ItemShareView(ToolView):
 	@csrf_exempt
 	def post(self, request, eventid):
 		ajax = request.POST.get('ajax', False)
-		cur_event=getEvent(eventid)
+		cur_event=EventModel.getEvent(eventid)
 		item = ItemModel.items.get(id=request.POST['item_id'], event=cur_event)
 		signup = ItemSignupModel.objects.update_or_create(itemid=item, user = request.user, event=cur_event, defaults={'amount' : request.POST['amount']})
 		if ajax:

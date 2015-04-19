@@ -11,7 +11,9 @@ class ProfileForm(forms.ModelForm):
 
 	class Meta:
 		model = Profile
+		
 		fields = ('birthday', 'gender', 'description', 'avatar')
+		
 		widgets = {'description': forms.Textarea() , 'birthday' : SelectDateWidget(years = range(datetime.date.today().year, 1930, -1)) }
 		
 

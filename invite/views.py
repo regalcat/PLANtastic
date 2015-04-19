@@ -77,20 +77,5 @@ def join_event(request):
 	return render(request, 'invite/join.html', { 'menu' : getMenuInfo(request), 'title' : "Join Event" })
 
 
-def editMemberStatus(request, eventid):
-	if request.method == "POST":
-		username = request.POST['user']
-		status = request.POST['status']
-		user = User.objects.filter(username = username)
-		event = EventModel.objects.filter(eventid = eventid)
-		member = getMemberObject(user, event)
-		member.status = status
-		member.save()
-			
-		return HttpResponseRedirect("editMembers.html")
-
-
-	return HttpResponseRedirect("editMembers.html")	
-
 
 
