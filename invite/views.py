@@ -38,7 +38,11 @@ class InviteView(FormView):
 
 	@method_decorator(login_required(login_url = '/loginRequired/'))
 	def post(self, request, eventid):
+			#if request.POST['email']!=""
 		to = request.POST['email']
+		#if request.POST['username']!=""
+		#	to = User.objects.filter(username = username).email
+		
 		event = EventModel.getEvent(eventid)
 		rstring = ""
 		for i in range(0,16):

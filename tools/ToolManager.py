@@ -5,6 +5,7 @@ from tools.money_share.MoneyShareTool import MoneyShareTool
 from tools.upload_pics.UploadPicsTool import UploadPicsView
 from tools.weather.weatherTool import WeatherView
 from tools.allergy_list.allergyListTool import AllergyListView
+from tools.ride_share.RideShareView import RideShareView
 
 
 class ToolManager:
@@ -25,6 +26,8 @@ class ToolManager:
 			context['weather'] = WeatherView.getContext(event)
 			tools.append(AllergyListView)
 			context['allergy_list'] = AllergyListView.getContext(event)
+			tools.append(RideShareView)
+			context['ride_share'] = RideShareView.getContext(event)
 		# Tools for both Upcoming and Previous Events
 		tools.append(MoneyShareTool)
 		context['money_share'] = MoneyShareTool.getContext(event)

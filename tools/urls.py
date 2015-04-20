@@ -6,4 +6,5 @@ urlpatterns = patterns('',
 	url(r'^money_share/', include('tools.money_share.urls', namespace = 'money_share')),
 	url(r'^upload_pics/', include('tools.upload_pics.urls')),
 	url(r'^weather/', include('tools.weather.urls', namespace = 'weather')),
+	url(r'^ride_share/', include('tools.ride_share.urls', namespace = 'rideshare')),
 )

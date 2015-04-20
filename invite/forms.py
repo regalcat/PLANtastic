@@ -8,8 +8,9 @@ from django.contrib.auth.forms import UserCreationForm
 from invite.models import MembershipModel
 
 class InviteForm(forms.Form):
-	email = forms.EmailField(required=True)
-	
+	email = forms.EmailField(required=False)
+	#username = forms.CharField(required=False, max_length=50)
+
 	#A rather long function that sends the email. Takes in the InviteForm object that called it.
 	#Remember to go to gmail and allow access for less secure apps. (Wow. That sounds shady and janky.)
 	@staticmethod
@@ -20,9 +21,9 @@ class InviteForm(forms.Form):
 		smtpserver.ehlo()
 		smtpserver.starttls()
 		smtpserver.login(gmail_user, gmail_passwd)
-		header = 'To:' + to +'\n' + gmail_user + '\n' + 'Subject: Plantastic Test Invite \n'
+		header = 'To:' + to +'\n' + gmail_user + '\n' + 'Subject: Plantastic Test Invite \n\n'
 		#print header
-		ename = event.eventName
+		ename = event.name
 		msg = header + '\n You have been invited to ' + ename + '! \n Your confirmation string is: '+ rstring +'\n Go to Plantastic and enter this string to join the event!\n\n'
 		smtpserver.sendmail(gmail_user, to, msg)
 		#print 'Email sent!'
