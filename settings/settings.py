@@ -47,6 +47,7 @@ INSTALLED_APPS = (
 	'tools.upload_pics',
 	'tools.allergy_list',
 	'tools.weather',
+	'tools.ride_share',
 	'users',
 )
 
