@@ -1,7 +1,6 @@
 from django.contrib.sessions.models import Session
 from django.contrib.auth.models import User
 from django.utils import timezone
-from django.db.models import Count
 
 from invite.models import MembershipModel
 from events.models import EventModel
@@ -46,6 +45,11 @@ def getPreviousEvents(user_):
 			events.append(entry.event)
 	
 	return events
+
+#def getFeaturedPrevEvent(user_):
+	
+
+#def getFeaturedUpcomingEvent(user_):
 
 def getUpcomingEvents(user_):
 	membership_entries = MembershipModel.objects.filter(user=user_)
