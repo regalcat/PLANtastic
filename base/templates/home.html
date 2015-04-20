@@ -10,11 +10,10 @@
 <div id="events-table">
 <table>
 <tr>
+		<td>You are a member of {{menu.num_upcoming_events}} upcoming events!</td>
+</tr>
+<tr>
 {% for e in menu.upcoming_events %}
-	{% if forloop.counter=1 %}
-	<td><p>You are currently in {{menu.upcoming_events.count()}} events!</p></td>
-</tr><tr>
-	{% endif %}
 	<td>
 		<div class="panel panel-default">
 			<div class="panel-heading">
@@ -34,8 +33,9 @@
 <tr>
 {% endif %}
 {% endfor %}
-</tr>
-<tr>
+</tr><tr>
+	<td>You are a member of {{menu.num_prev_events}} previous events!</td>
+</tr><tr>
 {% for f in menu.prev_events %}
 	<td>                                                                                                                          
 		<div class="panel panel-default">

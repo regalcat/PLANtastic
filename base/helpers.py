@@ -1,9 +1,9 @@
 from django.contrib.sessions.models import Session
 from django.contrib.auth.models import User
 from django.utils import timezone
+from django.db.models import Count
+
 from invite.models import MembershipModel
-
-
 from events.models import EventModel
 
 def getUserEvents(user_):
@@ -62,5 +62,7 @@ def getMenuInfo(request):
 	toReturn['server'] = "http://" + request.get_host()
 	toReturn['prev_events'] = getPreviousEvents(request.user)
 	toReturn['upcoming_events'] = getUpcomingEvents(request.user)
+	toReturn['num_prev_events'] = len(getPreviousEvents(request.user))
+	toReturn['num_upcoming_events'] = len(getUpcomingEvents(request.user))
 	toReturn['event_types'] = EventModel.getEventTypes()
 	return toReturn
