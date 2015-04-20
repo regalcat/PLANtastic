@@ -11,7 +11,10 @@
 <table>
 <tr>
 {% for e in menu.upcoming_events %}
-
+	{% if forloop.counter=1 %}
+	<td><p>You are currently in {{menu.upcoming_events.count()}} events!</p></td>
+</tr><tr>
+	{% endif %}
 	<td>
 		<div class="panel panel-default">
 			<div class="panel-heading">
