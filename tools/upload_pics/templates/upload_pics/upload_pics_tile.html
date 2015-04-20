@@ -15,7 +15,7 @@
 	<div class="carousel-inner fill" role="listbox">
 	{% for pic in upload_pics.pics %}
 			<div class="item{% if forloop.counter0 = 0 %} active{% endif %}">
-				<img class="image-responsive thumbnail"src="/{{ pic.file }}">
+				<img class="image-responsive thumbnail"src="{{ STATIC_URL }}{{ pic.file }}">
 			</div>
 		{% empty %}
 			<div class="item active fill">
