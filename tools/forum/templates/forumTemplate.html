@@ -2,7 +2,7 @@
 	<h3>Event Forum</h3>
 	<a href=""><button class="btn btn-default">Create Thread</button></a>
 	<table>
-		<thead><tr><td>Thread Name</td><td>Posts</td><td>Last Post</td></thead>
+		<thead><tr><td>Thread Name</td><td>Posts</td><td>Last Post</td><td></td></thead>
 		<tbody>
 		{% for thread in threads %}
 		<tr>
@@ -12,6 +12,18 @@
 				<td><a href=""><button class="btn btn-default">View</button></a></td>
 		</tr>
 		{% endfor %}
+		
 		</tbody>
 	</table>
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<h4>Create a New Thread</h4>
+			<form action="create-thread/" method="post">
+				{% csrf_token %}
+				<input type="text" class="form-control" placeholder="Enter subject" id="ttitle" name="ttitle" />
+				<input type="text" class="form-control" placeholder="Enter message body" id="pbody" name="pbody" />
+				<input type="submit" class="btn btn-default" value="Create Thread" />
+			</form>
+		</div>
+	</div>	
 </div>
