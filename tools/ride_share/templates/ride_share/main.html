@@ -13,29 +13,24 @@
 
 <tr class="table-header">
 <td> </td>
-<td>  Driver  </td> 
-<td>  Seats  </td>
-<td>  Available Seats  </td>
-<td>  Seats Taken  </td>
+<td> <b> Driver </b> </td> 
+<td> <b> Seats  </b></td>
+<td> <b> Available Seats  </b></td>
+<td> <b> Passengers </b> </td>
 </tr>
 {% for car in cars %}
 	<tr>
-	{% if car.signups.count >= 0 %}<td class="plus">+{% else %}<td> {% endif %}</td>
-	<td>{{ car.driver }}</td>
-	<td>{{ car.seats }}</td><td>{{ car.available }}</td><td id="signup_{{ car.id }}">{{ car.signedup }}</td>
-
-	<form action = "{{ cur_path }}" method="post">
-		<td><input type="number" name="seats" min=0 value="{% if not car.your_signup %}0{% else %}1{% endif %}" 
-				onchange="formChanged(value, {{ car.id }})"></td>
-		<td><input type="hidden" value="{{ car.id }}" name="car_id"></td>
-	</form>
+	
+	<td></td>
+	<td>{{ car.driver.personid }}</td>
+	<td>{{ car.seats }}</td><td>{{ car.open_seats }}</td>
 	</tr>
-	{% for signup in car.signups %}
-		<tr class="dropdown">
+
+	
+	{% for Passenger in Passengers.all %}
+		
 		<td></td>
-		<td> {{ signup.user.username }} </td>
-<!-- TODO		<td>{{ signup.user.first_name }} {{ signup.user.last_name }}</td> -->
-		<td>{{ signup.seats }}</td>
+		<td> {{ Passenger.personid }} </td>
 		</tr>
 	{% endfor %}
 {% endfor %}

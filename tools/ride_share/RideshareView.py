@@ -8,21 +8,20 @@ from events.models import EventModel
 from tools.ride_share.models import Car, Person, Riders
 from tools.ToolView import ToolView
 
-
-class RideShareView(ToolView):
+class RideshareView(ToolView):
 	tile_template = "ride_share/ride_share_tile.html"
 
 	@staticmethod
 	def getIdentifier():
 		return "ride_share"
-
+	
 	def get(self, request, eventid):
 		user = request.user
 		cur_event = EventModel.getEvent(eventid)
 		cars = Car.cars.filter(event=cur_event)
 		for car in cars:
 			
-			car.signups = car.getPassengerList().count()
+			car.signups = car.getPassengerList(eventid).count()
 			car.available = car.seats
 			car.your_signup = RideSignupModel.objects.filter(rideid=car, user=request.user)
 			car.signedup = 0
@@ -40,7 +39,7 @@ class RideShareView(ToolView):
 		if (True):
 			admin = True
 		template = loader.get_template("ride_share/main.html")
-		context = RequestContext(request, {'Vehicles' : cars, 'event' : cur_event, 'cur_path' : request.get_full_path(), 'title' : "Ride Share", 'menu': getMenuInfo(request) })
+		context = RequestContext(request, {'cars' : cars, 'event' : cur_event, 'cur_path' : request.get_full_path(), 'title' : "Ride Share", 'menu': getMenuInfo(request) })
 		return HttpResponse(template.render(context))
 
 	@csrf_exempt
