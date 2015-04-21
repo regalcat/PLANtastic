@@ -77,4 +77,7 @@ ALT+Arrow Keys or CTRL+Arrow keys = resize current tmux window
 
 [ = scroll, type "q" to exit and be able to type into the terminal again.
 
-
+### Requirements to Run the PLANtastic server
+You will need to run these commands in order to migrate the database: (NOTE: You only need to do these once per install)
+1. sudo pip install libnet-smtp-ssl-perl (required for email functionality)
+2. sudo pip install django-localflavor (required for weather tool)

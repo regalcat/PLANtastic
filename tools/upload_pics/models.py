@@ -4,8 +4,7 @@ from django.contrib.auth.models import User
 from events.models import EventModel
 
 def getUploadDir(instance, filename):
-	return "static/uploads/event_pics/" + str(instance.event.eventid) + "/" + filename
-#	return "/var/www/planner/uploads/event_pics/"
+	return "uploads/event_pics/" + str(instance.event.eventid) + "/" + filename
 
 class UploadedPicModel(models.Model):
 	event = models.ForeignKey(EventModel)

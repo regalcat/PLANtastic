@@ -19,7 +19,7 @@
 {% for pic in pics %}
 <td>
 <div class="thumbnail">
-	<img class="img-rounded uploaded-pic" src="/{{ pic.file }}" id="{{ forloop.counter }}" onclick="select({{ forloop.counter }});" alt="{{ pic.title}}: {{ pic.caption}}"><br>
+	<img class="img-rounded uploaded-pic" src="{{ STATIC_URL }}{{ pic.file }}" id="{{ forloop.counter }}" onclick="select({{ forloop.counter }});" alt="{{ pic.title}}: {{ pic.caption}}"><br>
 	<div class="caption">
 		<h2>{{ pic.title }}</h2>
 		<p>{{ pic.caption }}</p>
