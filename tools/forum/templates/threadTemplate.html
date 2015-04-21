@@ -13,5 +13,16 @@
 		</div>
 	</div>
 {% endfor %}
-
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h4>Reply to Thread</h4>
+	</div>
+	<div class="panel-body">
+		<form action="reply-thread/" method="post">
+			{% csrf_token %}
+			<input type="text" class="form-control" placeholder="Enter text here" id="" name="pbody" />
+			<input type="submit" class="btn btn-default" value="Post Reply" />
+		</form>
+	</div>
+</div>
 {% endblock %}
