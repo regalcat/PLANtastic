@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="page-header">
+	<font size="6">Schedule</font></div>
+
+<div class="panel-body">
+<div class="container">
+	<div class="table-responsive">
+	<table class="table">
+		<thead><tr><td><b>Date and time</b></td><td><b>Activity</b></td><td><b>Description<b></td><td></td></tr></thead>
+		<tbody>
+		{% for activity in activities %}
+		<tr>
+		<td> 	{{activity.start_date}} {% if activity.end_date %} {{activity.end_date}} {%endif%} </td>
+		<td> 	{{ activity.name }}</b>
+		<td>	{{ activity.description }}</td>
+
+		</td>
+		<td>	
+			<form action= "editActivity" method= "GET">
+			{% csrf_token %}
+			<input type="hidden" name="scheduleid" id="scheduleid" value="{{activity.scheduleid}}">	
+			<input type="submit" value="Edit activity" class="btn btn-default"></form>
+		</td>
+		</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+
+
+
+
+
+</div></div>
+<a href="addActivity"><button type="button" class="btn btn-default">Add activity</button></a>
+<a href="{{menu.server}}/{{event.eventid}}"><button type="button" class="btn btn-default">Go Back</button></a>
+
+{% endblock %}
