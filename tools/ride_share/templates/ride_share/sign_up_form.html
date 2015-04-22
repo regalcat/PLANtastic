@@ -7,7 +7,7 @@
 
 <form action="" method="post">
 {% csrf_token %}
-{{person.personid.username}}
+{{person.personid}}
 {% if cars.count == 0 %}
 	There are no cars to join!
 {% else %}
@@ -17,17 +17,19 @@
 	<td>  Passengers  </td>
 	</tr>
 	{% for car in cars %}
-		<tr>
-		<td></td>
-		<td>{{ car.driver }}</td>
-		{% for passenger in car.passengers.all %}
-			<tr class="dropdown">
+		{% if car.open_seats > 0 %}
+					
+			<tr>
 			<td></td>
-			<td> {{ passenger.personid.username }} </td>
-			</tr>
-		{% endfor %}
-		<td><input type="submit" class="btn btn-default" value="Join Car" /></td>
-
+			<td>{{ car.driver.userid }}</td>
+			{% for person in car.passengers.all %}
+				<tr class="dropdown">
+				<td></td>
+				<td> {{ passenger.personid.username }} </td>
+				</tr>
+			{% endfor %}
+			<td><input type="submit" class="btn btn-default" value="Join Car" /></td>
+		{% endif %}
 	{% endfor %}
 	<!--<p><label for="car" id="carLabel" >Join Car:</label> 
 	<select id="car" name="car">

@@ -22,18 +22,13 @@ class SignupView(CreateView):
 		person = Person(personid = request.user)
 		open_seats=0
 		passengers=None
-		driver = None
+		
 		for car in cars:
-			
-			for passenger in car.passengers.all():
-				if (passenger.status == 'DR'):
-					driver = passenger.personid.username
-			open_seats = car.getOpenSeats(eventid)
+			car.open_seats = car.getOpenSeats(eventid)
 			passengers = car.getPassengerList(eventid)
-			if open_seats <= 0:
-				cars -= car
+
 		context = {'menu' : getMenuInfo(request), 'title' : "Sign Up", 'cars' : cars, 'event' : event, \
-		 'Open_Seats' : open_seats, 'Passengers' : passengers, 'Driver': driver,}	
+		 'Open_Seats' : open_seats,}	
 		return super(SignupView, self).get(self, request, context)
 		#return render(request, 'ride_share/main.html', context)
 

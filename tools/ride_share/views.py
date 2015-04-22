@@ -19,12 +19,11 @@ def rideshareindexView(request, eventid):
 	
 
 	for car in cars:
-		#for passenger in car.passengers.all():
-			#if (passenger.status == 'DR'):
-				#car.driver = passenger
 		car.seats = car.seats
 		car.open_seats = car.getOpenSeats(eventid)
 		car.passengers.all = car.getPassengerList(eventid)
+
+	
 		
 	context = {'menu' : getMenuInfo(request), 'title' : "Ride Share List", 'cars' : cars, 'event' : event,   }
 	return render(request, 'ride_share/main.html', context)
@@ -84,7 +83,7 @@ def signupView(request, eventid):
 		else:
 			personform = PersonForm(request.POST, instance = instance[0])
 
-		
+		 
 		if personform.is_valid():
 			form = personform.save(commit=False)
 			form.user = request.user
@@ -92,6 +91,26 @@ def signupView(request, eventid):
 			form.save()
 		return HttpResponseRedirect(reverse('events:tools:rideshare:signup', kwargs={'eventid' : eventid}))
 
-	
 
+@login_required(login_url = '/loginRequired/')
+def carView(request, carid, eventid):
+	event = EventModel.objects.filter(eventid=eventid)
+	user = request.user	
+	car = Car.cars.get(event=event,carid=carid)
+	passengers = car.getPassengerList(eventid)
+	if memberCheck(request.user, event) == False:
+			return render(request, 'invite/notMember.html')
+	if request.method == 'GET':
+		
+		driver=None
+		#for passenger in passengers.all:
+		#	if (passenger.status == 'DR'):		
+		#		driver = passenger
+		admin = False
+		#if (driver.personid == user):
+		#	admin = True
+		context = {'menu' : getMenuInfo(request), 'title' : "Car Details",  'event' :event,'user' : request.user, \
+				'car':car, 'admin':admin,  'cur_path' : request.get_full_path()}
+	
+		return render(request, 'ride_share/carDetails.html', context)
 	

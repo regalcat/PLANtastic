@@ -1,7 +1,28 @@
 <div class="panel panel-default">
-	<a href="tools/ride_share">
-	<div class="tool-tile">
-	<button type="button" class="btn btn-default">Ride Share Tool</button>
+
+	<div class="panel-heading">
+		<h3 class="panel-title">Ride Share</h3>
+
 	</div>
-	</a>
+	<div class="panel-body">
+{{ cars.count }}
+	<table class="table"> 
+
+	<tr class="table-header">
+	<td> </td>
+	<td><b>Driver:</b></td>
+	<td><b>Open Seats:</b></td>
+	<td><b> {{ cars.count }} </b></td>
+	</tr>
+	
+	{% for car in cars %}
+		<tr>
+		<td>{{ car.driver.personid }}</td>
+		<td>{{ car.open_seats }}</td>
+		</tr>
+	{% endfor %}
+	</table>
+	<a href="tools/ride_share"><button type="button" class="btn btn-default">Sign Up</button></a>
+	</div>
+
 </div>

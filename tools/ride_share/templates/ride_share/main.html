@@ -12,27 +12,23 @@
 <table class="table"> 
 
 <tr class="table-header">
-<td> </td>
+
 <td> <b> Driver </b> </td> 
 <td> <b> Seats  </b></td>
 <td> <b> Available Seats  </b></td>
-<td> <b> Passengers </b> </td>
+<td> <b>  </b> </td>
 </tr>
 {% for car in cars %}
 	<tr>
 	
-	<td></td>
+	
 	<td>{{ car.driver.personid }}</td>
 	<td>{{ car.seats }}</td><td>{{ car.open_seats }}</td>
-	</tr>
-
 	
-	{% for Passenger in Passengers.all %}
+
+	<td><a href="{{cur_path}}+'/{{car.carid}}/'"><button type="button" class="btn btn-default">View Details</button></a></td>
 		
-		<td></td>
-		<td> {{ Passenger.personid }} </td>
 		</tr>
-	{% endfor %}
 {% endfor %}
 </table>
 

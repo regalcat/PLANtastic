@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="page-header">
+	<font size="6">Car Details</font>
+</div>
+
+<a href=".."><button type="button" class="btn btn-default">Go Back</button></a></p>
+<table class="table"> 
+
+<tr><td><b> Driver: </b> </td> <td> {{ car.driver.personid }}</td></tr>
+
+<tr><td><b> Seats: </b></td> <td> {{ car.seats }} </td></tr>
+<tr><td><b> Available Seats:  </b></td> <td> {{ car.open_seats }} </td></tr>
+<tr><td><b> Passengers: </b></td> 
+{% for passenger in car.passengers.all %}
+	{{ passenger.personid }}</tr><tr>
+
+{% endfor %}
+</tr>
+
+{% endblock %}

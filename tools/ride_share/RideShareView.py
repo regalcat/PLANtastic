@@ -21,39 +21,17 @@ class RideShareView(ToolView):
 		cur_event = EventModel.getEvent(eventid)
 		cars = Car.cars.filter(event=cur_event)
 		for car in cars:
-			
-			car.signups = car.getPassengerList().count()
-			car.available = car.seats
-			car.your_signup = RideSignupModel.objects.filter(rideid=car, user=request.user)
-			car.signedup = 0
-			for signup in car.signups:
-				car.signedup +=1 
-				car.available -= 1
-			if car.your_signup.count() == 0 or car.available<=0:
-				car.your_signup = False
-			else:
-				car.your_signup = car.your_signup[0]
-				car.available -= 1
+			car.open_seats = car.getOpenSeats(event)	
 				
 		admin = False
-#		if (user.isDriver()):
-		if (True):
+		if (car.driver.personid == user):
 			admin = True
-		template = loader.get_template("ride_share/main.html")
-		context = RequestContext(request, {'Vehicles' : cars, 'event' : cur_event, 'cur_path' : request.get_full_path(), 'title' : "Ride Share", 'menu': getMenuInfo(request) })
+		template = loader.get_template("ride_share/ride.main.html")
+		context = RequestContext(request, {'cars' : cars, 'event' : cur_event, 'cur_path' : request.get_full_path(), 'title' : "Ride Share", 'menu': getMenuInfo(request) })
 		return HttpResponse(template.render(context))
 
 	@csrf_exempt
 	def post(self, request, eventid):
-		ajax = request.POST.get('ajax', False)
 		cur_event=EventModel.getEvent(eventid)
-		car = Car.car.get(id=request.POST['rideid'], event=cur_event)
-		signup = Person.objects.update_or_create(rideid=ride, user = request.user, event=cur_event, defaults={'seats' : request.POST['seats']})
-		if ajax:
-			# TODO - return sum of all people in car
-			cars = Car.objects.filter(carid=car.carid, event=cur_event)
-			total = 0
-			for car in cars:
-				total += car.seats
-			return HttpResponse(total)
+		cars = Car.cars.filter(event=cur_event)
 		return self.get(request, eventid)
