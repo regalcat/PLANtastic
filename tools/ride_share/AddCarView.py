@@ -14,6 +14,7 @@ class AddCarView(CreateView):
 
 	def get(self, request, eventid):
 		self.eventid=eventid
+		self.driver = request.user
 		return super(AddCarView, self).get(self, request)
 
 	def post(self, request, eventid):

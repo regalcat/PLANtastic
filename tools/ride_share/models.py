@@ -6,9 +6,6 @@ from django.contrib.auth.models import User
 from users import forms as userForms
 
 
-
-
-
 class Person(models.Model):
 	
 	DRIVER = 'DR'
