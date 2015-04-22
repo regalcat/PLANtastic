@@ -24,6 +24,7 @@ class ScheduleView(ToolView):
 			if today < activities[i].start_date:
 				context['name'] = activities[i].name
 				context['start_date'] = activities[i].start_date
+				context['end_date'] = activities[i].end_date
 				context['description'] = activities[i].description
 				break
 
