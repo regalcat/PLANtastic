@@ -23,9 +23,8 @@ def rideshareindexView(request, eventid):
 		car.open_seats = car.getOpenSeats(eventid)
 		car.passengers.all = car.getPassengerList(eventid)
 
-	
-		
-	context = {'menu' : getMenuInfo(request), 'title' : "Ride Share List", 'cars' : cars, 'event' : event,   }
+	context = {'menu' : getMenuInfo(request), 'title' : "Ride Share List",  'cur_path' : request.get_full_path(), \
+			'cars' : cars, 'event' : event,   }
 	return render(request, 'ride_share/main.html', context)
 
 @login_required(login_url = '/loginRequired/')
@@ -57,27 +56,28 @@ def addCar(request, eventid):
 			form.user = request.user
 			form.event = event
 			form.save()
-		return HttpResponseRedirect(reverse('events:tools:rideshare:addCar', kwargs={'eventid' : eventid}))
+		return HttpResponseRedirect(reverse('events:tools:rideshare', kwargs={'eventid' : eventid}))
 
 	
 @login_required(login_url = '/loginRequired/')
-def signupView(request, eventid):
+def signupView(request, carid, eventid):
 	event = EventModel.getEvent(eventid)
 	user = request.user
+	car = Car.cars.get(event=event, carid=carid)
 	if memberCheck(request.user, event) == False:
 			return render(request, 'invite/notMember.html')
 	if request.method == 'GET':
-		instance = Car.cars.filter(event = event)
+		instance = Person.objects.filter(event=event, personid=user)
 		if instance.count() == 0:
 			personform = PersonForm()
 		else:
 			personform = PersonForm(instance = instance[0])
 
-		context = {'menu' : getMenuInfo(request), 'title' : "Choose A Car", 'personform' : personform, 'event' : event, 'user' : request.user}
-		return render(request, 'ride_share/signup.html', context)
+		context = {'menu' : getMenuInfo(request), 'title' : "Sign Up", 'personform' : personform, 'event' : event, 'user' : request.user}
+		return render(request, 'ride_share/sign_up_form.html', context)
 
 	if request.method == 'POST':
-		instance = Car.cars.filter(event = event, user = user)
+		instance = Car.cars.car(event = event,carid=carid)
 		if instance.count() == 0:
 			personform = PersonForm(request.POST)
 		else:
@@ -89,28 +89,110 @@ def signupView(request, eventid):
 			form.user = request.user
 			form.event = event
 			form.save()
-		return HttpResponseRedirect(reverse('events:tools:rideshare:signup', kwargs={'eventid' : eventid}))
+			
+		return HttpResponseRedirect(reverse('events:tools:rideshare:executeSignup', kwargs={'eventid':eventid, 'carid':carid}))
+
+
+@login_required(login_url = '/loginRequired/')
+def executeSignup(request, carid, eventid):
+	event = EventModel.objects.filter(eventid=eventid)
+	if memberCheck(request.user, event) == False:
+		return render(request, 'invite/notMember.html')
+	person=Person(personid=request.user, event=event[0], address=request.POST['address'])
+	person.save()
+	#person = Person.objects.get(personid=request.user, event=event)
+	car = Car.cars.get(event=event[0], carid=carid)
+	car.passengers.add(person)
+	car.open_seats -= 1
+	car.save()
+	return HttpResponseRedirect(reverse('events:tools:rideshare:carDetails', kwargs={'eventid' : eventid,'carid':carid}))
+
 
 
 @login_required(login_url = '/loginRequired/')
 def carView(request, carid, eventid):
 	event = EventModel.objects.filter(eventid=eventid)
-	user = request.user	
-	car = Car.cars.get(event=event,carid=carid)
+	user = request.user
+	car = Car.cars.get(event=event[0], carid=carid)
+
 	passengers = car.getPassengerList(eventid)
-	if memberCheck(request.user, event) == False:
-			return render(request, 'invite/notMember.html')
+
+	car.open_seats = car.getOpenSeats(eventid)
 	if request.method == 'GET':
 		
-		driver=None
-		#for passenger in passengers.all:
-		#	if (passenger.status == 'DR'):		
-		#		driver = passenger
+		driver=car.driver
 		admin = False
-		#if (driver.personid == user):
-		#	admin = True
-		context = {'menu' : getMenuInfo(request), 'title' : "Car Details",  'event' :event,'user' : request.user, \
-				'car':car, 'admin':admin,  'cur_path' : request.get_full_path()}
+		if (driver.personid == user):
+			admin = True
+		context = {'menu' : getMenuInfo(request), 'title' : "Car Details", 'passengers':passengers, \
+				 'eventid' :eventid,'user' : request.user, 'car':car, 'admin':admin, \
+				  'driver':driver, 'cur_path' : request.get_full_path()}
 	
 		return render(request, 'ride_share/carDetails.html', context)
+
+
+
+@login_required(login_url = '/loginRequired/')
+def deleteCar(request, carid, eventid):
+	event = EventModel.objects.filter(eventid=eventid)
+	car = Car.cars.get(event=event[0], carid=carid)
+	user=request.user
+	driver = car.driver.personid
+	admin = False
+	if driver == user:
+		admin = True
+	if memberCheck(request.user, event[0]) == False:
+		return render(request, 'invite/notMember.html', {'menu' : getMenuInfo(request), 'title' : 'Not Member'})
+	if admin == False:
+		return render(request, 'events/notPermission.html', {'menu' : getMenuInfo(request), 'title' : 'Not Permission'})
+	context = {'menu' : getMenuInfo(request), 'title' : "Remove Car", 'eventid':eventid,'car':car, \
+		'cur_path':request.get_full_path(),'admin':admin, 'event':event}
+	return render(request, "ride_share/deleteCar.html", context)
+
+
+@login_required(login_url = '/loginRequired/')
+def executeDeleteCar(request, carid, eventid):
+	event = EventModel.objects.filter(eventid=eventid)
+	car = Car.cars.get(event=event[0], carid=carid)
+	if memberCheck(request.user, event[0]) == False:
+		return render(request, 'invite/notMember.html', {'menu' : getMenuInfo(request), 'title' : 'Not Member'})
+	if car.driver.personid != request.user:
+		return render(request, 'events/notPermission.html', {'menu' : getMenuInfo(request), 'title' : 'Not Permission'})
+
+	car.delete()
+	
+	context = {'menu' : getMenuInfo(request), 'title' : 'Ride Share', 'event':event}
+	return HttpResponseRedirect(reverse('events:tools:rideshare:ride_share.index', kwargs={'eventid' : eventid}))
+
+	
+@login_required(login_url = '/loginRequired/')
+def kickPassenger(request, carid, personid, eventid):
+	event = EventModel.objects.filter(eventid=eventid)
+	car = Car.cars.get(event=event[0], carid=carid)
+	driver = car.driver
+	admin = False
+	if car.driver.personid == request.user:
+		admin = True
+	if memberCheck(request.user, event[0]) == False:
+		return render(request, 'invite/notMember.html', {'menu' : getMenuInfo(request), 'title' : 'Not Member'})
+	if admin == False:
+		return render(request, 'events/notPermission.html', {'menu' : getMenuInfo(request), 'title' : 'Not Permission'})
+	context = {'menu' : getMenuInfo(request), 'title' : "Remove Car", 'admin':admin, 'event':event}
+	return render(request, "ride_share/deleteCar.html", context)
+
+
+@login_required(login_url = '/loginRequired/')
+def executeKickPassenger(request, carid, personid, eventid):
+	event = EventModel.objects.filter(eventid=eventid)
+	car = Car.cars.get(event=event[0], carid=carid)
+	if memberCheck(request.user, event[0]) == False:
+		return render(request, 'invite/notMember.html', {'menu' : getMenuInfo(request), 'title' : 'Not Member'})
+	if car.driver.personid != request.user:
+		return render(request, 'events/notPermission.html', {'menu' : getMenuInfo(request), 'title' : 'Not Permission'})
+
+	car.delete()
+	
+	context = {'menu' : getMenuInfo(request), 'title' : 'Ride Share', 'event':event}
+	return render(request, "ride_share.index.html", context)
+
 	

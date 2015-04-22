@@ -5,18 +5,32 @@
 	<font size="6">Car Details</font>
 </div>
 
-<a href=".."><button type="button" class="btn btn-default">Go Back</button></a></p>
-<table class="table"> 
+<p><a href=".."><button type="button" class="btn btn-default">Go Back</button></a>
 
+{% if car.open_seats > 0 %}
+<a href="signup"><button type="button" class="btn btn-default">Join Car</button></a>
+ {% endif %}
+</p>
+
+<table class="table">
 <tr><td><b> Driver: </b> </td> <td> {{ car.driver.personid }}</td></tr>
 
 <tr><td><b> Seats: </b></td> <td> {{ car.seats }} </td></tr>
 <tr><td><b> Available Seats:  </b></td> <td> {{ car.open_seats }} </td></tr>
 <tr><td><b> Passengers: </b></td> 
-{% for passenger in car.passengers.all %}
-	{{ passenger.personid }}</tr><tr>
+{% for passenger in passengers.all %}
+	<td>{{ passenger.personid }}</td>
+	{% if admin %}
+		<td><p><a href="deleteCar"><button type="button" class="btn btn-danger">Remove Passenger</button></a></p></td>
+	{% endif %}
+	</tr><tr>
+	<td></td>
 
 {% endfor %}
 </tr>
-
+</table>
+{% if admin %}
+	<p><a href="deleteCar"><button type="button" class="btn btn-danger">Remove Car</button></a></p>
+{% endif %}
 {% endblock %}
+

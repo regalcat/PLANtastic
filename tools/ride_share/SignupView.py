@@ -6,11 +6,12 @@ from django.template import RequestContext, loader
 from base.helpers import getMenuInfo
 from tools.ride_share.models import Car, Person, Riders
 from events.models import EventModel
+from forms import PersonForm
 
 class SignupView(CreateView):
 	template_name='ride_share/sign_up_form.html'
 	model = Person
-	fields = ('address','personid',)
+	fields = ('address',)
 
 	
 
@@ -22,13 +23,13 @@ class SignupView(CreateView):
 		person = Person(personid = request.user)
 		open_seats=0
 		passengers=None
-		
+		personform = PersonForm(personid = request.user)
 		for car in cars:
 			car.open_seats = car.getOpenSeats(eventid)
 			passengers = car.getPassengerList(eventid)
 
 		context = {'menu' : getMenuInfo(request), 'title' : "Sign Up", 'cars' : cars, 'event' : event, \
-		 'Open_Seats' : open_seats,}	
+		 'Open_Seats' : open_seats,'personform':personform}	
 		return super(SignupView, self).get(self, request, context)
 		#return render(request, 'ride_share/main.html', context)
 

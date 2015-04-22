@@ -5,41 +5,14 @@
 	<font size="6">Ride Share Sign Up</font>
 </div>
 
-<form action="" method="post">
+<form action="../executeSignup/" method="post">
 {% csrf_token %}
-{{person.personid}}
-{% if cars.count == 0 %}
-	There are no cars to join!
-{% else %}
-	<tr class="table-header">
-	<td> </td>
-	<td>  Driver  </td> 
-	<td>  Passengers  </td>
-	</tr>
-	{% for car in cars %}
-		{% if car.open_seats > 0 %}
-					
-			<tr>
-			<td></td>
-			<td>{{ car.driver.userid }}</td>
-			{% for person in car.passengers.all %}
-				<tr class="dropdown">
-				<td></td>
-				<td> {{ passenger.personid.username }} </td>
-				</tr>
-			{% endfor %}
-			<td><input type="submit" class="btn btn-default" value="Join Car" /></td>
-		{% endif %}
-	{% endfor %}
-	<!--<p><label for="car" id="carLabel" >Join Car:</label> 
-	<select id="car" name="car">
-	<option value="">--</option>	
-		{% for car in cars %}
-			{{car.driver}}
-			<option value = "{{car.carid}}"> {{car.driver}}</option>
-		{% endfor %}
-	</select>-->
-{% endif %}
+<p><b>Name:</b> {{user}}</p>
+{{personform.as_p}}
+<p>Note: Only the driver of your selected vehicle will be able to see your address.</p>
+<td><input type="submit" class="btn btn-default" value="Join Car" /></td>
+	
+	
 
 </form>
 <a href="../"><button type="button" class="btn btn-default">Go Back</button></a>
