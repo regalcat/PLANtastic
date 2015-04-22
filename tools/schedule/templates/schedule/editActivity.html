@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="page-header">
+	<font size="6">Edit schedule</font></div>
+
+<div class="panel-body">
+	<form action= "" method= "POST">
+	{% csrf_token %}
+	{{ scheduleform.as_p }}
+
+<b>Start time:</b>
+<select name="start_hour" id="start_hour">
+<option value="00">00</option>
+<option value="01">01</option>
+<option value="02">02</option>
+<option value="03">03</option>
+<option value="04">04</option>
+<option value="05">05</option>
+<option value="06">06</option>
+<option value="07">07</option>
+<option value="08">08</option>
+<option value="09">09</option>
+<option value="10">10</option>
+<option value="11">11</option>
+<option value="12">12</option>
+<option value="13">13</option>
+<option value="14">14</option>
+<option value="15">15</option>
+<option value="16">16</option>
+<option value="17">17</option>
+<option value="18">18</option>
+<option value="19">19</option>	
+<option value="20">20</option>
+<option value="21">21</option>
+<option value="22">22</option>
+<option value="23">23</option>
+</select>
+
+<select name="start_minute" id="start_minute">
+<option value="00">00</option>
+<option value="05">05</option>
+<option value="10">10</option>
+<option value="15">15</option>
+<option value="20">20</option>
+<option value="25">25</option>
+<option value="30">30</option>
+<option value="10">35</option>
+<option value="40">40</option>
+<option value="45">45</option>
+<option value="50">50</option>
+<option value="10">55</option>
+</select>
+<br>
+<br>
+<b>End time:</b>
+<select name="end_hour" id="end_hour">
+<option value="0">--</option>
+<option value="00">00</option>
+<option value="01">01</option>
+<option value="02">02</option>
+<option value="03">03</option>
+<option value="04">04</option>
+<option value="05">05</option>
+<option value="06">06</option>
+<option value="07">07</option>
+<option value="08">08</option>
+<option value="09">09</option>
+<option value="10">10</option>
+<option value="11">11</option>
+<option value="12">12</option>
+<option value="13">13</option>
+<option value="14">14</option>
+<option value="15">15</option>
+<option value="16">16</option>
+<option value="17">17</option>
+<option value="18">18</option>
+<option value="19">19</option>	
+<option value="20">20</option>
+<option value="21">21</option>
+<option value="22">22</option>
+<option value="23">23</option>
+</select>
+
+<select name="end_minute" id="end_minute">
+<option value="0">--</option>
+<option value="00">00</option>
+<option value="05">05</option>
+<option value="10">10</option>
+<option value="15">15</option>
+<option value="20">20</option>
+<option value="25">25</option>
+<option value="30">30</option>
+<option value="10">35</option>
+<option value="40">40</option>
+<option value="45">45</option>
+<option value="50">50</option>
+<option value="10">55</option>
+</select>
+<br><br>
+
+
+	<input type= "submit" value="Submit" class="btn btn-default">
+	</form>
+
+	{% if creator or coplanner %}
+		<br>
+		<form action= "{{menu.server}}/{{event.eventid}}/tools/schedule/deleteActivity/" method= "POST">
+		{% csrf_token %}
+		<input type="hidden" name="scheduleid" id="scheduleid" value="{{scheduleid}}">	
+		<input type="submit" value="Delete activity" class="btn btn-danger"></form>
+		<br>
+		{% endif %}
+
+
+<a href="{{menu.server}}/{{event.eventid}}/tools/schedule"><button type="button" class="btn btn-default">Go Back</button></a>
+
+</div>
+{% endblock %}

@@ -10,7 +10,6 @@
 	{% csrf_token %}
 	{{ allergyform.as_p }}
 	
-	<!--<input type="hidden" name="event" id="event" value="{{ event.eventid }}">-->
 	<input type= "submit" value="Submit" class="btn btn-default">
 	</form>
 <a href="{{menu.server}}/{{event.eventid}}/tools/allergy_list"><button type="button" class="btn btn-default">Go Back</button></a>

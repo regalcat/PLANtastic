@@ -7,32 +7,38 @@
 
 <div class="panel panel-default">
 <div class="panel-body">
-<div class="container">
+	<div class="container">
 	<div class="table-responsive">
 	<table class="table">
-		<thead><tr><td><b>#</b></td><td><b>Name</b></td><td><b>Status</b></td><td><b>Change status</b></td><td></td></thead>
+		<thead><td><b>#</b></td><td><b>Name</b></td><td><b>Status</b></td><td><b>Change status</b></td><td></td><td><b>Delete member</b></td></thead>
 		<tbody>
 		{% for member in members %}
 		<tr>
 		<td>{{ forloop.counter }}</td>
 		<td>{{ member.user.first_name }} {{ member.user.last_name }}</td>
 		<td>{{ member.get_status_display }}</td>
-		<td>
 			{% if member.get_status_display == "Creator" %}
-				Not editable
-				</td><td>
+				<td>Not changable</td><td></td>
 			{% else %}
-				<form action= "" method= "POST">
+				<td><form action= "" method= "POST">
 				{% csrf_token %}
 				<select name="status" id="status">
 				<option value="CP">Coplanner</option>
 				<option value="MEM">Member</option>
-			</td>
-			<td>
+				
+			</td><td>
 			<input type="hidden" name="user" id="user" value="{{member.user.username}}">	
-			<input type= "submit" value="Edit status" class="btn btn-default"></form>
+			<input type= "submit" value="Edit status" class="btn btn-default"></form></td>
 			{% endif %}
-		</td>
+				<td>
+				{% if member.get_status_display == "Creator" %}
+				{% else %}
+				<form action="deleteMember" method= "POST">
+				{% csrf_token %}
+				<input type="hidden" name="user" id="user" value="{{member.user.username}}">
+				<input type= "submit" value="Delete Member" class="btn btn-danger"></form></td>
+				{% endif %}
+
 		</tr>
 		{% endfor %}
 		</tbody>
