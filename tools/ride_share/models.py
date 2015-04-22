@@ -6,16 +6,11 @@ from django.contrib.auth.models import User
 from users import forms as userForms
 
 
-class RideModel(models.Model):
-	rideid = models.AutoField(primary_key=True)
-	event = models.ForeignKey(EventModel)
-	seats = models.IntegerField()
-	cars = models.Manager()
-	driver = models.CharField(max_length = 25)
 
 
 
-class RideSignupModel(models.Model):
+class Person(models.Model):
+	
 	DRIVER = 'DR'
 	PASSENGER = 'PS'
 	STATUSES = (
@@ -23,8 +18,54 @@ class RideSignupModel(models.Model):
 		(PASSENGER, 'Passenger'),
 	)	
 	event = models.ForeignKey(EventModel)
-	user = models.ForeignKey(User)
-	rideid = models.ForeignKey(RideModel)
+	personid = models.ForeignKey(User)
 	status = models.CharField(max_length=3, choices=STATUSES)
 	address = models.CharField(max_length=50)
-	objects = models.Manager()
+	address.blank = True
+
+	
+	def newPerson(self,event, personid, status):
+		self.event=event
+		self.personid=personid
+		self.status=status
+		self.save()
+		return self
+
+
+
+class Car(models.Model):
+	carid = models.AutoField(primary_key=True)
+	event = models.ForeignKey(EventModel)
+	seats = models.IntegerField()
+	cars = models.Manager()
+	event = models.ForeignKey(EventModel)
+	passengers = models.ManyToManyField(Person)
+	open_seats = models.IntegerField(default=0)
+	driver = models.ForeignKey(Person, related_name='driver')
+
+
+	def getOpenSeats(self, eventid):
+		event = EventModel.objects.filter(eventid=eventid)
+		car = Car.cars.get(event=event[0], carid=self.carid)
+		open_seats = (int)(car.seats-car.passengers.count())
+		return open_seats
+
+	def getPassengerList(self, eventid):
+		event = EventModel.objects.filter(eventid=eventid)
+		car = Car.cars.get(event=event[0], carid=self.carid)
+		return car.passengers
+
+	def newCar(self, event, seats):
+		self.event=event
+		self.seats=seats
+		self.open_seats = seats
+		self.save()
+		return self
+
+
+class Riders(models.Model):
+	car = models.ForeignKey(Car)
+	person = models.ForeignKey(Person)
+		
+
+

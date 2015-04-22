@@ -2,13 +2,13 @@ from django import forms
 from django.views.generic.edit import FormView, CreateView
 from django.http import HttpResponse
 from django.template import RequestContext, loader
-from tools.ride_share.models import RideModel, RideSignupModel
+from tools.ride_share.models import Car, Person, Riders
 from events.models import EventModel
 
 class AddCarView(CreateView):
 	template_name='ride_share/add_car_form.html'
-	model = RideModel
-	fields = ['seats', 'driver']
+	model = Car
+	fields = ['seats']
 	
 
 
@@ -19,8 +19,17 @@ class AddCarView(CreateView):
 	def post(self, request, eventid):
 		self.eventid=eventid
 		event = EventModel.getEvent(eventid)
-		ride = RideSignupModel(event=event, user=request.user, status='DR')
-		
+		person= Person(event=event)
+		person.newPerson(event=event, personid=request.user, status='DR')
+		person.save()
+		car=Car(event=event, driver=person, seats=request.POST['seats'], open_seats=request.POST['seats'])
+		car.newCar(event=event, seats=request.POST['seats'] )
+		car.driver=person
+		if (car.open_seats == None):
+			car.open_seats = request.POST['seats']		
+		car.save()
+		#car.passengers.add(person)
+		#car.save()
 		return super(AddCarView, self).post(self, request)
 
 	def form_valid(self, form):

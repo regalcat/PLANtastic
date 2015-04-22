@@ -60,7 +60,12 @@ class ThreadView(View):
 	
 	#Adds the post to the thread and returns the get method
 	@method_decorator
-	def post(self, request, eventid):
+	def post(self, request, eventid, key):
 		cur_event = EventModel.getEvent(eventid)
-		
+		cur_thread = ThreadModel.threads.get(pk=key)
+		puser = request.user
+		ptitle = request.POST['ptitle']
+		pbody = request.POST['pbody']
+		post = PostModel(title=ptitle, creator=puser, thread=cur_thread, body=pbody)
+		post.save()
 		return self.get(request, eventid)

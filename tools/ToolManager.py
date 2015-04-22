@@ -9,6 +9,7 @@ from tools.ride_share.RideShareView import RideShareView
 from tools.schedule.ScheduleTool import ScheduleView
 
 
+
 class ToolManager:
 	@staticmethod
 	def getTools(event):
@@ -31,6 +32,7 @@ class ToolManager:
 			context['ride_share'] = RideShareView.getContext(event)
 			tools.append(ScheduleView)
 			context['schedule'] = ScheduleView.getContext(event)
+
 		# Tools for both Upcoming and Previous Events
 		tools.append(MoneyShareTool)
 		context['money_share'] = MoneyShareTool.getContext(event)
