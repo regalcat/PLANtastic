@@ -17,8 +17,7 @@ class Person(models.Model):
 	event = models.ForeignKey(EventModel)
 	personid = models.ForeignKey(User)
 	status = models.CharField(max_length=3, choices=STATUSES)
-	address = models.CharField(max_length=50)
-	address.blank = True
+	address = models.CharField(max_length=50, blank = True)
 
 	
 	def newPerson(self,event, personid, status):
@@ -52,10 +51,11 @@ class Car(models.Model):
 		car = Car.cars.get(event=event[0], carid=self.carid)
 		return car.passengers
 
-	def newCar(self, event, seats):
+	def newCar(self, event, seats, driver):
 		self.event=event
 		self.seats=seats
 		self.open_seats = seats
+		self.driver = driver
 		self.save()
 		return self
 
