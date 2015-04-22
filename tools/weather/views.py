@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from events.models import EventModel
 from models import WeatherModel
 from base.helpers import getMenuInfo
-from base.permissions import memberCheck
+from base.permissions import memberCheck, isCreator, isCoplanner
 from forms import WeatherForm
 
 
@@ -16,6 +16,13 @@ def editWeather(request, eventid):
 	event = EventModel.getEvent(eventid)
 	if memberCheck(request.user, event) == False:
 			return render(request, 'invite/notMember.html', {'menu' : getMenuInfo(request), 'title' : "Not Member"})
+
+	creator = isCreator(request.user, event)
+	coplanner = isCoplanner(request.user, event)
+	if creator == False:
+		if coplanner == False:
+			return render(request, 'events/notPermission.html', \
+			{'menu' : getMenuInfo(request), 'title' : 'Not Permission'})
 
 	context = {'menu' : getMenuInfo(request), 'title' : "Edit Weather", 'event' : event}
 	information = WeatherModel.objects.filter(event = event)

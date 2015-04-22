@@ -18,11 +18,12 @@
 		<td>	{{ activity.description }}</td>
 
 		</td>
-		<td>	
+		<td>	{% if creator or coplanner %}
 			<form action= "editActivity" method= "GET">
 			{% csrf_token %}
 			<input type="hidden" name="scheduleid" id="scheduleid" value="{{activity.scheduleid}}">	
 			<input type="submit" value="Edit activity" class="btn btn-default"></form>
+			{% endif %}
 		</td>
 		</tr>
 		{% endfor %}

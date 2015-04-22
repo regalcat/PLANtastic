@@ -7,19 +7,28 @@ from django.contrib.auth.decorators import login_required
 from tools.schedule.models import ScheduleModel
 from events.models import EventModel
 from base.helpers import getMenuInfo
-from base.permissions import memberCheck
+from base.permissions import memberCheck, isCreator, isCoplanner
 from tools.schedule.forms import ScheduleForm
 
 
 @login_required(login_url = '/loginRequired/')
 def showSchedule(request, eventid):
+	event = EventModel.objects.filter(eventid=eventid)
+	if memberCheck(request.user, event[0]) == False:
+		return render(request, 'invite/notMember.html', {'menu' : getMenuInfo(request), 'title' : 'Not Member'})
+	creator = isCreator(request.user, event[0])
+	coplanner = isCoplanner(request.user, event[0])
+	if creator == False:
+		if coplanner == False:
+			return render(request, 'events/notPermission.html', \
+			{'menu' : getMenuInfo(request), 'title' : 'Not Permission'})
+
 	event = EventModel.getEvent(eventid)
-	if memberCheck(request.user, event) == False:
-			return render(request, 'invite/notMember.html', {'menu' : getMenuInfo(request), 'title' : "Not Member"})
 
 	activities = ScheduleModel.objects.filter(event = event).order_by("start_date")
 
-	context = {'menu' : getMenuInfo(request), 'title' : "Schedule", 'activities' : activities, 'event': event}
+	context = {'menu' : getMenuInfo(request), 'title' : "Schedule", 'activities' : activities, 'event': event, \
+			'creator' : creator, 'coplanner' : coplanner}
 
 	return render(request, 'schedule/showSchedule.html', context)
 
@@ -27,11 +36,19 @@ def showSchedule(request, eventid):
 
 @login_required(login_url = '/loginRequired/')
 def editActivity(request, eventid):
+	event = EventModel.objects.filter(eventid=eventid)
+	if memberCheck(request.user, event[0]) == False:
+		return render(request, 'invite/notMember.html', {'menu' : getMenuInfo(request), 'title' : 'Not Member'})
+	creator = isCreator(request.user, event[0])
+	coplanner = isCoplanner(request.user, event[0])
+	if creator == False:
+		if coplanner == False:
+			return render(request, 'events/notPermission.html', \
+			{'menu' : getMenuInfo(request), 'title' : 'Not Permission'})
 
 	scheduleid = request.GET['scheduleid']
 	event = EventModel.getEvent(eventid)
-	if memberCheck(request.user, event) == False:
-			return render(request, 'invite/notMember.html')
+
 
 
 	if request.method == 'GET':
@@ -78,10 +95,18 @@ def editActivity(request, eventid):
 
 @login_required(login_url = '/loginRequired/')
 def addActivity(request, eventid):
-	event = EventModel.getEvent(eventid)
-	if memberCheck(request.user, event) == False:
-			return render(request, 'invite/notMember.html')
+	event = EventModel.objects.filter(eventid=eventid)
+	if memberCheck(request.user, event[0]) == False:
+		return render(request, 'invite/notMember.html', {'menu' : getMenuInfo(request), 'title' : 'Not Member'})
+	creator = isCreator(request.user, event[0])
+	coplanner = isCoplanner(request.user, event[0])
+	if creator == False:
+		if coplanner == False:
+			return render(request, 'events/notPermission.html', \
+			{'menu' : getMenuInfo(request), 'title' : 'Not Permission'})
 
+
+	event = EventModel.getEvent(eventid)
 
 	if request.method == 'GET':
 		scheduleform = ScheduleForm()
