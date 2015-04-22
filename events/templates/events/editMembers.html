@@ -10,7 +10,7 @@
 <div class="container">
 	<div class="table-responsive">
 	<table class="table">
-		<thead><tr><td><b>#</b></td><td><b>Name</b></td><td><b>Status</b></td><td><b>Change status</b></td><td></td></thead>
+		<thead><tr><td><b>#</b></td><td><b>Name</b></td><td><b>Status</b></td><td><b>Change status</b></td><td><b>Delete member</b></td></thead>
 		<tbody>
 		{% for member in members %}
 		<tr>
@@ -32,6 +32,14 @@
 			<input type="hidden" name="user" id="user" value="{{member.user.username}}">	
 			<input type= "submit" value="Edit status" class="btn btn-default"></form>
 			{% endif %}
+		</td>
+		<td>		{% if member.get_status_display == "Creator" %}
+				{% else %}
+				<form action="deleteMember" method= "POST">
+				{% csrf_token %}
+				<input type="hidden" name="user" id="user" value="{{member.user.username}}">	
+				<input type= "submit" value="Delete member" class="btn btn-default"></form>
+				{% endif %}
 		</td>
 		</tr>
 		{% endfor %}

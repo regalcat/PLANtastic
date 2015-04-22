@@ -13,7 +13,7 @@
 		<tbody>
 		{% for activity in activities %}
 		<tr>
-		<td> 	{{activity.start_date}} {% if activity.end_date %} {{activity.end_date}} {%endif%} </td>
+		<td> 	{{activity.start_date}} {% if activity.end_date %} -- {{activity.end_date}} {%endif%} </td>
 		<td> 	{{ activity.name }}</b>
 		<td>	{{ activity.description }}</td>
 

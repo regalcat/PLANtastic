@@ -109,7 +109,7 @@ def addActivity(request, eventid):
 		activity.save()
 		
 		
-		return HttpResponseRedirect("")
+		return HttpResponseRedirect(reverse('events:tools:schedule:scheduleIndex', kwargs={'eventid':eventid}))
 
 
 

@@ -126,18 +126,42 @@ def editMembers(request, eventid):
 		return HttpResponseRedirect("")	
 
 
+@login_required(login_url = '/loginRequired/')
+def deleteMember(request, eventid):
+	event = EventModel.objects.filter(eventid=eventid)
+	if memberCheck(request.user, event[0]) == False:
+		return render(request, 'invite/notMember.html', {'menu' : getMenuInfo(request), 'title' : 'Not Member'})
+	if isCreator(request.user, event[0]) == False:
+		return render(request, 'events/notPermission.html', {'menu' : getMenuInfo(request), 'title' : 'Not Permission'})
+
+	username = request.POST['user']
+	event = EventModel.getEvent(eventid)
+
+	user = User.objects.filter(username = username)
+	event = EventModel.objects.filter(eventid = eventid)
+	member = getMemberObject(user, event)
+	member.delete()
+
+	return HttpResponseRedirect(reverse('events:editEvent', kwargs={'eventid':eventid}))	
+	
+	
 
 
 @login_required(login_url = '/loginRequired/')
 def deleteEvent(request, eventid):
+	event = EventModel.objects.filter(eventid=eventid)
+	if memberCheck(request.user, event[0]) == False:
+		return render(request, 'invite/notMember.html', {'menu' : getMenuInfo(request), 'title' : 'Not Member'})
+	if isCreator(request.user, event[0]) == False:
+		return render(request, 'events/notPermission.html', {'menu' : getMenuInfo(request), 'title' : 'Not Permission'})
 	event = EventModel.getEvent(eventid)
+
 	context = {'menu' : getMenuInfo(request), 'title' : 'Delete Event', 'event':event}
 	return render(request, "events/deleteEvent.html", context)
 
 
 @login_required(login_url = '/loginRequired/')
 def executeDeleteEvent(request, eventid):
-	
 	event = EventModel.objects.filter(eventid=eventid)
 	if memberCheck(request.user, event[0]) == False:
 		return render(request, 'invite/notMember.html', {'menu' : getMenuInfo(request), 'title' : 'Not Member'})
@@ -147,7 +171,7 @@ def executeDeleteEvent(request, eventid):
 	eventChild = EventModel.getEvent(eventid)
 	eventChild.delete()
 	event.delete()
-	# TODO : delete also from invite table everyone in event
+	# TODO : delete also from invite table everyone in event - I think Django does thid due to the foreign key
 
 	return HttpResponseRedirect(reverse('base:upcoming'))
 
