@@ -16,9 +16,7 @@ class ScheduleView(ToolView):
 	@staticmethod
 	def getContext(event_):
 
-		#event = EventModel.getEvent(event_.eventid)
-		activities = ScheduleModel.objects.filter(event = event_).order_by("start_date")
-		#today = datetime.datetime.now()	
+		activities = ScheduleModel.objects.filter(event = event_).order_by("start_date")	
 		today = timezone.now()
 		context = {}
 		
@@ -28,6 +26,5 @@ class ScheduleView(ToolView):
 				context['start_date'] = activities[i].start_date
 				context['description'] = activities[i].description
 				break
-
 
 		return context

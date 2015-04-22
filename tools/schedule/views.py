@@ -58,7 +58,8 @@ def editActivity(request, eventid):
 		else:
 			scheduleform = ScheduleForm(instance = instance[0])
 
-		context = {'menu' : getMenuInfo(request), 'title' : "Edit schedule", 'scheduleform' : scheduleform, 'event' : event}
+		context = {'menu' : getMenuInfo(request), 'title' : "Edit schedule", 'scheduleform' : scheduleform, \
+				'creator' : creator, 'coplanner': coplanner, 'event' : event, 'scheduleid' : scheduleid}
 		return render(request, 'schedule/editActivity.html', context)
 
 
@@ -89,6 +90,27 @@ def editActivity(request, eventid):
 
 			return HttpResponseRedirect("")
 
+
+@login_required(login_url = '/loginRequired/')
+def deleteActivity(request, eventid):
+	event = EventModel.objects.filter(eventid=eventid)
+	if memberCheck(request.user, event[0]) == False:
+		return render(request, 'invite/notMember.html', {'menu' : getMenuInfo(request), 'title' : 'Not Member'})
+	creator = isCreator(request.user, event[0])
+	coplanner = isCoplanner(request.user, event[0])
+	if creator == False:
+		if coplanner == False:
+			return render(request, 'events/notPermission.html', \
+			{'menu' : getMenuInfo(request), 'title' : 'Not Permission'})
+
+	scheduleid = request.POST['scheduleid']
+	event = EventModel.getEvent(eventid)
+
+	instance = ScheduleModel.objects.filter(scheduleid = scheduleid)
+
+	instance[0].delete()
+
+	return HttpResponseRedirect(reverse('events:tools:schedule:scheduleIndex', kwargs={'eventid': eventid}))
 	
 
 

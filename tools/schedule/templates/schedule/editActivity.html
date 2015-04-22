@@ -103,6 +103,17 @@
 
 	<input type= "submit" value="Submit" class="btn btn-default">
 	</form>
+
+	{% if creator or coplanner %}
+		<br>
+		<form action= "{{menu.server}}/{{event.eventid}}/tools/schedule/deleteActivity/" method= "POST">
+		{% csrf_token %}
+		<input type="hidden" name="scheduleid" id="scheduleid" value="{{scheduleid}}">	
+		<input type="submit" value="Delete activity" class="btn btn-danger"></form>
+		<br>
+		{% endif %}
+
+
 <a href="{{menu.server}}/{{event.eventid}}/tools/schedule"><button type="button" class="btn btn-default">Go Back</button></a>
 
 </div>
