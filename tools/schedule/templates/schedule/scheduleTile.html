@@ -1,7 +1,16 @@
 <div class="panel panel-default">
-	<a href="tools/schedule">
-	<div class="tool-tile">
-	<button type="button" class="btn btn-default">Schedule Tool</button>
+	<div class="panel-heading">
+		<h3 class="panel-title">Next scheduled activity</h3>
 	</div>
-	</a>
+	<div class="panel-body">
+	{% if schedule %}
+	<p><b>Name:</b> {{ schedule.name }}</p>
+	<p><b>Date and time:</b> {{ schedule.start_date }} {% if schedule.end_date %} -- {{ schedule.end_date }} {% endif %}</p>
+	<p>{% if schedule.description %}<b>Description:</b> {{ schedule.description }} {% endif %}</p>
+	{% else %}
+		<p>This event does not have any scheduled activities yet.</p>
+	{% endif%}
+
+	<a href="tools/schedule"><button type="button" class="btn btn-default">See full schedule</button></a>
+	</div>
 </div>

@@ -6,7 +6,7 @@ class ScheduleModel(models.Model):
 
 	scheduleid = models.AutoField(primary_key=True)
 	event = models.ForeignKey(EventModel)
-	name = models.CharField(max_length = 50, blank = True)
+	name = models.CharField(max_length = 50)
 	description = models.CharField(max_length=300, blank = True)
 	start_date = models.DateTimeField()
 	end_date = models.DateTimeField(blank=True, null=True)
