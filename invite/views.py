@@ -15,6 +15,7 @@ from base.permissions import getMemberObject
 from events.models import EventModel 
 from .forms import InviteForm
 from .models import MembershipModel, InviteModel
+from notifications.models import NotificationModel
 
 #The class that handles inviting people via email and then displays an html page
 class InviteView(FormView):
@@ -55,6 +56,11 @@ class InviteView(FormView):
 		#Saves the invite to the table
 		invite.save()
 		#Not happy with this going to the template, but I'll deal for now
+
+		notifications = NotificationModel()
+		text = "You have just invited " + str(to) + " to the event " + str(event.name) +"."
+		notifications = notifications.createNewNotification(user=request.user, text = text)
+
 		
 		template = loader.get_template("invite/inviteSuccess.html")
 		context = RequestContext(request, {'event' : event, 'user' : request.user, 'cur_path' : request.get_full_path(), 'title' : "Invite Success", 'menu' : getMenuInfo(request)})
@@ -66,17 +72,26 @@ def join_event(request):
 		# TODO - add error checking
 		string = request.POST['string']
 		invite = InviteModel.objects.filter(inviteString = string)
-		print invite.count()
-		print invite[0].inviteEmail
-		print request.user.email
+		#print invite.count()
+		#print invite[0].inviteEmail
+		#print request.user.email
+		
 		if (invite.count() != 1 or invite[0].inviteEmail != request.user.email):
 			return render(request, 'invite/join.html', { 'menu' : getMenuInfo(request), \
 				'title' : "Join Event" , 'error': True, 'error_message' : "Invalid Confirmation String" })
-		invite = invite[0]
+		else:
+			invite = invite[0]
 		if (MembershipModel.objects.filter(event=invite.inviteEvent, user=request.user).count() == 0):
 			member = MembershipModel(event=invite.inviteEvent, user=request.user, status=MembershipModel.COPLANNER)
 			member.save()
+						
+			creator = MembershipModel.objects.filter(event=invite.inviteEvent, status = "CR")
+			notifications = NotificationModel()
+			text = str(request.user.username) + " has just joined your event" + str(invite.inviteEvent.name) + "."
+
+			notifications = notifications.createNewNotification(user=creator[0].user, text = text)
 			invite.delete()
+	
 		return HttpResponseRedirect('http://'+str(request.get_host())+'/'+str(invite.inviteEvent.eventid))
 	return render(request, 'invite/join.html', { 'menu' : getMenuInfo(request), 'title' : "Join Event" })
 
