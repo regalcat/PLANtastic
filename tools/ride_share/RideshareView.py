@@ -23,7 +23,7 @@ class RideshareView(ToolView):
 		cars=Car.cars.filter(event=event)
 		for car in cars:
 			car.open_seats = car.getOpenSeats(eventid)
-
-		context = {'cars':cars}
+		ccount = cars.count()
+		context = {'cars':cars, 'ccount':ccount}
 
 		return context

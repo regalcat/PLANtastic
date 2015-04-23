@@ -12,51 +12,67 @@ from forms import CarForm, PersonForm
 @login_required(login_url = '/loginRequired/')
 def rideshareindexView(request, eventid):
 	event = EventModel.getEvent(eventid)
+	user=request.user
 	if memberCheck(request.user, event) == False:
 			return render(request, 'invite/notMember.html', {'menu' : getMenuInfo(request), 'title' : "Not Member"})
+	if request.method == 'GET':
+		cars = Car.cars.filter(event = event)
+		
+		isNotInACar=True
+		for car in cars:
+			car.seats = car.seats
+			car.open_seats = car.getOpenSeats(eventid)
+			car.passengers.all = car.getPassengerList(eventid)
+			if(car.driver.personid == user):
+				isNotInACar=False
+			elif(car.passengers.filter(personid=user)):
+				isNotInACar=False
 
-	cars = Car.cars.filter(event = event)
-	
+		context = {'menu' : getMenuInfo(request), 'title' : "Ride Share List", 'isNotInACar':isNotInACar,\
+		  'cur_path' : request.get_full_path(), 'cars' : cars, 'event' : event,   }
+		return render(request, 'ride_share/main.html', context)
 
-	for car in cars:
-		car.seats = car.seats
-		car.open_seats = car.getOpenSeats(eventid)
-		car.passengers.all = car.getPassengerList(eventid)
+	if request.method == 'POST':
+		carid = request.POST['carid']
+		return HttpResponseRedirect(reverse('events:tools:rideshare:carDetails', kwargs={'eventid':eventid,'carid':carid}))
 
-	context = {'menu' : getMenuInfo(request), 'title' : "Ride Share List",  'cur_path' : request.get_full_path(), \
-			'cars' : cars, 'event' : event,   }
-	return render(request, 'ride_share/main.html', context)
 
 @login_required(login_url = '/loginRequired/')
 def addCar(request, eventid):
 	event = EventModel.getEvent(eventid)
 	user = request.user
+	
 	if memberCheck(request.user, event) == False:
 			return render(request, 'invite/notMember.html')
-	if request.method == 'GET':
-		instance = Car.objects.filter(event = event, user = user)
-		if instance.count() == 0:
-			carform = CarForm()
-		else:
-			carform = CarForm(instance = instance[0])
+	if request.method == 'GET':		
+		carform = CarForm()
 
 		context = {'menu' : getMenuInfo(request), 'title' : "Add Car", 'carform' : carform, 'event' : event, 'user' : request.user}
-		return render(request, 'ride_share/addCar.html', context)
+		return render(request, 'ride_share/add_car_form.html', context)
 
 	if request.method == 'POST':
-		instance = Car.objects.filter(event = event, user = user)
-		if instance.count() == 0:
-			carform = CarForm(request.POST)
-		else:
-			carform = CarForm(request.POST, instance = instance[0])
+		#instance = Car.objects.filter(event = event, user = user)
+		#if instance.count() == 0:
+		#	carform = CarForm(request.POST)
+		#else:
+		#	carform = CarForm(request.POST, instance = instance[0])
 
+		carform=CarForm(request.POST)
 		
 		if carform.is_valid():
-			form = carform.save(commit=False)
-			form.user = request.user
-			form.event = event
-			form.save()
-		return HttpResponseRedirect(reverse('events:tools:rideshare', kwargs={'eventid' : eventid}))
+			#form = carform.save(commit=False)
+			#form.user = request.user
+			#form.event = event
+			#form.save()
+			person=Person(personid=user,status='DR',event=event)
+			person.save()
+			car=Car(event=event, driver=person, seats=request.POST['seats'], open_seats=request.POST['seats'])
+			car.event=event
+			car.driver =person
+			car.seats = request.POST['seats']
+			car.open_seats=car.seats
+			car.save()
+		return HttpResponseRedirect(reverse('events:tools:rideshare:carDetails', kwargs={'eventid':eventid,'carid':car.carid}))
 
 	
 @login_required(login_url = '/loginRequired/')
@@ -113,29 +129,42 @@ def executeSignup(request, carid, eventid):
 def carView(request, carid, eventid):
 	event = EventModel.objects.filter(eventid=eventid)
 	user = request.user
-	car = Car.cars.get(event=event[0], carid=carid)
-
-	passengers = car.getPassengerList(eventid)
-
-	car.open_seats = car.getOpenSeats(eventid)
+	
 	if request.method == 'GET':
+		cars = Car.cars.filter(event=event)
+		car = Car.cars.filter(event=event[0], carid=carid)
+		isNotInACar=True
+		isInThisCar=False
+		for car in cars:
+			if(car.passengers.filter(personid=user)):
+				isNotInACar=False
+			if(car.passengers.filter(personid=user)):
+				isInThisCar=True
+		passengers = car.getPassengerList(eventid)
 		
+		car.open_seats = car.getOpenSeats(eventid)
+		carid=car.carid
 		driver=car.driver
 		admin = False
 		if (driver.personid == user):
 			admin = True
+			isNotInACar=False
+			
+		
 		context = {'menu' : getMenuInfo(request), 'title' : "Car Details", 'passengers':passengers, \
 				 'eventid' :eventid,'user' : request.user, 'car':car, 'admin':admin, \
-				  'driver':driver, 'cur_path' : request.get_full_path()}
+				  'driver':driver, 'cur_path' : request.get_full_path(), 'isNotInACar':isNotInACar,\
+				'isInThisCar':isInThisCar}
 	
-		return render(request, 'ride_share/carDetails.html', context)
-
+		#return render(request, 'ride_share/carDetails.html', context)
+		return HttpResponseRedirect(reverse('events:tools:rideshare:carDetails', kwargs={'eventid' : eventid,'carid':carid}))
+		
 	if request.method == 'POST':
-		personid= person.personid
+		personid = user
 		#context['action'] = reverse('events:tools:rideshare:kickPassenger',kwargs={'eventid':eventid, 'carid':carid,'pk':personid, })
 
 		return HttpResponseRedirect(reverse('events:tools:rideshare:kickPassenger', kwargs={'eventid':eventid,\
-		 'carid':carid, 'pk':personid}))
+		 'carid':carid}))
 
 
 		
@@ -145,6 +174,7 @@ def carView(request, carid, eventid):
 @login_required(login_url = '/loginRequired/')
 def deleteCar(request, carid, eventid):
 	event = EventModel.objects.filter(eventid=eventid)
+	eventname=event[0].name
 	car = Car.cars.get(event=event[0], carid=carid)
 	user=request.user
 	driver = car.driver.personid
@@ -155,8 +185,8 @@ def deleteCar(request, carid, eventid):
 		return render(request, 'invite/notMember.html', {'menu' : getMenuInfo(request), 'title' : 'Not Member'})
 	if admin == False:
 		return render(request, 'events/notPermission.html', {'menu' : getMenuInfo(request), 'title' : 'Not Permission'})
-	context = {'menu' : getMenuInfo(request), 'title' : "Remove Car", 'eventid':eventid,'car':car, \
-		'cur_path':request.get_full_path(),'admin':admin, 'event':event}
+	context = {'menu' : getMenuInfo(request), 'title' : "Remove Car", 'eventname':eventname,'car':car, \
+		'cur_path':request.get_full_path(),'admin':admin, 'eventid':eventid}
 	return render(request, "ride_share/deleteCar.html", context)
 
 
@@ -179,6 +209,7 @@ def executeDeleteCar(request, carid, eventid):
 def kickPassenger(request, carid, eventid):
 	event = EventModel.objects.filter(eventid=eventid)
 	car = Car.cars.get(event=event[0], carid=carid)
+	personid = request.POST['personid']
 	driver = car.driver
 	admin = False
 	if car.driver.personid == request.user:
@@ -187,25 +218,74 @@ def kickPassenger(request, carid, eventid):
 		return render(request, 'invite/notMember.html', {'menu' : getMenuInfo(request), 'title' : 'Not Member'})
 	if admin == False:
 		return render(request, 'events/notPermission.html', {'menu' : getMenuInfo(request), 'title' : 'Not Permission'})
-	context = {'menu' : getMenuInfo(request), 'title' : "Remove Passenger from Car", 'admin':admin, 'event':event}
+	context = {'menu' : getMenuInfo(request), 'title' : "Remove Passenger from Car", 'admin':admin, 'eventid':eventid,\
+			'personid':personid[0], 'carid':carid}
 	return render(request, "ride_share/kickPassenger.html", context)
 	#return HttpResponseRedirect(reverse('events:tools:rideshare:executeKick', kwargs={'eventid':eventid,'personid':personid, 'carid':carid}))
 
+	
+
 
 @login_required(login_url = '/loginRequired/')
-def executeKickPassenger(request, carid, personid, eventid):
+def executeKickPassenger(request, carid, eventid):
 	event = EventModel.objects.filter(eventid=eventid)
-	person = Person.objects.filter(personid=personid, event=event[0])
+	personid=request.POST['personid']
+	user=User.objects.filter(username=personid)
+	people = Person.objects.filter(personid=user[0].id, event=event[0])
 	car = Car.cars.get(event=event[0], carid=carid)
 	if memberCheck(request.user, event[0]) == False:
 		return render(request, 'invite/notMember.html', {'menu' : getMenuInfo(request), 'title' : 'Not Member'})
 	if car.driver.personid != request.user:
 		return render(request, 'events/notPermission.html', {'menu' : getMenuInfo(request), 'title' : 'Not Permission'})
+	for person in people:
+		car.passengers.remove(person)
+		car.save()
+		person.delete()
 	
-	car.passengers.remove(person)
-	car.save()
-	person.delete()
-	
-	return HttpResponseRedirect(reverse('events:tools:rideshare:carView', kwargs={'eventid':eventid,'carid':carid}))
+	return HttpResponseRedirect(reverse('events:tools:rideshare:carDetails', kwargs={'eventid':eventid,'carid':carid}))
 
+
+
+
+
+
+@login_required(login_url = '/loginRequired/')
+def leaveCar(request, carid, eventid):
+	event = EventModel.objects.filter(eventid=eventid)
+	user=request.user
+	car = Car.cars.get(event=event[0], carid=carid)
+	driver=car.driver.personid
+	admin = False
+	if(car.passengers.filter(personid=user)):
+		admin=True
+	if memberCheck(request.user, event[0]) == False:
+		return render(request, 'invite/notMember.html', {'menu' : getMenuInfo(request), 'title' : 'Not Member'})
+	if admin==False:
+		return render(request, 'events/notPermission.html', {'menu' : getMenuInfo(request), 'title' : 'Not Permission'})
+
+	context = {'menu' : getMenuInfo(request), 'title' : "Leave Car", 'eventid':eventid,'carid':carid, \
+		'cur_path':request.get_full_path(), 'driver':driver, 'event':event}
+	return render(request, "ride_share/leaveCar.html", context)
+
+
+@login_required(login_url = '/loginRequired/')
+def executeLeaveCar(request, carid, eventid):
+	event = EventModel.objects.filter(eventid=eventid)
+	user=request.user
+	car = Car.cars.get(event=event[0], carid=carid)
+	admin = False
+	if(car.passengers.filter(personid=user)):
+		admin=True
+	
+	if memberCheck(request.user, event[0]) == False:
+		return render(request, 'invite/notMember.html', {'menu' : getMenuInfo(request), 'title' : 'Not Member'})
+	if admin == False:
+		return render(request, 'events/notPermission.html', {'menu' : getMenuInfo(request), 'title' : 'Not Permission'})
+	person=car.passengers.filter(personid=user, event=event)
+	car.passengers.remove(person[0])
+	car.open_seats +=1
+	car.save()
+	
+	context = {'menu' : getMenuInfo(request), 'title' : 'Ride Share', 'event':event}
+	return HttpResponseRedirect(reverse('events:tools:rideshare:ride_share.index', kwargs={'eventid' : eventid}))
 	

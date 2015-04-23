@@ -8,26 +8,33 @@
 <p><a href=".."><button type="button" class="btn btn-default">Go Back</button></a>
 
 {% if car.open_seats > 0 %}
+{% if isNotInACar %}
 <a href="signup"><button type="button" class="btn btn-default">Join Car</button></a>
+ {% endif %}
+ {% endif %}
+{% if isInThisCar %}
+<a href="leaveCar"><button type="button" class="btn btn-danger">Leave This Car</button></a>
  {% endif %}
 </p>
 
 <table class="table">
-<tr><td><b> Driver: </b> </td> <td> {{ car.driver.personid }}</td></tr>
-
-<tr><td><b> Seats: </b></td> <td> {{ car.seats }} </td></tr>
-<tr><td><b> Available Seats:  </b></td> <td> {{ car.open_seats }} </td></tr>
-<tr><td><b> Passengers: </b></td> 
+<tr><td><b> Driver: </b> </td> 
+<td><b> Seats: </b></td> 
+<td><b> Available Seats:  </b></td> 
+<td><b> Passengers: </b></td></tr>
+ <tr><td> {{ car.driver.personid }}</td><td> {{ car.seats }} </td><td> {{ car.open_seats }} </td>
 {% for person in passengers.all %}
-	
-	<td>{{ person.personid }}</td>
+	<form action="{% url 'events:tools:rideshare:kickPassenger' eventid=eventid carid=car.carid %}" method="post" >
+	<td>{{ person.personid }}</n>
 	{% if admin %}
-		<td><p><a href="{% url 'events:tools:rideshare:kickPassenger' eventid=eventid carid=car.carid pk=person.personid %}">
-Remove Passenger</a></p></td>
-		
+		{% csrf_token %}
+		<p>{{person.address}}</p></td>
+		<input type="hidden" name="personid" id="personid" value = "{{person.personid}}">
+		<td><p><input type="submit" class="btn btn-danger" value="Remove Passenger"/></p></td>
+		</form>
 	{% endif %}
 	</tr><tr>
-	<td></td>
+	<td></td><td></td><td></td>
 
 {% endfor %}
 </tr>

@@ -5,9 +5,11 @@
 	<font size="6">Ride Share</font>
 </div>
 
-<!--<script src="{{ STATIC_URL }}item_share/item_share.js"></script>-->
-<p><a href="signup"><button type="button" class="btn btn-default">Sign Up</button></a>
+
+<p>
+{% if isNotInACar %}
 <a href="add_car"><button type="button" class="btn btn-default">Add Vehicle</button></a>
+{% endif %}
 <a href="{{menu.server}}/{{event.eventid}}"><button type="button" class="btn btn-default">Go Back</button></a></p>
 <table class="table"> 
 
@@ -21,13 +23,14 @@
 {% for car in cars %}
 	<tr>
 	
-	
+	<form action="{% url 'events:tools:rideshare:carDetails' eventid=event.eventid carid=car.carid %}" method="get">
+	{% csrf_token %}
 	<td>{{ car.driver.personid }}</td>
 	<td>{{ car.seats }}</td><td>{{ car.open_seats }}</td>
 	
-
-	<td><a href="{{cur_path}}{{car.carid}}/"><button type="button" class="btn btn-default">View Details</button></a></td>
-		
+	<input type="hidden" name="carid" id="carid" value="{{car.carid}}"/>
+	<td><input type="submit" class="btn btn-default" value="View Details"/></td>
+	</form>	
 		</tr>
 {% endfor %}
 </table>

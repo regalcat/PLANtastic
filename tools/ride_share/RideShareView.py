@@ -16,7 +16,7 @@ class RideShareView(ToolView):
 	def getIdentifier():
 		return "ride_share"
 
-	def get(self, request, eventid):
+	def getContext(request, eventid):
 		user = request.user
 		event = EventModel.getEvent(eventid)
 		cars = Car.cars.filter(event=event[0])

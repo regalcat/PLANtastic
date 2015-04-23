@@ -19,24 +19,22 @@ class AddCarView(CreateView):
 		return super(AddCarView, self).get(self, request)
 
 	def post(self, request, eventid):
-		self.eventid=eventid
+		#self.eventid=eventid
 		#self.driver = request.user
 		event = EventModel.getEvent(eventid)
 		person = Person()
 		person = person.newPerson(event=event, personid=request.user, status='DR')
 		person.save()
-		driver1 = Person.objects.filter(event=event, personid = request.user)
-		self.driver = driver1[0].personid.id
-		self.seats = request.POST['seats']
-		#car=Car()
-		#car = car.newCar(event=event, seats=request.POST['seats'], driver=driver1[0] )
-
-		#if (car.open_seats == None):
-		#	car.open_seats = request.POST['seats']		
-		#car.save()
-		#car.passengers.add(person)
-		#car.save()
-		return super(AddCarView, self).post(self, request)
+		car=Car()
+		car.event=event
+		car.driver = person
+		car.seats = request.POST['seats']
+		car.open_seats=car.seats
+		car.save()
+		#self.driver = person
+		#self.seats = request.POST['seats']
+		
+		return super(AddCarView, car).post(car, request)
 
 	def form_valid(self, form):
 		self.success_url = "http://"+self.request.get_host()+"/"+self.eventid+"/tools/ride_share"

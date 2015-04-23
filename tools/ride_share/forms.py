@@ -10,7 +10,7 @@ class CarForm(forms.ModelForm):
 		model = Car
 		fields = ('seats',)
 		exclude = ('user', 'event',)
-		widgets = {'seats' : forms.IntegerField(min_value = '0')}
+		widgets = {'seats' : forms.NumberInput()}
 
 
 class PersonForm(forms.ModelForm):

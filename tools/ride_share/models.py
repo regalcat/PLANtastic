@@ -17,7 +17,7 @@ class Person(models.Model):
 	event = models.ForeignKey(EventModel)
 	personid = models.ForeignKey(User)
 	status = models.CharField(max_length=3, choices=STATUSES)
-	address = models.CharField(max_length=50, blank = True)
+	address = models.CharField(max_length=50)
 
 	
 	def newPerson(self,event, personid, status):
