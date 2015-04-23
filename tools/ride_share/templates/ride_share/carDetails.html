@@ -18,10 +18,13 @@
 <tr><td><b> Seats: </b></td> <td> {{ car.seats }} </td></tr>
 <tr><td><b> Available Seats:  </b></td> <td> {{ car.open_seats }} </td></tr>
 <tr><td><b> Passengers: </b></td> 
-{% for passenger in passengers.all %}
-	<td>{{ passenger.personid }}</td>
+{% for person in passengers.all %}
+	
+	<td>{{ person.personid }}</td>
 	{% if admin %}
-		<td><p><a href="deleteCar"><button type="button" class="btn btn-danger">Remove Passenger</button></a></p></td>
+		<td><p><a href="{% url 'events:tools:rideshare:kickPassenger' eventid=eventid carid=car.carid pk=person.personid %}">
+Remove Passenger</a></p></td>
+		
 	{% endif %}
 	</tr><tr>
 	<td></td>

@@ -130,6 +130,16 @@ def carView(request, carid, eventid):
 	
 		return render(request, 'ride_share/carDetails.html', context)
 
+	if request.method == 'POST':
+		personid= person.personid
+		#context['action'] = reverse('events:tools:rideshare:kickPassenger',kwargs={'eventid':eventid, 'carid':carid,'pk':personid, })
+
+		return HttpResponseRedirect(reverse('events:tools:rideshare:kickPassenger', kwargs={'eventid':eventid,\
+		 'carid':carid, 'pk':personid}))
+
+
+		
+
 
 
 @login_required(login_url = '/loginRequired/')
@@ -166,7 +176,7 @@ def executeDeleteCar(request, carid, eventid):
 
 	
 @login_required(login_url = '/loginRequired/')
-def kickPassenger(request, carid, personid, eventid):
+def kickPassenger(request, carid, eventid):
 	event = EventModel.objects.filter(eventid=eventid)
 	car = Car.cars.get(event=event[0], carid=carid)
 	driver = car.driver
@@ -177,22 +187,25 @@ def kickPassenger(request, carid, personid, eventid):
 		return render(request, 'invite/notMember.html', {'menu' : getMenuInfo(request), 'title' : 'Not Member'})
 	if admin == False:
 		return render(request, 'events/notPermission.html', {'menu' : getMenuInfo(request), 'title' : 'Not Permission'})
-	context = {'menu' : getMenuInfo(request), 'title' : "Remove Car", 'admin':admin, 'event':event}
-	return render(request, "ride_share/deleteCar.html", context)
+	context = {'menu' : getMenuInfo(request), 'title' : "Remove Passenger from Car", 'admin':admin, 'event':event}
+	return render(request, "ride_share/kickPassenger.html", context)
+	#return HttpResponseRedirect(reverse('events:tools:rideshare:executeKick', kwargs={'eventid':eventid,'personid':personid, 'carid':carid}))
 
 
 @login_required(login_url = '/loginRequired/')
 def executeKickPassenger(request, carid, personid, eventid):
 	event = EventModel.objects.filter(eventid=eventid)
+	person = Person.objects.filter(personid=personid, event=event[0])
 	car = Car.cars.get(event=event[0], carid=carid)
 	if memberCheck(request.user, event[0]) == False:
 		return render(request, 'invite/notMember.html', {'menu' : getMenuInfo(request), 'title' : 'Not Member'})
 	if car.driver.personid != request.user:
 		return render(request, 'events/notPermission.html', {'menu' : getMenuInfo(request), 'title' : 'Not Permission'})
-
-	car.delete()
 	
-	context = {'menu' : getMenuInfo(request), 'title' : 'Ride Share', 'event':event}
-	return render(request, "ride_share.index.html", context)
+	car.passengers.remove(person)
+	car.save()
+	person.delete()
+	
+	return HttpResponseRedirect(reverse('events:tools:rideshare:carView', kwargs={'eventid':eventid,'carid':carid}))
 
 	
