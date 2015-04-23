@@ -95,7 +95,7 @@ def join_event(request):
 						
 			creator = MembershipModel.objects.filter(event=invite.inviteEvent, status = "CR")
 			notifications = NotificationModel()
-			text = str(request.user.username) + " has just joined your event" + str(invite.inviteEvent.name) + "."
+			text = str(request.user.username) + " has just joined your event " + str(invite.inviteEvent.name) + "."
 
 			notifications = notifications.createNewNotification(user=creator[0].user, text = text)
 			invite.delete()

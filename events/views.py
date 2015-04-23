@@ -168,7 +168,7 @@ def executeLeaveEvent(request, eventid):
 
 	creator = MembershipModel.objects.filter(event=event[0], status = "CR")
 	notifications = NotificationModel()
-	text = str(request.user.username) + " has just left your event" + str(event[0].name) + "."
+	text = str(request.user.username) + " has just left your event " + str(event[0].name) + "."
 	notifications = notifications.createNewNotification(user=creator[0].user, text = text)
 
 	event = EventModel.objects.filter(eventid = eventid)
