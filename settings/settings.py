@@ -50,6 +50,7 @@ INSTALLED_APPS = (
 	'tools.ride_share',
 	'tools.schedule',
 	'users',
+	'notifications',
 )
 
 MIDDLEWARE_CLASSES = (

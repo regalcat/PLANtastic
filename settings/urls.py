@@ -11,4 +11,5 @@ urlpatterns = patterns('',
 	url(r'^', include('base.urls', namespace='base')),
 	url(r'^(?P<eventid>\d+)/', include('events.urls', namespace='events')),
 	url(r'^profile/', include('profile.urls', namespace='profile')),
+	url(r'^notifications', include('notifications.urls', namespace='notifications')),
 )
