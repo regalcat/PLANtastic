@@ -13,7 +13,7 @@ from base.helpers import getMenuInfo
 @login_required(login_url = '/loginRequired/')
 def notifications(request):
 
-	notifications = NotificationModel.objects.filter(user = request.user).order_by("time")
+	notifications = NotificationModel.objects.filter(user = request.user).order_by("-time")
 
 	for note in notifications:
 		if note.seen == False:
