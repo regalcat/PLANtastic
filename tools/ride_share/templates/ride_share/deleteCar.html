@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+			<h3 class="panel-title">Do you really want to remove your vehicle from {{event.eventName}}?</h3>
+		</div>
+	<div class="panel-body">
+
+<a href = "{{menu.server}}/{{eventid}}/tools/ride_share/{{car.carid}}/executeDelete"><button class="btn btn-danger">Yes</button></a>
+
+<a href = ".."><button class="btn btn-default">No</button></a>
+
+
+{% endblock %}

@@ -17,10 +17,7 @@ class PersonForm(forms.ModelForm):
 	
 	class Meta:
 		model = Person
-		fields = ('personid', 'address')
-		#cars = Car.cars.filter(event = self.event)
-		#car = forms.ChoiceField()
-		#personid = user
+		fields = ('address',)
 		widgets = {'address': forms.TextInput(attrs={'max_length':'50'}),}
 
 

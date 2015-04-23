@@ -18,16 +18,14 @@ class RideShareView(ToolView):
 
 	def get(self, request, eventid):
 		user = request.user
-		cur_event = EventModel.getEvent(eventid)
-		cars = Car.cars.filter(event=cur_event)
+		event = EventModel.getEvent(eventid)
+		cars = Car.cars.filter(event=event[0])
 		for car in cars:
-			car.open_seats = car.getOpenSeats(event)	
-				
-		admin = False
-		if (car.driver.personid == user):
-			admin = True
-		template = loader.get_template("ride_share/ride.main.html")
-		context = RequestContext(request, {'cars' : cars, 'event' : cur_event, 'cur_path' : request.get_full_path(), 'title' : "Ride Share", 'menu': getMenuInfo(request) })
+			car.open_seats = car.getOpenSeats(eventid)	
+		ccount = cars.count()		
+		#template = loader.get_template("ride_share/ride_share_tile.html")
+		context = RequestContext(request, {'menu': getMenuInfo(request) ,'title' : "Ride Share",'ccount': ccount,\
+		'cars' : cars, 'event' : cur_event, 'cur_path' : request.get_full_path() })
 		return HttpResponse(template.render(context))
 
 	@csrf_exempt
