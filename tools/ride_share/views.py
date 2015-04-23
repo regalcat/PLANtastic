@@ -8,6 +8,7 @@ from events.models import EventModel
 from base.helpers import getMenuInfo
 from base.permissions import memberCheck
 from forms import CarForm, PersonForm
+from notifications.models import NotificationModel
 
 @login_required(login_url = '/loginRequired/')
 def rideshareindexView(request, eventid):
@@ -121,6 +122,10 @@ def executeSignup(request, carid, eventid):
 	car.passengers.add(person)
 	car.open_seats -= 1
 	car.save()
+	msg = str(request.user)+" joined your car!"
+	recipient= car.driver.personid
+	note=NotificationModel()
+	note.createNewNotification(user=recipient, text=msg)
 	return HttpResponseRedirect(reverse('events:tools:rideshare:carDetails', kwargs={'eventid' : eventid,'carid':carid}))
 
 
@@ -129,17 +134,23 @@ def executeSignup(request, carid, eventid):
 def carView(request, carid, eventid):
 	event = EventModel.objects.filter(eventid=eventid)
 	user = request.user
+	if memberCheck(request.user, event) == False:
+			return render(request, 'invite/notMember.html', {'menu' : getMenuInfo(request), 'title' : "Not Member"})
 	
 	if request.method == 'GET':
-		cars = Car.cars.filter(event=event)
-		car = Car.cars.filter(event=event[0], carid=carid)
+		carlist = Car.cars.filter(event=event[0])
+		
 		isNotInACar=True
 		isInThisCar=False
-		for car in cars:
+		for car in carlist:
 			if(car.passengers.filter(personid=user)):
 				isNotInACar=False
-			if(car.passengers.filter(personid=user)):
-				isInThisCar=True
+			if(car.driver.personid == user):
+				isNotInACar=False
+		car2 = Car.cars.filter(event=event[0], carid=carid)
+		car = car2[0]
+		if(car.passengers.filter(personid=user)):
+			isInThisCar=True
 		passengers = car.getPassengerList(eventid)
 		
 		car.open_seats = car.getOpenSeats(eventid)
@@ -156,8 +167,8 @@ def carView(request, carid, eventid):
 				  'driver':driver, 'cur_path' : request.get_full_path(), 'isNotInACar':isNotInACar,\
 				'isInThisCar':isInThisCar}
 	
-		#return render(request, 'ride_share/carDetails.html', context)
-		return HttpResponseRedirect(reverse('events:tools:rideshare:carDetails', kwargs={'eventid' : eventid,'carid':carid}))
+		return render(request, 'ride_share/carDetails.html', context)
+		
 		
 	if request.method == 'POST':
 		personid = user
@@ -219,7 +230,7 @@ def kickPassenger(request, carid, eventid):
 	if admin == False:
 		return render(request, 'events/notPermission.html', {'menu' : getMenuInfo(request), 'title' : 'Not Permission'})
 	context = {'menu' : getMenuInfo(request), 'title' : "Remove Passenger from Car", 'admin':admin, 'eventid':eventid,\
-			'personid':personid[0], 'carid':carid}
+			'personid':personid, 'carid':carid}
 	return render(request, "ride_share/kickPassenger.html", context)
 	#return HttpResponseRedirect(reverse('events:tools:rideshare:executeKick', kwargs={'eventid':eventid,'personid':personid, 'carid':carid}))
 
@@ -229,9 +240,10 @@ def kickPassenger(request, carid, eventid):
 @login_required(login_url = '/loginRequired/')
 def executeKickPassenger(request, carid, eventid):
 	event = EventModel.objects.filter(eventid=eventid)
-	personid=request.POST['personid']
-	user=User.objects.filter(username=personid)
-	people = Person.objects.filter(personid=user[0].id, event=event[0])
+	user = request.POST['personid']
+	#personid=request.POST['personid']
+	user=User.objects.get(username=request.POST['personid'])
+	people = Person.objects.filter(personid=user.id, event=event[0])
 	car = Car.cars.get(event=event[0], carid=carid)
 	if memberCheck(request.user, event[0]) == False:
 		return render(request, 'invite/notMember.html', {'menu' : getMenuInfo(request), 'title' : 'Not Member'})
@@ -240,8 +252,11 @@ def executeKickPassenger(request, carid, eventid):
 	for person in people:
 		car.passengers.remove(person)
 		car.save()
+		msg = str(car.driver.personid)+" removed you from their car."
+		recipient= person.personid
+		note=NotificationModel()
+		note.createNewNotification(user=recipient, text=msg)
 		person.delete()
-	
 	return HttpResponseRedirect(reverse('events:tools:rideshare:carDetails', kwargs={'eventid':eventid,'carid':carid}))
 
 
@@ -285,7 +300,10 @@ def executeLeaveCar(request, carid, eventid):
 	car.passengers.remove(person[0])
 	car.open_seats +=1
 	car.save()
-	
+	msg = str(request.user)+" left your car."
+	recipient= car.driver.personid
+	note=NotificationModel()
+	note.createNewNotification(user=recipient, text=msg)
 	context = {'menu' : getMenuInfo(request), 'title' : 'Ride Share', 'event':event}
 	return HttpResponseRedirect(reverse('events:tools:rideshare:ride_share.index', kwargs={'eventid' : eventid}))
 	
