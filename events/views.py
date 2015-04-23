@@ -22,6 +22,7 @@ from users.forms import UserRegistrationForm
 from base.helpers import getMenuInfo, isPreviousEvent
 from base.permissions import memberCheck, isCreator, isCoplanner
 from forms import EventForm, HikeForm, GenericTripForm, GenericGatheringForm, DinnerForm
+from notifications.models import NotificationModel
 
 
 @login_required(login_url = '/loginRequired/')
@@ -143,7 +144,38 @@ def deleteMember(request, eventid):
 	member.delete()
 
 	return HttpResponseRedirect(reverse('events:editEvent', kwargs={'eventid':eventid}))	
+
+@login_required(login_url = '/loginRequired/')
+def leaveEvent(request, eventid):
+	event = EventModel.objects.filter(eventid=eventid)
+	if memberCheck(request.user, event[0]) == False:
+		return render(request, 'invite/notMember.html', {'menu' : getMenuInfo(request), 'title' : 'Not Member'})
+	if isCreator(request.user, event[0]) == True:
+		return render(request, 'events/notPermission.html', {'menu' : getMenuInfo(request), 'title' : 'Not Permission'})
 	
+
+	return render(request, 'events/leaveEvent.html', { 'menu' : getMenuInfo(request), 'title' : "Leave Event", 'event' : event[0]})
+
+
+
+@login_required(login_url = '/loginRequired/')
+def executeLeaveEvent(request, eventid):
+	event = EventModel.objects.filter(eventid=eventid)
+	if memberCheck(request.user, event[0]) == False:
+		return render(request, 'invite/notMember.html', {'menu' : getMenuInfo(request), 'title' : 'Not Member'})
+	if isCreator(request.user, event[0]) == True:
+		return render(request, 'events/notPermission.html', {'menu' : getMenuInfo(request), 'title' : 'Not Permission'})
+
+	creator = MembershipModel.objects.filter(event=event[0], status = "CR")
+	notifications = NotificationModel()
+	text = str(request.user.username) + " has just left your event" + str(event[0].name) + "."
+	notifications = notifications.createNewNotification(user=creator[0].user, text = text)
+
+	event = EventModel.objects.filter(eventid = eventid)
+	member = getMemberObject(request.user, event)
+	member.delete()
+
+	return HttpResponseRedirect(reverse('base:upcoming'))
 	
 
 

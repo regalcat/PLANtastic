@@ -32,13 +32,14 @@
 	<div class="container">
 	<div class="table-responsive">
 	<table class="table">
-		<thead><tr><td><b>#</b></td><td><b>Name</b></td><td><b>Status</b></td></thead>
+		<thead><tr><td><b>#</b></td><td><b>Name</b></td><td><b>Status</b></td><td></td></thead>
 		<tbody>
 		{% for member in members %}
 		<tr>
 		<td>{{ forloop.counter }}</td>
 		<td>{{ member.user.first_name }} {{ member.user.last_name }}</td>
 		<td>{{ member.get_status_display }}</td>
+		<td>{% if member.user == user and not creator %} <a href="leaveEvent"><button class="btn btn-danger">Leave Event</button></a> {%endif%}</td>
 		</tr>
 		{% endfor %}
 		</tbody>
