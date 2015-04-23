@@ -11,7 +11,7 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.models import User
 
 from base.helpers import getMenuInfo
-from base.permissions import getMemberObject
+from base.permissions import getMemberObject, memberCheck
 from events.models import EventModel 
 from .forms import InviteForm
 from .models import MembershipModel, InviteModel
@@ -31,6 +31,10 @@ class InviteView(FormView):
 
 	@method_decorator(login_required(login_url = '/loginRequired/'))
 	def get(self, request, eventid):
+		event = EventModel.getEvent(eventid)
+		if memberCheck(request.user, event) == False:
+			return render(request, 'invite/notMember.html', {'menu' : getMenuInfo(request), 'title' : "Not Member"})
+
 		user = request.user
 		cur_event = EventModel.getEvent(eventid)
 		template = loader.get_template("invite/invite.html")
@@ -39,6 +43,10 @@ class InviteView(FormView):
 
 	@method_decorator(login_required(login_url = '/loginRequired/'))
 	def post(self, request, eventid):
+		event = EventModel.getEvent(eventid)
+		if memberCheck(request.user, event) == False:
+			return render(request, 'invite/notMember.html', {'menu' : getMenuInfo(request), 'title' : "Not Member"})
+
 			#if request.POST['email']!=""
 		to = request.POST['email']
 		#if request.POST['username']!=""
@@ -82,7 +90,7 @@ def join_event(request):
 		else:
 			invite = invite[0]
 		if (MembershipModel.objects.filter(event=invite.inviteEvent, user=request.user).count() == 0):
-			member = MembershipModel(event=invite.inviteEvent, user=request.user, status=MembershipModel.COPLANNER)
+			member = MembershipModel(event=invite.inviteEvent, user=request.user, status=MembershipModel.MEMBER)
 			member.save()
 						
 			creator = MembershipModel.objects.filter(event=invite.inviteEvent, status = "CR")
