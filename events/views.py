@@ -158,6 +158,11 @@ def executeDeleteMember(request, eventid):
 	user = User.objects.filter(username = username)
 	event = EventModel.objects.filter(eventid = eventid)
 	member = getMemberObject(user[0], event[0])
+
+	note = NotificationModel()
+	text = "You are no longer a member of the event " + str(event[0].name) + "."
+	note.createNewNotification(user=user[0], text=text)
+
 	member.delete()
 
 	return HttpResponseRedirect(reverse('events:editMembers', kwargs={'eventid':eventid}))	
