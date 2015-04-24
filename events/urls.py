@@ -16,6 +16,7 @@ urlpatterns = patterns('',
 	url(r'^editMembers', views.editMembers, name='editMembers'),
 	url(r'^editEvent', views.editEvent, name='editEvent'),
 	url(r'^deleteMember', views.deleteMember, name='deleteMember'),
+	url(r'^executeMember', views.executeDeleteMember, name='executeDeleteMember'),
 	url(r'^leaveEvent', views.leaveEvent, name='leaveEvent'),
 	url(r'^executeLeaveEvent', views.executeLeaveEvent, name='executeLeaveEvent'),
 
