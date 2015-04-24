@@ -2,7 +2,7 @@ from django.conf.urls import patterns, url, include
 
 from eventHomeView import eventHomeView
 from invite.forms import InviteForm
-from invite.views import InviteView
+from invite.views import InviteView, usernameInvite
 from events import views
 from invite import views as invite_views
 
@@ -12,6 +12,7 @@ urlpatterns = patterns('',
 	url(r'^executeDelete', views.executeDeleteEvent, name='executeDeleteEvent'),
 	url(r'^invite', InviteView.as_view(), name='invite'),
 	url(r'^invite-action', InviteForm, name='invite-action'),
+	url(r'^username-invite', usernameInvite, name='invite-username'),
 	url(r'^tools/', include('tools.urls', namespace='tools')),
 	url(r'^editMembers', views.editMembers, name='editMembers'),
 	url(r'^editEvent', views.editEvent, name='editEvent'),

@@ -123,9 +123,12 @@ def editMembers(request, eventid):
 		member = getMemberObject(user, event)
 		member.status = status
 		member.save()
-		
-		return HttpResponseRedirect("")	
 
+		note = NotificationModel()
+		text = "Your status in the event " + str(event.name) + " just got changed to " + str(member.get_status_display) + "."
+		note.createNewNotification(member, text)		
+
+		return HttpResponseRedirect("")	
 
 @login_required(login_url = '/loginRequired/')
 def deleteMember(request, eventid):
@@ -136,14 +139,28 @@ def deleteMember(request, eventid):
 		return render(request, 'events/notPermission.html', {'menu' : getMenuInfo(request), 'title' : 'Not Permission'})
 
 	username = request.POST['user']
+	
+
+	return render(request, 'events/deleteMember.html', { 'menu' : getMenuInfo(request), 'title' : "Leave Event", 'event' : event[0], 'username':username})
+
+
+@login_required(login_url = '/loginRequired/')
+def executeDeleteMember(request, eventid):
+	event = EventModel.objects.filter(eventid=eventid)
+	if memberCheck(request.user, event[0]) == False:
+		return render(request, 'invite/notMember.html', {'menu' : getMenuInfo(request), 'title' : 'Not Member'})
+	if isCreator(request.user, event[0]) == False:
+		return render(request, 'events/notPermission.html', {'menu' : getMenuInfo(request), 'title' : 'Not Permission'})
+
+	username = request.POST['username']
 	event = EventModel.getEvent(eventid)
 
 	user = User.objects.filter(username = username)
 	event = EventModel.objects.filter(eventid = eventid)
-	member = getMemberObject(user, event)
+	member = getMemberObject(user[0], event[0])
 	member.delete()
 
-	return HttpResponseRedirect(reverse('events:editEvent', kwargs={'eventid':eventid}))	
+	return HttpResponseRedirect(reverse('events:editMembers', kwargs={'eventid':eventid}))	
 
 @login_required(login_url = '/loginRequired/')
 def leaveEvent(request, eventid):

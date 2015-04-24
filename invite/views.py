@@ -74,6 +74,39 @@ class InviteView(FormView):
 		context = RequestContext(request, {'event' : event, 'user' : request.user, 'cur_path' : request.get_full_path(), 'title' : "Invite Success", 'menu' : getMenuInfo(request)})
 		return HttpResponse(template.render(context))
 
+@login_required(login_url = '/loginRequired/')
+def usernameInvite(request, eventid):
+	if request.method == "POST":
+		username = request.POST["username"]
+		event = EventModel.getEvent(eventid)
+		user = User.objects.filter(username = username)
+		if user.count() != 1:
+			return HttpResponseRedirect(reverse("events:invite", kwargs={'eventid':eventid}))
+		if memberCheck(user[0], event) == True:
+			return HttpResponseRedirect(reverse("events:invite", kwargs={'eventid':eventid}))
+
+		rstring = ""
+		for i in range(0,16):
+			rstring+=random.choice(string.ascii_letters + string.digits)
+
+		invite=InviteModel(inviteEmail= user[0].email, inviteEvent=event, inviteString=rstring)
+		invite.save()
+
+		notifications = NotificationModel()
+		text = "You just got invited to the event " + str(event.name) + \
+		". Join the event by using this confirmationstring: " \
+		+ rstring + " on the join event page."
+		notifications = notifications.createNewNotification(user=user[0], text = text)
+
+		notifications = NotificationModel()
+		text = "You have just invited " + str(username) + " to the event " + str(event.name) +"."
+		notifications = notifications.createNewNotification(user=request.user, text = text)
+
+		context = {'event' : event, 'user' : request.user, 'cur_path' : request.get_full_path(), 'title' : "Invite Success", 'menu' : getMenuInfo(request)}
+		return render(request, "invite/inviteSuccess.html", context)
+
+
+
 @login_required(login_url = '/loginRequired/')  # User have to be logged in to see this view - if not: redirects to loginRequired
 def join_event(request):
 	if (request.method == "POST"):
