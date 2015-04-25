@@ -222,10 +222,17 @@ def executeDeleteEvent(request, eventid):
 	if isCreator(request.user, event[0]) == False:
 		return render(request, 'events/notPermission.html', {'menu' : getMenuInfo(request), 'title' : 'Not Permission'})
 	
+	text = "The event " + str(event[0].name) + " that you were a member of has been deleted by the creator."
+
+	members = MembershipModel.objects.filter(event=event[0])
+	for member in members:
+		note = NotificationModel()
+		note.createNewNotification(user = member.user, text = text)
+			
+
 	eventChild = EventModel.getEvent(eventid)
 	eventChild.delete()
 	event.delete()
-	# TODO : delete also from invite table everyone in event - I think Django does thid due to the foreign key
 
 	return HttpResponseRedirect(reverse('base:upcoming'))
 
