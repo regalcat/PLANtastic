@@ -37,6 +37,6 @@ class ToolManager:
 		# Tools for both Upcoming and Previous Events
 		tools.append(MoneyShareTool)
 		context['money_share'] = MoneyShareTool.getContext(event)
-		#tools.append(ForumView)
-		#context['forum'] = ForumView.getContext(event)
+		tools.append(ForumView)
+		context['forum'] = ForumView.getContext(event)
 		return {'tools' : tools, 'context' : context}

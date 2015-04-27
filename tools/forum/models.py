@@ -21,11 +21,12 @@ class ThreadModel(models.Model):
 	threads = models.Manager()
 
 	def num_posts(self):
-		return self.post_set.count()
+		return PostModel.posts.filter(thread=self).count()
 
 	def last_post(self):
-		if self.post_set.count():
-			return self.post_set.order_by("created")[0]
+		posts = PostModel.posts.filter(thread=self)
+		if posts.count() > 0:
+			return posts.order_by("created")[0]
 
 class PostModel(models.Model):
 	title = models.CharField(max_length = 100)

@@ -1,3 +1,4 @@
+{% extends 'base.html' %}
 <div id="event-forum">
 	<h3>Event Forum</h3>
 	<table>
@@ -8,7 +9,7 @@
 				<td>{{thread.title}}</td>
 				<td>{{ thread.num_posts}}</td>
 				<td>{{ thraed.last_posts }}</td>
-				<td><a href="tools/forum/{{thread.threadid}}"><button class="btn btn-default">View</button></a></td>
+				<td><a href="{{thread.threadid}}"><button class="btn btn-default">View</button></a></td>
 		</tr>
 		{% endfor %}
 		
