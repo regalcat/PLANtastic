@@ -1,0 +1,16 @@
+<div class="panel panel-default">
+
+<div class="panel-body">
+
+{% for gmap in maps.gmaps %}
+<iframe
+  width="450"
+  height="250"
+  frameborder="0" style="border:0"
+  src="https://www.google.com/maps/embed/v1/search?key=AIzaSyBrI-UzWUQWIsHaeVXCzT6Werwrov_CHhk&q={{gmap.location}}">
+
+</iframe>
+
+{% endfor %}
+
+</div></div>

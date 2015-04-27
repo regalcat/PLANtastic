@@ -8,5 +8,7 @@ urlpatterns = patterns('',
 	url(r'^weather/', include('tools.weather.urls', namespace = 'weather')),
 	url(r'^ride_share/', include('tools.ride_share.urls', namespace = 'rideshare')),
 	url(r'^schedule/', include('tools.schedule.urls', namespace = 'schedule')),
+	url(r'^maps/', include('tools.maps.urls', namespace = 'maps')),
 	url(r'^forum/', include('tools.forum.urls', namespace = 'forum')),
+
 )

@@ -52,6 +52,7 @@ INSTALLED_APPS = (
 	'tools.forum',
 	'users',
 	'notifications',
+	'tools.maps',
 )
 
 MIDDLEWARE_CLASSES = (

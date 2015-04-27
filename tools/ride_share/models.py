@@ -15,7 +15,7 @@ class Person(models.Model):
 		(PASSENGER, 'Passenger'),
 	)	
 	event = models.ForeignKey(EventModel)
-	personid = models.ForeignKey(User)
+	personid = models.ForeignKey(User,primary_key=True)
 	status = models.CharField(max_length=3, choices=STATUSES)
 	address = models.CharField(max_length=50)
 

@@ -1,7 +1,32 @@
 <div class="panel panel-default">
-	<a href="tools/item_share">
-	<div class="tool-tile">
-	<button type="button" class="btn btn-default">Item Share Tool</button>
+
+	<div class="panel-heading">
+		<h3 class="panel-title">Item Share</h3>
+
+	</div>
+<div class="panel-body">
+<table class="table"> 
+<tr class="table-header">
+
+<td><b>  Item Name </b></td>
+<td><b> Amount Needed  </b></td>
+<td><b>  Amount Signed Up </b></td>
+</tr>
+{% if item_share.items.count == 0 %}
+	<tr><td>No Items Signed Up </td><td></td><td></td></tr>
+{% endif %}
+{% for item in item_share.items %}
+	<tr>
+	
+	<td>{{ item.item_name }}</td>
+	<td>{{ item.amount_needed }}</td><td id="signup_{{ item.id }}">{{ item.signedup }}</td>
+</tr>
+	</tr>
+	
+{% endfor %}
+</table>
+
+	<a href="tools/item_share"><button type="button" class="btn btn-default">View/Edit</button></a>
 	</div>
 	</a>
 </div>
