@@ -5,6 +5,7 @@ from tools.upload_pics.models import UploadedPicModel
 from tools.weather.models import WeatherModel
 from tools.ride_share.models import Car, Person, Riders
 from tools.schedule.models import ScheduleModel
+from tools.maps.models import Gmap
 
 admin.site.register(ItemModel)
 admin.site.register(ItemSignupModel)
@@ -15,4 +16,5 @@ admin.site.register(Car)
 admin.site.register(Person)
 admin.site.register(Riders)
 admin.site.register(ScheduleModel)
+admin.site.register(Gmap)
 
