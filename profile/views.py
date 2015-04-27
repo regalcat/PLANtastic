@@ -13,6 +13,8 @@ from django.views.generic.edit import FormView
 from events.models import EventModel
 from base.helpers import getMenuInfo
 from forms import ProfileForm, UserForm
+from notifications.models import NotificationModel
+from invite.models import MembershipModel
 
 
 
@@ -81,6 +83,16 @@ def deleteAccount(request):
 
 @login_required(login_url = '/loginRequired/')  # User have to be logged in to see this view - if not: redirects to login_url
 def executeDelete(request):
+
+	events = MembershipModel.objects.filter(user = request.user)
+
+	for em in events:
+		if em.status == "CR":
+			allmembers = MembershipModel.objects.filter(event = em.event)
+			for mem in allmembers:
+				note = NotificationModel()
+				text = "The event " + str(em.event.name) + " that you were a member of has been deleted."
+				note.createNewNotification(user = mem.user, text = text)
 
 	request.user.delete()
 
