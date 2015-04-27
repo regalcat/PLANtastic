@@ -25,7 +25,7 @@ class CreateThreadView(CreateView):
 		return super(CreateThreadView, self).post(self, request)
 
 	def form_valid(self, form):
-		self.success_url = "../"
+		self.success_url = "../../../"
 		form.instance.forum = self.forum
 		form.instance.creator = self.request.user
 		return super(CreateThreadView, self).form_valid(form)
