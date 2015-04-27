@@ -41,7 +41,8 @@
 	<td>Amount Received</td>
 	<td>Total Due</td>
 </tr>
-{% for person:info in amounts %}
+{% for person,info in amounts %}
+{{ person }}
 {{ info }}
 <tr>
 	<td>{{ person.userinfo }}</td>
