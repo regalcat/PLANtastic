@@ -1,11 +1,21 @@
 {% extends "base.html" %}
 {% block content %}
+
+<div class="page-header">
+	<font size="6">Join Event</font>
+</div>
+
+<div class="panel panel-default">
+	<div class="panel-body">
+
 {% if error %}
 <p>{{ error_message }}</p>
 {% endif %}
 <form method="post" action="">
 {% csrf_token %}
-<p>Confirmation String:  <input name="string" type="text"></input></p>
+<p><b>Confirmation String:</b>  <input name="string" type="text"></input></p>
 <button class="btn btn-default" action="submit">Submit</button>
 </form>
+
+</div>
 {% endblock %}

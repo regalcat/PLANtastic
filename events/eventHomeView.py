@@ -25,7 +25,7 @@ class eventHomeView(View):
 		tools_data = ToolManager.getTools(event)
 		context = tools_data['context']
 		context.update({'menu' : getMenuInfo(request), 'event' : event, \
-			'tools' : tools_data['tools'], 'members' : members, 'user': request.user})
+			'tools' : tools_data['tools'], 'members' : members, 'user': request.user, 'title': str(event.name)})
 
 		permissionevent = EventModel.objects.filter(eventid=eventid)
 		if isCreator(request.user, permissionevent[0]):
