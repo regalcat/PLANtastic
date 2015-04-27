@@ -7,6 +7,7 @@ from tools.weather.weatherTool import WeatherView
 from tools.allergy_list.allergyListTool import AllergyListView
 from tools.ride_share.RideshareView import RideshareView
 from tools.schedule.ScheduleTool import ScheduleView
+from tools.forum.views import ForumView
 
 
 
@@ -36,4 +37,6 @@ class ToolManager:
 		# Tools for both Upcoming and Previous Events
 		tools.append(MoneyShareTool)
 		context['money_share'] = MoneyShareTool.getContext(event)
+		tools.append(ForumView)
+		#context['forum'] = ForumView.getContext(event)
 		return {'tools' : tools, 'context' : context}

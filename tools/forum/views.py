@@ -10,7 +10,7 @@ from tools.forum.models import ForumModel, ThreadModel, PostModel
 from tools.ToolView import ToolView
 
 class ForumView(ToolView):
-	template = "forum/forumTemplate.html"
+	tile_template = "forum/forumTemplate.html"
 
 	@staticmethod
 	def getIdentifier():
@@ -21,8 +21,12 @@ class ForumView(ToolView):
 		num = len(PostModel.posts.filter(thread = cur_thread))
 		return num
 
+	def getContext():
+		
+		return context
+
 	#Returns the template for the forum tile in the event page
-	@method_decorator
+	
 	def get(self, request, eventid):
 		user = request.user
 		cur_event = EventModel.getEvent(eventid)
@@ -33,7 +37,7 @@ class ForumView(ToolView):
 		return HttpResponse(template.render(context))
 
 	#Adds the new thread and the initial post and returns the get view
-	@method_decorator
+	
 	def post(self, request, eventid):
 		cur_event = getEvent(eventid)
 		ttitle = request.POST['ttitle']
@@ -50,16 +54,16 @@ class ThreadView(View):
 	template = "forum/threadTemplate.html"
 	
 	#Gets a paginated list of the posts in the current thread
-	@method_decorator
+	
 	def get(self, request, eventid, key):
 		cur_event = EventModel.getEvent(eventid)
 		posts = Post.posts.filter(thread=key).order_by("created")
 		title = ThreadModel.threads.get(pk=key).title
-		context = RequestContext(request, {'posts' : posts, 'thread' : ThreadModel.threads,get(pk=key), 'event' : cur_event, 'cur_path' : request.get_full_path(), 'title' : title, 'menu' : getMenuInfo(request) })
+		context = RequestContext(request, {'posts' : posts, 'thread' : ThreadModel.threads.get(pk=key), 'event' : cur_event, 'cur_path' : request.get_full_path(), 'title' : title, 'menu' : getMenuInfo(request) })
 		return HttpResponse(template.render(context))
 	
 	#Adds the post to the thread and returns the get method
-	@method_decorator
+	
 	def post(self, request, eventid, key):
 		cur_event = EventModel.getEvent(eventid)
 		cur_thread = ThreadModel.threads.get(pk=key)
