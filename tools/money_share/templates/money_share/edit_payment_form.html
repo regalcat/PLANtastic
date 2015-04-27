@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<h3>Edit Payment to {{ form.instance.receiver }}</h3>
+<form action="" method="post">
+{% csrf_token %}
+{{ form.as_p }}
+<input type="submit" value="Save" name="save" />
+</form>
+<form action="" method="post">
+{% csrf_token %}
+<input type="submit" value="Delete" name="delete"/>
+</form>
+{% endblock %}

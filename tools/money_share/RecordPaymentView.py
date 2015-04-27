@@ -5,7 +5,7 @@ from django.template import RequestContext, loader
 from .models import MsPaymentModel
 
 class RecordPaymentView(CreateView):
-	template_name='money_share/record_pyament_form.html'
+	template_name='money_share/record_payment_form.html'
 	model = MsPaymentModel
 	fields = ['payer', 'receiver', 'amount']
 
