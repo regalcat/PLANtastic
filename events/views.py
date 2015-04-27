@@ -92,6 +92,8 @@ def editEvent(request, eventid):
 				subform = DinnerForm(request.POST, instance = event)
 
 			if subform.is_valid():
+					editeventform.save(commit = False)
+					editeventform.creator = request.user
 					editeventform.save()
 					subform.save()
 

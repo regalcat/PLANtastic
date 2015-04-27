@@ -36,7 +36,7 @@ def new(request):
 		event = EventModel()
 		event.createEvent(name=request.POST['name'], \
 			location=request.POST['location'],event_Start_Date=event_Start_Date, \
-			eventType=eventType,event_Description=request.POST['event_Description'])
+			eventType=eventType,event_Description=request.POST['event_Description'], creator = request.user)
 
 		event.save()
 
@@ -69,7 +69,7 @@ def new(request):
 			event = HikeEventModel(event.eventid, \
 				name=request.POST['name'], location=request.POST['location'], \
 				event_Start_Date=event_Start_Date,event_Description=request.POST['event_Description'], \
-				event_End_Date=event_End_Date, duration=duration, distance=distance, 					elevation=elevation, difficulty=request.POST['difficulty'], eventType=eventType)
+				event_End_Date=event_End_Date, duration=duration, distance=distance, 					elevation=elevation, difficulty=request.POST['difficulty'], eventType=eventType, creator = request.user)
 			event.save()
 
 
@@ -86,7 +86,7 @@ def new(request):
 			event = GenericTripModel(event.eventid, \
 				name=request.POST['name'], location=request.POST['location'], \
 				event_Start_Date=event_Start_Date,event_Description=request.POST['event_Description'], \
-				event_End_Date=event_End_Date, eventType=eventType)
+				event_End_Date=event_End_Date, eventType=eventType, creator = request.user)
 			event.save()
 
 		elif (request.POST['eventType'] == u'otherGathering'):
@@ -99,7 +99,7 @@ def new(request):
 
 			event = GenericGatheringModel(event.eventid, \
 				name=request.POST['name'], location=request.POST['location'], \
-				event_Start_Date=event_Start_Date,event_Description=request.POST['event_Description'], 					event_End_Date=event_EndDate, eventType=eventType)
+				event_Start_Date=event_Start_Date,event_Description=request.POST['event_Description'], 					event_End_Date=event_End_Date, eventType=eventType, creator = request.user)
 			event.save()
 
 
@@ -108,7 +108,7 @@ def new(request):
 			event = DinnerEventModel(event.eventid, \
 				name=request.POST['name'], location=request.POST['location'], \
 				event_Start_Date=event_Start_Date,event_Description=request.POST['event_Description'], \
-				eventType=eventType)
+				eventType=eventType, creator = request.user)
 			event.save()
 
 		
