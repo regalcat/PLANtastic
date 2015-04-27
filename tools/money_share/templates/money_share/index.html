@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
 <a href="add_item"><button type="button" class="btn btn-default">Add Item</button></a>
+<a href="record_payment"><button type="button" class="btn btn-default">Record Payment</button></a>
+<a href="edit_settings/{{ method.id }}"><button type="button" class="btn btn-default">Edit Settings</button></a>
+<h2>Items Purchased</h2>
 <table>
 <tr>
 	<td>Item</td>
@@ -9,11 +12,47 @@
 </tr>
 {% for item in items %}
 <tr>
-	<td>{{ item.name }}</td>
+	<td><a href="edit_item/{{item.id}}">{{ item.name }}</a></td>
 	<td>{{ item.cost }}</td>
 	<td>{{ item.purchaser.username }}</td>
 </tr>
 {% endfor %}
 </table>
+<h2>Payments</h2>
+<table>
+<tr>
+	<td>Payer</td><td>Recipient</td><td>Amount</td>
+</tr>
+{% for payment in payments %}
+<tr>
+	<td><a href="edit_payment/{{payment.id}}">{{payment.payer.username }}</a></td>
+	<td>{{ payment.receiver.username }}</td>
+	<td>{{ payment.amount }}</td>
+</tr>
+{% endfor %}
+</table>
+
+<table>
+<tr>
+	<td>Person</td>
+	<td>Base Due</td>
+	<td>Amount Spent</td>
+	<td>Amount Paid</td>
+	<td>Amount Received</td>
+	<td>Total Due</td>
+</tr>
+{% for person:info in amounts %}
+{{ info }}
+<tr>
+	<td>{{ person.userinfo }}</td>
+	<td>{{ person.owe }}</td>
+	<td>{{ person.spent }}</td>
+	<td>{{ person.paid }}</td>
+	<td>{{ person.received }}</td>
+	<td>{{ person.total }}</td>
+</tr>
+{% endfor %}
+</table>
+</tr>
 
 {% endblock %}

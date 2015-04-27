@@ -6,7 +6,7 @@
 {% for post in posts %}
 	<div class = "panel panel-default">
 		<div class = "panel-heading">
-			{{PostModel.get_post_description(post)}}
+			{{ post.post_description}}
 		</div>
 		<div class="panel-body">
 			{{post.body}}
