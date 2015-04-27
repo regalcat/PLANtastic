@@ -20,8 +20,16 @@
 {% endblock %}
 
 {% block content %}
-That was not a correct username or password.
-<br><br>
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+			<h3 class="panel-title">Permission Denied</h3>
+	</div>
+	<div class="panel-body">
+	<p>That was not a correct username or password.</p>
+	
+<br>
 <p><a href="{% url 'base:login' %}"><button class="btn btn-default">Click here to log in again</button></a></p>
+</div>
 
 {% endblock %}
