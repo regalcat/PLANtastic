@@ -34,7 +34,7 @@ class MainView(View):
 				amounts[str(item.purchaser.id)]['spent'] += item.cost
 			temp = sum/members.count()
 			for person in amounts:
-				person['owe'] = temp
+				amounts[person]['owe'] = temp
 		elif method.method == MsSettingsModel.ITEM_BY_ITEM:
 			method.method = "Item By Item"
 			for item in items:
