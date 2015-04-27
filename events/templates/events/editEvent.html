@@ -19,8 +19,9 @@
 </div></div>
 
 {% if upcoming %}
+{% if creator or coplanner %}
 <a href="tools/weather/editWeather"><button type="button" class="btn btn-default">Edit Weather Information</button></a>
-{% endif %}
+{% endif %}{% endif %}
 
 {% if creator %}
 <a href="editMembers"><button type="button" class="btn btn-default">Edit Members</button></a>
@@ -29,7 +30,7 @@
 
 {% if creator %}
 <a href="{{menu.server}}/{{event.eventid}}/
-delete"><button type="button" class="btn btn-danger">Delete Event</button></a>
+deleteEvent"><button type="button" class="btn btn-danger">Delete Event</button></a>
 {% endif %}
 <br><br>
 <a href="{{menu.server}}/{{event.eventid}}"><button type="button" class="btn btn-default">Go Back</button></a>

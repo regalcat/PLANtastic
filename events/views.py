@@ -22,6 +22,7 @@ from users.forms import UserRegistrationForm
 from base.helpers import getMenuInfo, isPreviousEvent
 from base.permissions import memberCheck, isCreator, isCoplanner
 from forms import EventForm, HikeForm, GenericTripForm, GenericGatheringForm, DinnerForm
+from notifications.models import NotificationModel
 
 
 @login_required(login_url = '/loginRequired/')
@@ -91,6 +92,8 @@ def editEvent(request, eventid):
 				subform = DinnerForm(request.POST, instance = event)
 
 			if subform.is_valid():
+					editeventform.save(commit = False)
+					editeventform.creator = request.user
 					editeventform.save()
 					subform.save()
 
@@ -122,32 +125,116 @@ def editMembers(request, eventid):
 		member = getMemberObject(user, event)
 		member.status = status
 		member.save()
-		
+
+		note = NotificationModel()
+		text = "Your status in the event " + str(event.name) + " just got changed to " + str(member.get_status_display) + "."
+		note.createNewNotification(member, text)		
+
 		return HttpResponseRedirect("")	
 
+@login_required(login_url = '/loginRequired/')
+def deleteMember(request, eventid):
+	event = EventModel.objects.filter(eventid=eventid)
+	if memberCheck(request.user, event[0]) == False:
+		return render(request, 'invite/notMember.html', {'menu' : getMenuInfo(request), 'title' : 'Not Member'})
+	if isCreator(request.user, event[0]) == False:
+		return render(request, 'events/notPermission.html', {'menu' : getMenuInfo(request), 'title' : 'Not Permission'})
+
+	username = request.POST['user']
+	
+
+	return render(request, 'events/deleteMember.html', { 'menu' : getMenuInfo(request), 'title' : "Leave Event", 'event' : event[0], 'username':username})
+
+
+@login_required(login_url = '/loginRequired/')
+def executeDeleteMember(request, eventid):
+	event = EventModel.objects.filter(eventid=eventid)
+	if memberCheck(request.user, event[0]) == False:
+		return render(request, 'invite/notMember.html', {'menu' : getMenuInfo(request), 'title' : 'Not Member'})
+	if isCreator(request.user, event[0]) == False:
+		return render(request, 'events/notPermission.html', {'menu' : getMenuInfo(request), 'title' : 'Not Permission'})
+
+	username = request.POST['username']
+	event = EventModel.getEvent(eventid)
+
+	user = User.objects.filter(username = username)
+	event = EventModel.objects.filter(eventid = eventid)
+	member = getMemberObject(user[0], event[0])
+
+	note = NotificationModel()
+	text = "You are no longer a member of the event " + str(event[0].name) + "."
+	note.createNewNotification(user=user[0], text=text)
+
+	member.delete()
+
+	return HttpResponseRedirect(reverse('events:editMembers', kwargs={'eventid':eventid}))	
+
+@login_required(login_url = '/loginRequired/')
+def leaveEvent(request, eventid):
+	event = EventModel.objects.filter(eventid=eventid)
+	if memberCheck(request.user, event[0]) == False:
+		return render(request, 'invite/notMember.html', {'menu' : getMenuInfo(request), 'title' : 'Not Member'})
+	if isCreator(request.user, event[0]) == True:
+		return render(request, 'events/notPermission.html', {'menu' : getMenuInfo(request), 'title' : 'Not Permission'})
+	
+
+	return render(request, 'events/leaveEvent.html', { 'menu' : getMenuInfo(request), 'title' : "Leave Event", 'event' : event[0]})
 
 
 
 @login_required(login_url = '/loginRequired/')
+def executeLeaveEvent(request, eventid):
+	event = EventModel.objects.filter(eventid=eventid)
+	if memberCheck(request.user, event[0]) == False:
+		return render(request, 'invite/notMember.html', {'menu' : getMenuInfo(request), 'title' : 'Not Member'})
+	if isCreator(request.user, event[0]) == True:
+		return render(request, 'events/notPermission.html', {'menu' : getMenuInfo(request), 'title' : 'Not Permission'})
+
+	creator = MembershipModel.objects.filter(event=event[0], status = "CR")
+	notifications = NotificationModel()
+	text = str(request.user.username) + " has just left your event " + str(event[0].name) + "."
+	notifications = notifications.createNewNotification(user=creator[0].user, text = text)
+
+	event = EventModel.objects.filter(eventid = eventid)
+	member = getMemberObject(request.user, event)
+	member.delete()
+
+	return HttpResponseRedirect(reverse('base:upcoming'))
+	
+
+
+@login_required(login_url = '/loginRequired/')
 def deleteEvent(request, eventid):
+	event = EventModel.objects.filter(eventid=eventid)
+	if memberCheck(request.user, event[0]) == False:
+		return render(request, 'invite/notMember.html', {'menu' : getMenuInfo(request), 'title' : 'Not Member'})
+	if isCreator(request.user, event[0]) == False:
+		return render(request, 'events/notPermission.html', {'menu' : getMenuInfo(request), 'title' : 'Not Permission'})
 	event = EventModel.getEvent(eventid)
+
 	context = {'menu' : getMenuInfo(request), 'title' : 'Delete Event', 'event':event}
 	return render(request, "events/deleteEvent.html", context)
 
 
 @login_required(login_url = '/loginRequired/')
 def executeDeleteEvent(request, eventid):
-	
 	event = EventModel.objects.filter(eventid=eventid)
 	if memberCheck(request.user, event[0]) == False:
 		return render(request, 'invite/notMember.html', {'menu' : getMenuInfo(request), 'title' : 'Not Member'})
 	if isCreator(request.user, event[0]) == False:
 		return render(request, 'events/notPermission.html', {'menu' : getMenuInfo(request), 'title' : 'Not Permission'})
 	
+	text = "The event " + str(event[0].name) + " that you were a member of has been deleted by the creator."
+
+	members = MembershipModel.objects.filter(event=event[0])
+	for member in members:
+		note = NotificationModel()
+		note.createNewNotification(user = member.user, text = text)
+			
+
 	eventChild = EventModel.getEvent(eventid)
 	eventChild.delete()
 	event.delete()
-	# TODO : delete also from invite table everyone in event
 
 	return HttpResponseRedirect(reverse('base:upcoming'))
 

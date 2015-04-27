@@ -48,7 +48,10 @@ INSTALLED_APPS = (
 	'tools.allergy_list',
 	'tools.weather',
 	'tools.ride_share',
+	'tools.schedule',
+	'tools.forum',
 	'users',
+	'notifications',
 )
 
 MIDDLEWARE_CLASSES = (

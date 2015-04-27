@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 def getUploadFileName(instance, filename):
 	return "event_pics/%s" % (filename)
@@ -6,6 +7,7 @@ def getUploadFileName(instance, filename):
 class EventModel(models.Model):
 	eventid = models.AutoField(primary_key=True)
 	name = models.CharField(max_length=50)
+	creator = models.ForeignKey(User)
 	location = models.CharField(max_length=50)
 	location.blank = True
 	event_Start_Date = models.DateField(auto_now=False,auto_now_add=False)
@@ -42,12 +44,13 @@ class EventModel(models.Model):
 			return events[0]
 		return EventModel.objects.get(eventid=event_id)
 
-	def createEvent(self,name,location,event_Start_Date,eventType,event_Description):
+	def createEvent(self,name,location,event_Start_Date,eventType,event_Description, creator):
 		self.name=name
 		self.location=location
 		self.event_Start_Date=event_Start_Date
 		self.eventType=eventType
 		self.event_Description=event_Description
+		self.creator = creator
 		self.save()
 		return self
 

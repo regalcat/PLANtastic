@@ -4,6 +4,7 @@ from django.utils import timezone
 
 from invite.models import MembershipModel
 from events.models import EventModel
+from notifications.models import NotificationModel
 
 def getUserEvents(user_):
 	membership_entries = MembershipModel.objects.filter(user=user_)
@@ -51,6 +52,16 @@ def getPreviousEvents(user_):
 
 #def getFeaturedUpcomingEvent(user_):
 
+
+def countNewNotifications(user_):
+	notifications = NotificationModel.objects.filter(user=user_)
+	counter = 0
+	for note in notifications:
+		if note.seen == False:
+			counter += 1
+
+	return counter
+
 def getUpcomingEvents(user_):
 	membership_entries = MembershipModel.objects.filter(user=user_)
 	events = []
@@ -69,4 +80,5 @@ def getMenuInfo(request):
 	toReturn['num_prev_events'] = len(getPreviousEvents(request.user))
 	toReturn['num_upcoming_events'] = len(getUpcomingEvents(request.user))
 	toReturn['event_types'] = EventModel.getEventTypes()
+	toReturn['new_notifications'] = countNewNotifications(request.user)
 	return toReturn

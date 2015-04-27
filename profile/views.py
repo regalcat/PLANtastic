@@ -7,12 +7,15 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import check_password, make_password, is_password_usable
 from django.views.generic.edit import FormView
+from django.contrib.auth.models import User
 
 
 #imported from our project
 from events.models import EventModel
 from base.helpers import getMenuInfo
 from forms import ProfileForm, UserForm
+from notifications.models import NotificationModel
+from invite.models import MembershipModel
 
 
 
@@ -24,6 +27,46 @@ def profile(request):
 	context = {'menu' : getMenuInfo(request), 'title' : "Profile", 'membership' : request.user.date_joined, 'name' : request.user.get_short_name(), 'fullname' : request.user.get_full_name(), 'email' : request.user.email, 'username' : request.user.username, 'birthday' : request.user.profile.getBirthday(), 'gender' : request.user.profile.gender, 'description' : request.user.profile.description, 'avatar' : request.user.profile.avatar }
 	
 	return render(request, 'profile/profile.html', context)
+
+@login_required(login_url = '/loginRequired/')
+def otherProfile(request):
+	if request.method == "POST":
+		otherusername = request.POST['username']
+		eventid = request.POST['eventid']
+
+		event = EventModel.objects.filter(eventid = eventid)
+		
+		otheruser = User.objects.filter(username = otherusername)
+		otheruser = otheruser[0]
+
+		events1 = MembershipModel.objects.filter(user = request.user)
+		events2 = MembershipModel.objects.filter(user = otheruser)
+
+		boolean = False
+		
+		for event1 in events1:
+			for event2 in events2:
+				if event1.event == event2.event:
+					boolean = True
+					break
+
+		if boolean == False:
+			# permission denied
+			context = {'menu' : getMenuInfo(request), 'title' : "Permission denied"}
+			return render(request, 'profile/notFriends.html', context)
+
+		else:
+			context = {'menu' : getMenuInfo(request), 'title' : "View profile", \
+			'membership' : otheruser.date_joined, 'fullname' : otheruser.get_full_name(),  \
+			'avatar' : otheruser.profile.avatar , 'gender' : request.user.profile.gender, \
+			'description' : request.user.profile.description, 'event' : event[0]}
+			
+			return render(request, 'profile/otherProfile.html', context)
+		
+
+	else:
+		context = {'menu' : getMenuInfo(request), 'title' : "Permission denied"}
+		return render(request, 'profile/notFriends.html', context)
 
 
 
@@ -81,6 +124,16 @@ def deleteAccount(request):
 
 @login_required(login_url = '/loginRequired/')  # User have to be logged in to see this view - if not: redirects to login_url
 def executeDelete(request):
+
+	events = MembershipModel.objects.filter(user = request.user)
+
+	for em in events:
+		if em.status == "CR":
+			allmembers = MembershipModel.objects.filter(event = em.event)
+			for mem in allmembers:
+				note = NotificationModel()
+				text = "The event " + str(em.event.name) + " that you were a member of has been deleted."
+				note.createNewNotification(user = mem.user, text = text)
 
 	request.user.delete()
 

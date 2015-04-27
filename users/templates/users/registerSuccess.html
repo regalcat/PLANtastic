@@ -23,9 +23,15 @@
 {% endblock %}
 
 {% block content %}
-You have registered.
-<br>
-<br>
-<p><a href="{% url 'base:login' %}"><button class="btn btn-default">Click here to log in</button></a></p>
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+			<h3 class="panel-title">Your register was successful!</h3>
+	</div>
+	<div class="panel-body">
+	<p>You can now log in with your new account.</p>
+	<p><a href="{% url 'base:login' %}"><button class="btn btn-default">Click here to log in</button></a></p>
+
+	</div>
 
 {% endblock %}

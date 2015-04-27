@@ -21,10 +21,10 @@ class InviteForm(forms.Form):
 		smtpserver.ehlo()
 		smtpserver.starttls()
 		smtpserver.login(gmail_user, gmail_passwd)
-		header = 'To:' + to +'\n' + gmail_user + '\n' + 'Subject: Plantastic Test Invite \n\n'
+		header = 'To:' + to +'\n' + 'From:' + gmail_user + '\n' + 'Subject: PLANtastic Invite' + '\n'  
 		#print header
 		ename = event.name
-		msg = header + '\n You have been invited to ' + ename + '! \n Your confirmation string is: '+ rstring +'\n Go to Plantastic and enter this string to join the event!\n\n'
+		msg = header + 'You have been invited to ' + ename + '! \n Your confirmation string is: '+ rstring +'\n Go to PLANtastic and enter this string to join the event!\n\n'
 		smtpserver.sendmail(gmail_user, to, msg)
 		#print 'Email sent!'
 		smtpserver.close()

@@ -32,13 +32,24 @@
 	<div class="container">
 	<div class="table-responsive">
 	<table class="table">
-		<thead><tr><td><b>#</b></td><td><b>Name</b></td><td><b>Status</b></td></thead>
+		<thead><tr><td><b>#</b></td><td><b>Name</b></td><td><b>Status</b></td><td></td><td></td></thead>
 		<tbody>
 		{% for member in members %}
 		<tr>
 		<td>{{ forloop.counter }}</td>
-		<td>{{ member.user.first_name }} {{ member.user.last_name }}</td>
+		<td>{{ member.user.first_name }} {{ member.user.last_name }} - {{member.user.username}}</td>
 		<td>{{ member.get_status_display }}</td>
+		<td>{% if member.user != user %}
+			<form action="{% url 'profile:otherProfile' %}" method= "POST">
+			{% csrf_token %}
+			<input type="hidden" name="username" id="username" value="{{member.user.username}}">
+			<input type="hidden" name="eventid" id="eventid" value="{{event.eventid}}">
+			<input type= "submit" value="See profile" class="btn btn-default"></form></td>
+			{%endif%}</td>
+		<td>{% if member.user == user and not creator %}
+			<a href="leaveEvent"><button class="btn btn-danger">Leave Event</button></a>
+ 		{%endif%}
+</td>
 		</tr>
 		{% endfor %}
 		</tbody>

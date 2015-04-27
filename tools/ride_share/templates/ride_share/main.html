@@ -5,39 +5,33 @@
 	<font size="6">Ride Share</font>
 </div>
 
-<!--<script src="{{ STATIC_URL }}item_share/item_share.js"></script>-->
-<p><a href="signup"><button type="button" class="btn btn-default">Sign Up</button></a>
+
+<p>
+{% if isNotInACar %}
 <a href="add_car"><button type="button" class="btn btn-default">Add Vehicle</button></a>
+{% endif %}
 <a href="{{menu.server}}/{{event.eventid}}"><button type="button" class="btn btn-default">Go Back</button></a></p>
 <table class="table"> 
 
 <tr class="table-header">
-<td> </td>
-<td>  Driver  </td> 
-<td>  Seats  </td>
-<td>  Available Seats  </td>
-<td>  Seats Taken  </td>
+
+<td> <b> Driver </b> </td> 
+<td> <b> Seats  </b></td>
+<td> <b> Available Seats  </b></td>
+<td> <b>  </b> </td>
 </tr>
 {% for car in cars %}
 	<tr>
-	{% if car.signups.count >= 0 %}<td class="plus">+{% else %}<td> {% endif %}</td>
-	<td>{{ car.driver }}</td>
-	<td>{{ car.seats }}</td><td>{{ car.available }}</td><td id="signup_{{ car.id }}">{{ car.signedup }}</td>
-
-	<form action = "{{ cur_path }}" method="post">
-		<td><input type="number" name="seats" min=0 value="{% if not car.your_signup %}0{% else %}1{% endif %}" 
-				onchange="formChanged(value, {{ car.id }})"></td>
-		<td><input type="hidden" value="{{ car.id }}" name="car_id"></td>
-	</form>
-	</tr>
-	{% for signup in car.signups %}
-		<tr class="dropdown">
-		<td></td>
-		<td> {{ signup.user.username }} </td>
-<!-- TODO		<td>{{ signup.user.first_name }} {{ signup.user.last_name }}</td> -->
-		<td>{{ signup.seats }}</td>
+	
+	<form action="{% url 'events:tools:rideshare:carDetails' eventid=event.eventid carid=car.carid %}" method="get">
+	{% csrf_token %}
+	<td>{{ car.driver.personid }}</td>
+	<td>{{ car.seats }}</td><td>{{ car.open_seats }}</td>
+	
+	<input type="hidden" name="carid" id="carid" value="{{car.carid}}"/>
+	<td><input type="submit" class="btn btn-default" value="View Details"/></td>
+	</form>	
 		</tr>
-	{% endfor %}
 {% endfor %}
 </table>
 

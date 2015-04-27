@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="page-header">
+	<font size="6">{{ fullname }}</font>
+</div>
+
+<div class="panel panel-default">
+<div class="panel-heading">
+<h3 class="panel-title">Information</h3>
+</div>
+<div class="panel-body"> <font size="3">
+	{% if avatar %}
+	<img src="{{ avatar.url }}" alt="profile avatar"></img><br><br>
+	{% endif %}
+	{% if birthday %}
+	<br><b>Birthday:</b> {{ birthday }}
+	{% endif %}
+	{% if gender %}
+	<br><b>Gender:</b> {{ gender }}
+	{% endif %}
+	<br><b>Member since:</b> {{ membership }}
+	{% if description %}
+	<br><b>Description:</b>
+	<br>{{ description }}
+	{% endif %}</font>
+
+<br><br>
+<a href="{{menu.server}}/{{event.eventid}}"><button type="button" class="btn btn-default">Go Back</button></a>
+</div></div>
+
+
+
+{% endblock %}

@@ -11,7 +11,7 @@ class EventForm(forms.ModelForm):
 	class Meta:
 		model = EventModel
 		fields = ('name', 'location', 'event_Start_Date', 'event_Description',)
-		exclude = ('eventType',)
+		exclude = ('eventType', 'creator',)
 		
 		name = forms.CharField()
 		event_Description = forms.CharField()
@@ -29,7 +29,7 @@ class HikeForm(EventForm):
 		model = HikeEventModel
 
 		fields = ('event_End_Date', 'duration', 'elevation', 'distance', 'difficulty', 'picture',)
-		exclude = ('eventType',)
+		exclude = ('eventType','creator',)
 
 		eventDifficulty = forms.ChoiceField()
 		eventElevation = forms.FloatField()
@@ -45,7 +45,7 @@ class DinnerForm(EventForm):
 	class Meta:
 		model = DinnerEventModel
 
-		exclude = ('eventType',)
+		exclude = ('eventType','creator',)
 
 		fields = ( 'picture',)
 
@@ -57,7 +57,7 @@ class GenericTripForm(EventForm):
 		model = GenericTripModel
 
 		fields = ('event_End_Date','picture',)
-		exclude = ('eventType',)
+		exclude = ('eventType', 'creator',)
 		widgets = {'event_End_Date' : SelectDateWidget(), }
 
 
@@ -68,7 +68,7 @@ class GenericGatheringForm(EventForm):
 	class Meta:
 		model = GenericGatheringModel
 
-		fields = ('event_End_Date','picture',)
+		fields = ('event_End_Date','picture','creator',)
 		exclude = ('eventType',)
 		widgets = {'event_End_Date' : SelectDateWidget(), }
 

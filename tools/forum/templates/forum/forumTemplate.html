@@ -1,0 +1,18 @@
+<div id="event-forum">
+	<h3>Event Forum</h3>
+	<table>
+		<thead><tr><td>Thread Name</td><td>Posts</td><td>Last Post</td><td></td></thead>
+		<tbody>
+		{% for thread in forum.threads %}
+		<tr>
+				<td>{{thread.title}}</td>
+				<td>{{ThreadModel.num_posts(thread)}}</td>
+				<td>{{ThreadModel.last_post(thread)}}</td>
+				<td><a href="{{thread.threadid}}"><button class="btn btn-default">View</button></a></td>
+		</tr>
+		{% endfor %}
+		
+		</tbody>
+	</table>
+	<a href="create-thread/"><button class="btn btn-default">Create Thread</button></a>	
+</div>

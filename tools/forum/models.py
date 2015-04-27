@@ -4,7 +4,7 @@ from django.contrib import admin
 from string import join
 
 #Imported from our code
-from event.models import EventModel
+from events.models import EventModel
 
 class ForumModel(models.Model):
 	title = models.CharField(max_length = 100)
@@ -12,10 +12,12 @@ class ForumModel(models.Model):
 	forums = models.Manager()
 
 class ThreadModel(models.Model):
+	threadid = models.AutoField(primary_key=True)
 	title = models.CharField(max_length = 100)
 	created = models.DateTimeField(auto_now_add = True)
 	creator = models.ForeignKey(User)
-	forum = models.ForeignKey(Forum)
+	forum = models.ForeignKey(ForumModel)
+	body = models.TextField(max_length=10000)
 	threads = models.Manager()
 
 	def num_posts(self):
@@ -29,7 +31,7 @@ class PostModel(models.Model):
 	title = models.CharField(max_length = 100)
 	created = models.DateTimeField(auto_now_add=True)
 	creator = models.ForeignKey(User)
-	thread = models.ForeignKey(Thread)
+	thread = models.ForeignKey(ThreadModel)
 	body = models.TextField(max_length=10000)
 	posts = models.Manager()
 

@@ -21,14 +21,21 @@
 
 
 {% block content %}
-<p>You must be logged in to see this page. Please log in below or register for a new account.</p>
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+			<h3 class="panel-title">Permission Denied</h3>
+	</div>
+	<div class="panel-body">
+	<p>You must be logged in to see this page. Please log in below or register for a new account.</p><br>
+
 
 <form action= "{% url 'base:authView' %}" method= "POST">
 {% csrf_token %}
 
-<label for ="username"> <b>Username:</b> </label><input type="text" name="username" value="" id="username">
-<label for ="password"> <b>Password:</b> </label><input type="password" name="password" value="" id="password">
-
+<label for ="username"> <b>Username:</b> </label><input type="text" name="username" value="" id="username"><br>
+<label for ="password"> <b>Password:</b> </label><input type="password" name="password" value="" id="password"><br>
+<br>
 <input type= "submit" value="Log in" class="btn btn-default">
 </form>
 <br>
@@ -37,4 +44,5 @@
 
 <a href = "{% url 'base:index' %}"><button type="button" class="btn btn-default">Go back to index page</button></a>
 
+</div>
 {% endblock %}
