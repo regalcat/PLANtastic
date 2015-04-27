@@ -14,11 +14,18 @@ from base.helpers import getMenuInfo
 def notifications(request):
 
 	notifications = NotificationModel.objects.filter(user = request.user).order_by("-time")
+	i = 0
 
 	for note in notifications:
+		if i > 25 and note.seen == True:
+			note.delete()
+			i += 1
+			continue
+
 		if note.seen == False:
 			note.seen = True
 			note.save()
+		i += 1
 
 	context = {'menu' : getMenuInfo(request), 'title' : "Notifications", 'notifications' : notifications}
 
