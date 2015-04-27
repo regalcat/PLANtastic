@@ -49,6 +49,7 @@ INSTALLED_APPS = (
 	'tools.weather',
 	'tools.ride_share',
 	'tools.schedule',
+	'tools.forum',
 	'users',
 	'notifications',
 )
