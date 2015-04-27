@@ -12,6 +12,9 @@
 <td> <b> Available Seats  </b></td>
 <td> <b> </b> </td>
 </tr>
+{% if ride_share.cars.count == 0 %}
+	<tr><td>No Cars Signed Up</td><td></td><td></td></tr>
+{% endif %}
 {% for car in ride_share.cars %}
 	<tr>
 	<td>{{ car.driver.personid }}</td>

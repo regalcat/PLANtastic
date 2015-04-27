@@ -63,3 +63,21 @@ class ItemShareView(ToolView):
 				total += item.amount
 			return HttpResponse(total)
 		return self.get(request, eventid)
+
+
+
+
+	@staticmethod
+	def getContext(event):
+		eventid = event.eventid
+		
+		items = ItemModel.items.filter(event=event)
+		for item in items:
+			item.signedup = 0
+			item.signups = ItemSignupModel.objects.filter(itemid = item)
+			for signup in item.signups:
+				item.signedup += signup.amount
+			
+		context = {'items':items}
+
+		return context
