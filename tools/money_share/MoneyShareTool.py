@@ -48,5 +48,5 @@ class MoneyShareTool(ToolView):
 		for index in amounts:
 			person = amounts[index]
 			person['total'] = -1*(person['owe'] - person['spent'] - person['paid'] + person['received'])
-		context={'items' : items, 'amounts' : amounts}
+		context={'items' : items, 'amounts' : amounts, 'members':members}
 		return context
