@@ -3,12 +3,16 @@
 <a href="add_item"><button type="button" class="btn btn-default">Add Item</button></a>
 <a href="record_payment"><button type="button" class="btn btn-default">Record Payment</button></a>
 <a href="edit_settings/{{ method.id }}"><button type="button" class="btn btn-default">Edit Settings</button></a>
+<a href="../../"><button type="button" class="btn btn-default">Go back</button></a>
+
 <h3><b>Items Purchased</b></h3>
 
 {% if items.count == 0 %}
 No Purchased Items
 {% else %}
 <table class="table">
+
+
 <tr>
 	<td><b>Item</b></td>
 	<td> </td><td> </td><td></td>
