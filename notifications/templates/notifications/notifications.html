@@ -11,7 +11,9 @@
 	<div class="panel panel-default">
 	<div class="panel-body">
 		{{ note.text }}
-
+		{% if note.link %}
+			<a href="{{menu.server}}/{{note.link}}"><button class="btn btn-default">{{note.btnText}}</button></a>
+		{% endif %}
 	</div></div>
 {% endfor %}
 
