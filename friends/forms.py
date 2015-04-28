@@ -9,6 +9,6 @@ class AddFriendForm(forms.ModelForm):
 	class Meta:
 		model = FriendList
 		fields = ('friends',)
-		widgets = {'friends' : forms.TextInput(attrs={'max_length':'30',})}
+		widgets = {'friends' : forms.TextInput(attrs={'max_length':'30', 'label':'Username'})}
 
 

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="page-header">
+	<font size="6">Add Friend by Username</font>
+</div>
+
+<form action="" method="post">
+{% csrf_token %}
+<p><b> Username:</b>
+<input type="text" id="friend" name="friend"/></p>
+
+<input type="submit" class="btn btn-success" value="Send Friend Request" />
+
+<a href="../"><button type="button" class="btn btn-default">Go Back</button></a>
+</form>
+{% endblock %}

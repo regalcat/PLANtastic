@@ -2,106 +2,78 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
-
+from django.contrib.auth.models import User
 from models import FriendList
 from events.models import EventModel
 from base.helpers import getMenuInfo
+from forms import AddFriendForm
 
 
 from notifications.models import NotificationModel
 
 @login_required(login_url = '/loginRequired/')
-def addFriend(request, user):
-	user2 = user
-	this user=request.user
-	friendlist = FriendList.objects.get(user=request.user)
-	if request.method == 'GET':
-		
-		isNotFriend=True
-		for user in friendlist:
-			if(user == user2):
-				isNotFriend=False
-				return render(request, 'friends/alreadyFriend.html', {'menu' : getMenuInfo(request), \
-				'title' : "Already Friends"})
-		context = {'menu' : getMenuInfo(request), 'title' : "Add Friend", 'isNotFriend':isNotFriend,\
-		  'cur_path' : request.get_full_path(),  'event' : event,   }
-		return render(request, 'friends/add.html', context)
+def addFriend(request, userid):
+	user2 = User.objects.get(id=userid)
+	thisUser=request.user
+	friendlist = FriendList.objects.filter(user=request.user)
 
-	if request.method == 'POST':
-		msg = str(request.user)+" would like to add you as a friend!"
-		recipient= user2
-		btnText = "Confirm"
-		link = ""
-		note=NotificationModel()
-		note.createNewNotification(user=recipient, text=msg, link=link, btnText=btnText)
-		#friendlist.friends.add(user2)
-		#friendlist.save()
-		return HttpResponseRedirect(reverse('home'))
+		
+	isNotFriend=True
+	for user in friendlist[0].friends.all():
+		if(user == user2):
+			isNotFriend=False
+			return render(request, 'friends/alreadyFriend.html', {'menu' : getMenuInfo(request), \
+			'title' : "Already Friends"})
+	context = {'menu' : getMenuInfo(request), 'title' : "Add Friend", 'isNotFriend':isNotFriend,\
+	  'cur_path' : request.get_full_path(),    }
+
+	msg = str(request.user)+" would like to add you as a friend!"
+	recipient= user2
+	btnText = "Confirm"
+	link = "friends:executeAdd"
+	friendarg = thisUser.id
+	note=NotificationModel()
+	note.createButtonNotification(user=recipient, text=msg, link=link, btnText=btnText, friendarg=friendarg, eventarg=None)
+	
+	return HttpResponseRedirect(reverse('friends:list'))
 
 
 @login_required(login_url = '/loginRequired/')
-def executeAddFriend(request, user):
-	user2 = user
+def executeAddFriend(request, userid):
+	user2 = User.objects.get(id=userid)
 	thisUser=request.user
 	friendlist = FriendList.objects.get(user=request.user)
 	friendlist2 = FriendList.objects.get(user=user2)
-		isNotFriend=True
-		for user in friendlist:
-			if(user == user2):
-				isNotFriend=False
-				return render(request, 'friends/alreadyFriend.html', {'menu' : getMenuInfo(request), \
+	isNotFriend=True
+	for user in friendlist.friends.all():
+		if(user == user2):
+			isNotFriend=False
+			return render(request, 'friends/alreadyFriend.html', {'menu' : getMenuInfo(request), \
 				'title' : "Already Friends"})
-		for user in friendlist2:
-			if(user == request.user):
-				isNotFriend=False
-				return render(request, 'friends/alreadyFriend.html', {'menu' : getMenuInfo(request), \
+	for user in friendlist2.friends.all():
+		if(user == request.user):
+			isNotFriend=False
+			return render(request, 'friends/alreadyFriend.html', {'menu' : getMenuInfo(request), \
 				'title' : "Already Friends"})
 
 
-		friendlist.friends.add(user2)
-		friendlist.save()
-		friendlist2.friends.add(request.user)
-		friendlist2.save()
+	friendlist.friends.add(user2)
+	friendlist.save()
+	friendlist2.friends.add(request.user)
+	friendlist2.save()
 
-		msg = str(request.user)+" added you as a friend!"
-		recipient = user2
-		note=NotificationModel()
-		note.createNewNotification(user=recipient, text=msg)
-		
-		msg = "You are now friends with " + str(user2) + "!"
-		recipient = request.user
-		note=NotificationModel()
-		note.createNewNotification(user=recipient, text=msg)
+	msg = str(request.user)+" added you as a friend!"
+	recipient = user2
+	note=NotificationModel()
+	note.createNewNotification(user=recipient, text=msg)
+	
+	msg = "You are now friends with " + str(user2) + "!"
+	recipient = request.user
+	note=NotificationModel()
+	note.createNewNotification(user=recipient, text=msg)
 
-		context = {'menu' : getMenuInfo(request), 'title' : "Add Friend", 'isNotFriend':isNotFriend,\
-		  'cur_path' : request.get_full_path(),  'event' : event,   }
-		return render(request, 'friends/add.html', context)
-
-
-		return HttpResponseRedirect(reverse('notifications'))
-
-
-@login_required(login_url = '/loginRequired/')
-def addFriendQuery(request):
-	thisUser=request.user
-	friendlist = FriendList.objects.get(user=request.user)
-
-		if request.method == 'GET':
-		
-		context = {'menu' : getMenuInfo(request), 'title' : "Add Friend", 'isNotFriend':isNotFriend,\
-		  'cur_path' : request.get_full_path(),  'event' : event,   }
-		return HttpResponseRedirect(reverse('friends:addFriend', kwargs={'user2':user2,}))
-
-	if request.method == 'POST':
-		msg = str(request.user)+" would like to add you as a friend!"
-		recipient= user2
-		btnText = "Confirm"
-		link = ""
-		note=NotificationModel()
-		note.createNewNotification(user=recipient, text=msg, link=link, btnText=btnText)
-		#friendlist.friends.add(user2)
-		#friendlist.save()
-		return HttpResponseRedirect(reverse('home'))
+	
+	return HttpResponseRedirect(reverse('friends:list'))
 
 
 @login_required(login_url = '/loginRequired/')
@@ -112,4 +84,37 @@ def declineFriend(request, userid):
 		note.delete()
 
 	return HttpResponseRedirect(reverse("notifications:notifications.index"))
+	
+
+
+@login_required(login_url = '/loginRequired/')
+def addFriendQuery(request):
+	thisUser=request.user
+	friendlist = FriendList.objects.get(user=request.user)
+	addfriendform = AddFriendForm()
+	if request.method == 'GET':
+		
+		context = {'menu' : getMenuInfo(request), 'title' : "Add Friend", \
+		  'cur_path' : request.get_full_path(),  'addfriendform':addfriendform }
+		return render(request, 'friends/addFriend.html', context)
+
+	if request.method == 'POST':
+
+		friend = request.POST['friend']
+		user2 = User.objects.filter(username=friend)
+		if user2.count() != 1:
+			return HttpResponseRedirect(reverse("friends:addFriendQ"))
+		user2 = User.objects.get(username=friend)
+		return HttpResponseRedirect(reverse('friends:addFriend', kwargs={'userid':int(user2.id)}))
+
+
+@login_required(login_url = '/loginRequired/')
+def friendListView(request):
+	thisUser=request.user
+	friendlist = FriendList.objects.get(user=request.user)
+	if request.method == 'GET':
+		#friends=friendlist.getFriendList()
+		context = {'menu' : getMenuInfo(request), 'title' : "Friends", 'friendlist':friendlist,\
+		  'cur_path' : request.get_full_path(),  }
+		return render(request, 'friends/friendList.html', context)
 
