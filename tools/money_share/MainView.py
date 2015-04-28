@@ -1,5 +1,7 @@
 from django.shortcuts import redirect, render
 from django.views.generic import View
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 
 from base.helpers import getMenuInfo
 from events.models import EventModel
@@ -7,11 +9,17 @@ from invite.models import MembershipModel
 from settings import settings
 
 from .models import MsItemModel, MsPaymentModel, MsSettingsModel
+from base.permissions import memberCheck
 
 class MainView(View):
 	template_name = "money_share/index.html"
 
+	@method_decorator(login_required(login_url = '/loginRequired/'))
 	def get(self, request, eventid):
+		event = EventModel.getEvent(eventid)
+		if memberCheck(request.user, event) == False:
+			return render(request, 'invite/notMember.html', {'menu' : getMenuInfo(request), 'title' : "Not Member"})
+
 		if MsSettingsModel.objects.filter(event = eventid).count() == 0:
 			MsSettingsModel(event_id=eventid, method=MsSettingsModel.EQUAL).save()
 		items = MsItemModel.objects.filter(event = eventid)
@@ -53,7 +61,12 @@ class MainView(View):
 				'items' : items, 'payments' : payments, 'method' : method, \
 				'amounts' : amounts})
 
+	@method_decorator(login_required(login_url = '/loginRequired/'))
 	def post(self, request, eventid):
+		event = EventModel.getEvent(eventid)
+		if memberCheck(request.user, event) == False:
+			return render(request, 'invite/notMember.html', {'menu' : getMenuInfo(request), 'title' : "Not Member"})
+
 		return redirect("edit_pic/"+str(pic.id))
 
 
