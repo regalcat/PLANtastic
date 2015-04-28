@@ -1,18 +1,27 @@
-<div id="event-forum">
-	<h3>Event Forum</h3>
-	<table>
-		<thead><tr><td>Thread Name</td><td>Posts</td><td>Last Post</td><td></td></thead>
-		<tbody>
-		{% for thread in forum.threads %}
-		<tr>
-				<td>{{thread.title}}</td>
-				<td>{{ thread.num_posts}}</td>
-				<td>{{ thraed.last_posts }}</td>
-				<td><a href="tools/forum/{{thread.threadid}}"><button class="btn btn-default">View</button></a></td>
+<div class="panel panel-default">
+
+	<div class="panel-heading">
+		<h3 class="panel-title">Event Forum</h3>
+
+	</div>
+<div class="panel-body">
+{% if forum.threads.count == 0 %}
+<p>No Threads to Show</p>
+{% else %}
+<table class="table">
+	<tr><td><b>Thread Name</b></td><td><b>Posts</b></td><td><b>Last Post</b></td><td></td>
+	
+	{% for thread in forum.threads %}
+	<tr>
+		<td>{{thread.title}}</td>
+		<td>{{ thread.num_posts}}</td>
+		<td>{{ thread.last_post.created }}</td>
+		<td><a href="tools/forum/{{thread.threadid}}"><button class="btn btn-default">View</button></a></td>
 		</tr>
-		{% endfor %}
-		
-		</tbody>
+	{% endfor %}
+	
 	</table>
+{% endif %}
 	<a href="tools/forum/create-thread/"><button class="btn btn-default">Create Thread</button></a>	
+</div>
 </div>

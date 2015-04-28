@@ -1,16 +1,25 @@
-<div class="panel panel-default">
+{% extends "base.html" %}
+{% block content %}
 
-<div class="panel-body">
+<div class="page-header">
+	<font size="6">Maps</font>
+</div>
 
-{% for gmap in maps.gmaps %}
-<iframe
-  width="450"
-  height="250"
-  frameborder="0" style="border:0"
-  src="https://www.google.com/maps/embed/v1/search?key=AIzaSyBrI-UzWUQWIsHaeVXCzT6Werwrov_CHhk&q={{gmap.location}}">
-
-</iframe>
-
+<a href="{% url 'events:eventHome' eventid=event.eventid %}"><button type="button" class="btn btn-default">Back</button></a>
+<a href="{{cur_path}}addMap"><button type="button" class="btn btn-default">Add Map</button></a>
+{% if gmaps.count != 0%}
+<table class="table">
+<tr><td><b>Map Location</b></td></tr>
+{% for gmap in gmaps %}
+	<tr>
+	<td>{{gmap.location}}</td>
+	<td>
+	<a href="{{cur_path}}editMap/{{gmap.mapid}}/"><button type="button" class="btn btn-default">Edit this Map</button></a>
+	</td></tr>
 {% endfor %}
+</table>
+{% endif %}
 
 </div></div>
+
+{% endblock %}

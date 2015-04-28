@@ -55,3 +55,6 @@ class MainView(View):
 
 	def post(self, request, eventid):
 		return redirect("edit_pic/"+str(pic.id))
+
+
+	

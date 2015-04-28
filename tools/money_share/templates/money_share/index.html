@@ -3,53 +3,67 @@
 <a href="add_item"><button type="button" class="btn btn-default">Add Item</button></a>
 <a href="record_payment"><button type="button" class="btn btn-default">Record Payment</button></a>
 <a href="edit_settings/{{ method.id }}"><button type="button" class="btn btn-default">Edit Settings</button></a>
-<h2>Items Purchased</h2>
-<table>
+<h3><b>Items Purchased</b></h3>
+
+{% if items.count == 0 %}
+No Purchased Items
+{% else %}
+<table class="table">
 <tr>
-	<td>Item</td>
-	<td>Cost</td>
-	<td>Purchaser</td>
+	<td><b>Item</b></td>
+	<td> </td><td> </td><td></td>
+	<td><b>Cost</b></td>
+	<td>   </td><td> </td><td></td>
+	<td><b>Purchaser</b></td>
 </tr>
 {% for item in items %}
 <tr>
 	<td><a href="edit_item/{{item.id}}">{{ item.name }}</a></td>
-	<td>{{ item.cost }}</td>
+	<td></td><td> </td><td></td>
+	<td>${{ item.cost }}</td>
+	<td></td><td> </td><td></td>
 	<td>{{ item.purchaser.username }}</td>
 </tr>
 {% endfor %}
 </table>
-<h2>Payments</h2>
-<table>
+{% endif %}
+
+<h3><b>Payments</b></h3>
+{% if payments.count == 0 %}
+No Payments Made
+{% else %}
+<table class="table">
 <tr>
-	<td>Payer</td><td>Recipient</td><td>Amount</td>
+	<td><b>Payer</b></td><td><b>Recipient</b></td><td><b>Amount</b></td>
 </tr>
 {% for payment in payments %}
 <tr>
 	<td><a href="edit_payment/{{payment.id}}">{{payment.payer.username }}</a></td>
 	<td>{{ payment.receiver.username }}</td>
-	<td>{{ payment.amount }}</td>
+	<td>${{ payment.amount }}</td>
 </tr>
 {% endfor %}
 </table>
+{% endif %}
 
-<h2>Totals</h2>
-<table>
+<h3><b>Totals</b></h3>
+<table class="table">
 <tr>
-	<td>Person</td>
-	<td>Base Due</td>
-	<td>Amount Spent</td>
-	<td>Amount Paid</td>
-	<td>Amount Received</td>
-	<td>Total Due</td>
+	<td> <b>Person</b> </td>
+	<td> <b>Base Due</b> </td>
+	<td> <b>Amount Spent</b> </td>
+	<td> <b>Amount Paid</b> </td>
+	<td> <b>Amount Received</b> </td>
+	<td> <b>Total Due</b> </td>
 </tr>
 {% for person,info in amounts.items %}
 <tr>
 	<td>{{ info.userinfo.user }}</td>
-	<td>{{ info.owe }}</td>
-	<td>{{ info.spent }}</td>
-	<td>{{ info.paid }}</td>
-	<td>{{ info.received }}</td>
-	<td>{{ info.total }}</td>
+	<td>${{ info.owe }}</td>
+	<td>${{ info.spent }}</td>
+	<td>${{ info.paid }}</td>
+	<td>${{ info.received }}</td>
+	<td>${{ info.total }}</td>
 </tr>
 {% endfor %}
 </table>
