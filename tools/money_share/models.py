@@ -28,8 +28,12 @@ class MsSplitsModel(models.Model):
 
 	@staticmethod
 	def getUsersSplitting(event_, item_):
-		users = SplitsModel.objects.filter(item = item_, event = event_)
-		if users == None:
+		if MsSettingsModel.ITEM_BY_ITEM == MsSettingsModel.objects.get(event=event_).method:
+			users = MsSplitsModel.objects.filter(item = item_, event = event_).values_list( \
+				'user', flat=True)
+			users = list(users)
+			users.append(item_.purchaser)
+		else:
 			users = MembershipModel.objects.filter(event=event_).values_list( \
 				'user', flat=True)
 		return users
