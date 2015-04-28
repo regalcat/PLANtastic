@@ -73,7 +73,7 @@ class ThreadView(View):
 	
 	def get(self, request, eventid, threadid):
 		cur_event = EventModel.getEvent(eventid)
-		posts = PostModel.posts.filter(thread=threadid).order_by("created")
+		posts = PostModel.posts.filter(thread=threadid).order_by("-created")
 		title = ThreadModel.threads.get(pk=threadid).title
 		for post in posts:
 			post.post_description = PostModel.get_post_description(post)

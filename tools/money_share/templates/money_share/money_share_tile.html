@@ -1,5 +1,33 @@
-<a href="tools/money_share">
-<div class="tool-tile">
-<button type="button" class="btn btn-default">Money Share Tool</button>
+
+<div class="panel panel-default">
+
+	<div class="panel-heading">
+		<h3 class="panel-title">Money Share</h3>
+
+	</div>
+<div class="panel-body">
+
+
+<table class="table"> 
+<tr class="table-header">
+
+<td> <b>Person</b> </td>
+<td> <b>Total Due</b> </td>
+</tr>
+
+{% for person,info in money_share.amounts.items %}
+<tr>
+	<td>{{ info.userinfo.user }}</td>
+	<td>${{ info.total }}</td>
+</tr>
+{% endfor %}
+	
+</table>
+
+
+	<a href="tools/money_share"><button type="button" class="btn btn-default">View/Edit</button></a>
+	</div>
+	</a>
 </div>
-</a>
+
+

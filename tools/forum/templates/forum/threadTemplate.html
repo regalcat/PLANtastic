@@ -2,6 +2,21 @@
 
 {% block content %}
 <h3>{{thread.title}}</h3>
+<a href="../../../"><button type="button" class="btn btn-default">Go Back</button></a>
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h4>Reply to Thread</h4>
+	</div>
+	<div class="panel-body">
+		<form action="" method="post">
+			{% csrf_token %}
+			<input type="text" class="form-control" placeholder="Post title" id="ptitle" name="ptitle" />
+			<input type="text" class="form-control" placeholder="Post message" id="pbody" name="pbody" />
+			<input type="submit" class="btn btn-default" value="Post Reply" />
+		</form>
+	</div>
+</div>
 
 {% for post in posts %}
 	<div class = "panel panel-default">
@@ -13,17 +28,5 @@
 		</div>
 	</div>
 {% endfor %}
-<div class="panel panel-default">
-	<div class="panel-heading">
-		<h4>Reply to Thread</h4>
-	</div>
-	<div class="panel-body">
-		<form action="reply-thread/" method="post">
-			{% csrf_token %}
-			<input type="text" class="form-control" placeholder="Post title" id="ptitle" name="ptitle" />
-			<input type="text" class="form-control" placeholder="Post message" id="pbody" name="pbody" />
-			<input type="submit" class="btn btn-default" value="Post Reply" />
-		</form>
-	</div>
-</div>
+
 {% endblock %}

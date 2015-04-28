@@ -37,6 +37,6 @@ class PostModel(models.Model):
 	posts = models.Manager()
 
 	def get_post_description(self):
-		return u"%s - %s\n%s" % (self.creator, self.title, self.created.strftime("%b %d, %I:%M %p"))
+		return u"%s - %s \t : \n%s" % (self.creator, self.title, self.created.strftime("%b %d, %I:%M %p"))
 
 

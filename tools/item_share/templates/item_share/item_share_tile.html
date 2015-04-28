@@ -5,6 +5,10 @@
 
 	</div>
 <div class="panel-body">
+
+{% if item_share.items.count == 0 %}
+<p>No Items to Display </p>
+{% else %}
 <table class="table"> 
 <tr class="table-header">
 
@@ -12,9 +16,7 @@
 <td><b> Amount Needed  </b></td>
 <td><b>  Amount Signed Up </b></td>
 </tr>
-{% if item_share.items.count == 0 %}
-	<tr><td>No Items Signed Up </td><td></td><td></td></tr>
-{% endif %}
+
 {% for item in item_share.items %}
 	<tr>
 	
@@ -25,6 +27,7 @@
 	
 {% endfor %}
 </table>
+{% endif %}
 
 	<a href="tools/item_share"><button type="button" class="btn btn-default">View/Edit</button></a>
 	</div>
