@@ -11,6 +11,9 @@ class NotificationModel(models.Model):
 	seen = models.BooleanField(default = False)
 	link = models.CharField(max_length = 10000, blank = True)
 	btnText = models.CharField(max_length = 100, blank=True)
+	eventarg = models.IntegerField(blank=True, null = True)
+	friendarg = models.IntegerField(blank=True, null = True)
+
 
 
 	def createNewNotification(self, user, text):
@@ -20,4 +23,17 @@ class NotificationModel(models.Model):
 		self.seen = False
 		self.save()
 		return self
+
+	def createButtonNotification(self, user, text, link, btnText, eventarg, friendarg):
+		self.user = user
+		self.time = timezone.now()
+		self.text = text
+		self.seen = False
+		self.link = link
+		self.btnText = btnText
+		self.eventarg = eventarg
+		self.friendarg = friendarg
+		self.save()
+		return self
+
 
