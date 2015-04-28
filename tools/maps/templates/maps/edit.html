@@ -5,19 +5,36 @@
 	<font size="6">Maps</font>
 </div>
 
-<a href="{% url 'events:eventHome' eventid=event.eventid %}"><button type="button" class="btn btn-default">Back</button></a>
-<a href="{{cur_path}}addMap"><button type="button" class="btn btn-default">Add Map</button></a>
+<p><a href="{% url 'events:eventHome' eventid=event.eventid %}"><button type="button" class="btn btn-default">Back</button></a>
+<a href="{{cur_path}}addMap"><button type="button" class="btn btn-default">Add Map</button></a></p>
 {% if gmaps.count != 0%}
 <table class="table">
-<tr><td><b>Map Location</b></td></tr>
+<tr></tr>
+
+
 {% for gmap in gmaps %}
-	<tr>
-	<td>{{gmap.location}}</td>
 	<td>
-	<a href="{{cur_path}}editMap/{{gmap.mapid}}/"><button type="button" class="btn btn-default">Edit this Map</button></a>
-	</td></tr>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<center><h3 class="panel-title"><b>{{gmap.location}}</b></h3></center>
+			</div>
+		<div class="panel-body">
+			<p>
+			<center><iframe width="350"height="300" frameborder="0" style="border:0"
+  	src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAE3keEQriszbqLIwKYLUvfwM3U7GQfhFo&q={{gmap.location}}">
+			</iframe></center>
+			</p>
+		</div>
+		<div class="panel-footer">
+			<center><a href="{{cur_path}}editMap/{{gmap.mapid}}/"><button class="btn btn-default"> Edit this Map</button></a></center>
+			</div>
+		</div>
+	</td>
+{% if forloop.counter|divisibleby:"2" %}
+</tr>
+<tr>
+{% endif %}
 {% endfor %}
-</table>
 {% endif %}
 
 </div></div>
