@@ -8,7 +8,7 @@
 <div class="panel panel-default">
 <div class="panel-body">
 
-	<form action= "" method= "POST">
+	<form enctype="multipart/form-data" action= "" method= "POST">
 	{% csrf_token %}
 	{{ editeventform.as_p }}
 	{{ subform.as_p }}

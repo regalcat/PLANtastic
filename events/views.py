@@ -72,7 +72,7 @@ def editEvent(request, eventid):
 			subform = DinnerForm(instance = event)
 
 		context['subform'] = subform
-		
+		 
 		return render(request, 'events/editEvent.html', context)
 		
 	if request.method == 'POST':
@@ -80,22 +80,28 @@ def editEvent(request, eventid):
 
 		if editeventform.is_valid():
 			if event.eventType == u'hike':
-				subform = HikeForm(request.POST, instance = event)
+				subform = HikeForm(request.POST, request.FILES, instance = event)
 				
 			elif event.eventType == u'otherTrip':
-				subform = GenericTripForm(request.POST, instance = event)
+				subform = GenericTripForm(request.POST, request.FILES, instance = event)
 				
 			elif event.eventType == u'otherGathering':
-				subform = GenericGatheringForm(request.POST, instance = event)
+				subform = GenericGatheringForm(request.POST, request.FILES, instance = event)
 				
 			elif event.eventType == u'dinner':
-				subform = DinnerForm(request.POST, instance = event)
+				subform = DinnerForm(request.POST, request.FILES, instance = event)
 
 			if subform.is_valid():
+					pic = subform.cleaned_data['picture']
 					editeventform.save(commit = False)
 					editeventform.creator = request.user
 					editeventform.save()
 					subform.save()
+					print pic
+						event = EventModel.getEvent(eventid)
+						event.picture = pic
+						event.save()
+					
 
 		return HttpResponseRedirect("")
 
