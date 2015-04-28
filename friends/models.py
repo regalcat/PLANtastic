@@ -5,7 +5,7 @@ from events.models import EventModel
 
 class FriendList(models.Model):
 	user = models.ForeignKey(User,primary_key=True)
-	friends = models.ManyToManyField(User)
+	friends = models.ManyToManyField(User, related_name='friends')
 	
 	def getFriendList(user_):
 		friends = FriendList.objects.get(user=user_)
