@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h3>{{thread.title}}</h3>
+<h3><b>{{thread.title}}</b></h3>
+<h4>{{thread.body}}</h4>
 <a href="../../../"><button type="button" class="btn btn-default">Go Back</button></a>
 <br><br>
 <div class="panel panel-default">
@@ -9,6 +10,7 @@
 		<h4>Reply to Thread</h4>
 	</div>
 	<div class="panel-body">
+	
 		<form action="" method="post">
 			{% csrf_token %}
 			<input type="text" class="form-control" placeholder="Post title" id="ptitle" name="ptitle" />
