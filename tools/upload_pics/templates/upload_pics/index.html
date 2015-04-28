@@ -2,7 +2,8 @@
 {% block content %}
 <link rel="stylesheet" type="text/css" href="{{ STATIC_URL}}upload_pics.css">
 <script src="{{ STATIC_URL }}upload_pics.js"></script>
-<a href="upload_pic"><button type="button" class="btn btn-default">Upload Pictures</button></a><br>
+<a href="upload_pic"><button type="button" class="btn btn-default">Upload Pictures</button></a>
+<a href="../../"><button type="button" class="btn btn-default">Go back</button></a><br><br>
 <form action="" method="post">
 {% csrf_token %}
 <select id="select" name="selected">
