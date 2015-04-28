@@ -97,7 +97,7 @@ def editEvent(request, eventid):
 					editeventform.creator = request.user
 					editeventform.save()
 					subform.save()
-					print pic
+					if pic:
 						event = EventModel.getEvent(eventid)
 						event.picture = pic
 						event.save()
