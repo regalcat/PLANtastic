@@ -56,15 +56,15 @@ def mapsEditView(request, mapid, eventid):
 			return render(request, 'invite/notMember.html', {'menu' : getMenuInfo(request), 'title' : "Not Member"})
 	if request.method == 'GET':
 		gmap = Gmap.objects.filter(event=event, mapid=mapid)
-
+		mapform=MapForm()
 		context = {'menu' : getMenuInfo(request), 'title' : "Edit Map", \
 		  'cur_path' : request.get_full_path(), 'event' : event, 'mapform':mapform,'gmap':gmap  }
 		return render(request, 'maps/editMap.html', context)
 
 	if request.method == 'POST':
-		mapid = request.POST['mapid']
+		mapid = mapid
 		q=request.POST['location']
-		gmap = Gmap.objects.filter(event=event, mapid=mapid)
+		gmap = Gmap.objects.get(event=event, mapid=mapid)
 		gmap.location=q
 		gmap.save()
 		return HttpResponseRedirect(reverse('events:tools:maps:editMap', kwargs={'eventid':eventid,'mapid':mapid}))

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="page-header">
+	<font size="6">Edit Maps</font>
+</div>
+
+<form action="" method="post">
+<p><b>Current Map Location:</b>{{gmap.location}}</p>
+{% csrf_token %}
+<p>{{mapform.as_p}}</p>
+<input type="submit" class="btn btn-success" value="Submit" />
+
+</form>
+{% endblock %}
