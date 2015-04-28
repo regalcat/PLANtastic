@@ -77,6 +77,14 @@ def executeAddFriend(request, userid):
 	return HttpResponseRedirect(reverse('friends:list'))
 
 
+@login_required(login_url = '/loginRequired/')
+def declineFriend(request, userid):
+	
+	note = NotificationModel.objects.filter(user = request.user, friendarg=userid)
+	if note.count() == 1:
+		note.delete()
+
+	return HttpResponseRedirect(reverse("notifications:notifications.index"))
 	
 
 
@@ -92,6 +100,7 @@ def addFriendQuery(request):
 		return render(request, 'friends/addFriend.html', context)
 
 	if request.method == 'POST':
+
 		friend = request.POST['friend']
 		user2 = User.objects.filter(username=friend)
 		if(user2[0] == request.user):
@@ -112,7 +121,7 @@ def friendListView(request):
 	thisUser=request.user
 	friendlist = FriendList.objects.get(user=request.user)
 	if request.method == 'GET':
-		
+
 		context = {'menu' : getMenuInfo(request), 'title' : "Friends", 'friendlist':friendlist,\
 		  'cur_path' : request.get_full_path(),  }
 		return render(request, 'friends/friendList.html', context)
@@ -129,4 +138,4 @@ def deleteFriend(request, userid):
 		  'cur_path' : request.get_full_path(),  }
 		return render(request, 'friends/deleteFriend.html', context)
 
-	
+
