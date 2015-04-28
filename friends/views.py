@@ -102,3 +102,14 @@ def addFriendQuery(request):
 		#friendlist.friends.add(user2)
 		#friendlist.save()
 		return HttpResponseRedirect(reverse('home'))
+
+
+@login_required(login_url = '/loginRequired/')
+def declineFriend(request, userid):
+	
+	note = Notification(user = request.user, friendarg=userid)
+	if note.count() == 1:
+		note.delete()
+
+	return HttpResponseRedirect(reverse("notifications:notifications.index"))
+
