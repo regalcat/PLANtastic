@@ -9,6 +9,8 @@ class NotificationModel(models.Model):
 	time = models.DateTimeField()
 	text = models.CharField(max_length = 10000)
 	seen = models.BooleanField(default = False)
+	link = models.CharField(max_length = 10000, blank = True)
+	btnText = models.CharField(max_length = 100, blank=True)
 
 
 	def createNewNotification(self, user, text):
