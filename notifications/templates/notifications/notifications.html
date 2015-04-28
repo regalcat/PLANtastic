@@ -15,7 +15,7 @@
 			{% if note.eventarg %}
 			<a href="{% url note.link eventid=note.eventarg %}"><button class="btn btn-default">{{note.btnText}}</button></a>
 			{% elif note.friendarg %}
-			<a href="{% url note.link user=note.friendarg %}"><button class="btn btn-default">{{note.btnText}}</button></a>
+			<a href="{% url note.link userid=note.friendarg %}"><button class="btn btn-default">{{note.btnText}}</button></a>
 			{% else %}
 			<a href="{% url note.link %}"><button class="btn btn-default">{{note.btnText}}</button></a>
 			{% endif %}
