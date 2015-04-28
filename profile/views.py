@@ -58,8 +58,8 @@ def otherProfile(request):
 		else:
 			context = {'menu' : getMenuInfo(request), 'title' : "View profile", \
 			'membership' : otheruser.date_joined, 'fullname' : otheruser.get_full_name(),  \
-			'avatar' : otheruser.profile.avatar , 'gender' : request.user.profile.gender, \
-			'description' : request.user.profile.description, 'event' : event[0]}
+			'avatar' : otheruser.profile.avatar , 'gender' : otheruser.profile.gender, \
+			'description' : otheruser.profile.description, 'event' : event[0]}
 			
 			return render(request, 'profile/otherProfile.html', context)
 		
