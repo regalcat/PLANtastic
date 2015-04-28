@@ -10,6 +10,8 @@
 {% csrf_token %}
 <p>{{mapform.as_p}}</p>
 <input type="submit" class="btn btn-success" value="Submit" />
+<a href=".."><button type="button" class="btn btn-default">Cancel</button></a>
+<a href="../../deleteMap/{{gmap.mapid}}"><button type="button" class="btn btn-danger">Delete this Map</button></a>
 
 </form>
 {% endblock %}

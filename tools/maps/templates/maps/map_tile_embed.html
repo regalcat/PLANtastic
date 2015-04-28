@@ -16,7 +16,10 @@
   src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAE3keEQriszbqLIwKYLUvfwM3U7GQfhFo&q={{gmap.location}}">
 </iframe>
 {% endfor %}
+
+{% if creator or coplanner %}
 <p>
 <a href="tools/maps/"><button type="button" class="btn btn-default">Edit Maps</button></a>
 </p>
+{% endif %}
 </div></div>

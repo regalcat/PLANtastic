@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from tools.maps.models import *
 from events.models import EventModel
 from base.helpers import getMenuInfo
-from base.permissions import memberCheck
+from base.permissions import memberCheck, isCreator, isCoplanner
 from forms import MapForm
 from notifications.models import NotificationModel
 
@@ -17,6 +17,13 @@ def mapsView(request, eventid):
 	user=request.user
 	if memberCheck(request.user, event) == False:
 			return render(request, 'invite/notMember.html', {'menu' : getMenuInfo(request), 'title' : "Not Member"})
+	creator = isCreator(request.user, event)
+	coplanner = isCoplanner(request.user, event)
+	if creator == False:
+		if coplanner == False:
+			return render(request, 'events/notPermission.html', \
+			{'menu' : getMenuInfo(request), 'title' : 'Not Permission'})
+
 	if request.method == 'GET':
 		gmaps = Gmap.objects.filter(event = event)
 		mapform = MapForm()
@@ -28,7 +35,7 @@ def mapsView(request, eventid):
 
 	if request.method == 'POST':
 		mapid = request.POST['mapid']
-		return HttpResponseRedirect(reverse('events:tools:maps:editmaps', kwargs={'eventid':eventid,}))
+		return HttpResponseRedirect(reverse('events:tools:maps:maps', kwargs={'eventid':eventid,}))
 
 @login_required(login_url = '/loginRequired/')
 def mapsTile(request, eventid):
@@ -36,6 +43,9 @@ def mapsTile(request, eventid):
 	user=request.user
 	if memberCheck(request.user, event) == False:
 			return render(request, 'invite/notMember.html', {'menu' : getMenuInfo(request), 'title' : "Not Member"})
+	creator = isCreator(request.user, event)
+	coplanner = isCoplanner(request.user, event)
+	
 	if request.method == 'GET':
 		gmaps = Gmap.objects.filter(event = event)
 		q=""
@@ -54,8 +64,15 @@ def mapsEditView(request, mapid, eventid):
 	user=request.user
 	if memberCheck(request.user, event) == False:
 			return render(request, 'invite/notMember.html', {'menu' : getMenuInfo(request), 'title' : "Not Member"})
+	creator = isCreator(request.user, event)
+	coplanner = isCoplanner(request.user, event)
+	if creator == False:
+		if coplanner == False:
+			return render(request, 'events/notPermission.html', \
+			{'menu' : getMenuInfo(request), 'title' : 'Not Permission'})
+
 	if request.method == 'GET':
-		gmap = Gmap.objects.filter(event=event, mapid=mapid)
+		gmap = Gmap.objects.get(event=event, mapid=mapid)
 		mapform=MapForm()
 		context = {'menu' : getMenuInfo(request), 'title' : "Edit Map", \
 		  'cur_path' : request.get_full_path(), 'event' : event, 'mapform':mapform,'gmap':gmap  }
@@ -67,7 +84,7 @@ def mapsEditView(request, mapid, eventid):
 		gmap = Gmap.objects.get(event=event, mapid=mapid)
 		gmap.location=q
 		gmap.save()
-		return HttpResponseRedirect(reverse('events:tools:maps:editMap', kwargs={'eventid':eventid,'mapid':mapid}))
+		return HttpResponseRedirect(reverse('events:tools:maps:maps', kwargs={'eventid':eventid,}))
 
 
 @login_required(login_url = '/loginRequired/')
@@ -77,7 +94,13 @@ def addMapView(request, eventid):
 	user=request.user
 	if memberCheck(request.user, event) == False:
 			return render(request, 'invite/notMember.html', {'menu' : getMenuInfo(request), 'title' : "Not Member"})
-	
+	creator = isCreator(request.user, event)
+	coplanner = isCoplanner(request.user, event)
+	if creator == False:
+		if coplanner == False:
+			return render(request, 'events/notPermission.html', \
+			{'menu' : getMenuInfo(request), 'title' : 'Not Permission'})
+
 	if request.method == 'GET':
 		mapform=MapForm()
 
@@ -93,5 +116,49 @@ def addMapView(request, eventid):
 			gmap.save()
 			
 		return HttpResponseRedirect(reverse('events:tools:maps:maps', kwargs={'eventid':eventid,}))
+
+
+@login_required(login_url = '/loginRequired/')
+def deleteMapView(request, mapid, eventid):
+	event = EventModel.getEvent(eventid)
+	gmap = Gmap.objects.get(event=event, mapid=mapid)
+	user=request.user
+	if memberCheck(request.user, event) == False:
+			return render(request, 'invite/notMember.html', {'menu' : getMenuInfo(request), 'title' : "Not Member"})
+	creator = isCreator(request.user, event)
+	coplanner = isCoplanner(request.user, event)
+	if creator == False:
+		if coplanner == False:
+			return render(request, 'events/notPermission.html', \
+			{'menu' : getMenuInfo(request), 'title' : 'Not Permission'})
+
+	if request.method == 'GET':
+		context = {'menu' : getMenuInfo(request), 'title' : "Delete Map", \
+		  'cur_path' : request.get_full_path(), 'gmap':gmap, 'eventid' : eventid,   }
+		return render(request, 'maps/deleteMap.html', context)
+
+
+
+@login_required(login_url = '/loginRequired/')
+def executeDeleteView(request, mapid, eventid):
+	event = EventModel.getEvent(eventid)
+	gmap = Gmap.objects.get(event=event, mapid=mapid)
+	user=request.user
+	if memberCheck(request.user, event) == False:
+			return render(request, 'invite/notMember.html', {'menu' : getMenuInfo(request), 'title' : "Not Member"})
+	
+	creator = isCreator(request.user, event)
+	coplanner = isCoplanner(request.user, event)
+	if creator == False:
+		if coplanner == False:
+			return render(request, 'events/notPermission.html', \
+			{'menu' : getMenuInfo(request), 'title' : 'Not Permission'})
+
+	gmap = Gmap.objects.get(event=event, mapid=mapid)
+	gmap.delete()
+			
+	return HttpResponseRedirect(reverse('events:tools:maps:maps', kwargs={'eventid':eventid,}))
+
+
 
 
