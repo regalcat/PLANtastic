@@ -79,7 +79,7 @@ def executeAddFriend(request, userid):
 @login_required(login_url = '/loginRequired/')
 def declineFriend(request, userid):
 	
-	note = Notification(user = request.user, friendarg=userid)
+	note = NotificationModel.objects.filter(user = request.user, friendarg=userid)
 	if note.count() == 1:
 		note.delete()
 
@@ -113,7 +113,8 @@ def friendListView(request):
 	thisUser=request.user
 	friendlist = FriendList.objects.get(user=request.user)
 	if request.method == 'GET':
-		#friends=friendlist.getFriendList()
+		#friends=friendlist.getFriendList()@login_required(login_url = '/loginRequired/')
+
 		context = {'menu' : getMenuInfo(request), 'title' : "Friends", 'friendlist':friendlist,\
 		  'cur_path' : request.get_full_path(),  }
 		return render(request, 'friends/friendList.html', context)
