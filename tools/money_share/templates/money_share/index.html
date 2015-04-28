@@ -32,6 +32,7 @@
 {% endfor %}
 </table>
 
+<h2>Totals</h2>
 <table>
 <tr>
 	<td>Person</td>
@@ -41,16 +42,14 @@
 	<td>Amount Received</td>
 	<td>Total Due</td>
 </tr>
-{% for person,info in amounts %}
-{{ person }}
-{{ info }}
+{% for person,info in amounts.items %}
 <tr>
-	<td>{{ person.userinfo }}</td>
-	<td>{{ person.owe }}</td>
-	<td>{{ person.spent }}</td>
-	<td>{{ person.paid }}</td>
-	<td>{{ person.received }}</td>
-	<td>{{ person.total }}</td>
+	<td>{{ info.userinfo.user }}</td>
+	<td>{{ info.owe }}</td>
+	<td>{{ info.spent }}</td>
+	<td>{{ info.paid }}</td>
+	<td>{{ info.received }}</td>
+	<td>{{ info.total }}</td>
 </tr>
 {% endfor %}
 </table>

@@ -29,7 +29,10 @@ def new(request):
 
 		eventform = EventForm(request.POST)
 		event_Start_Date=request.POST['event_Start_Date_year']+"-"+request.POST['event_Start_Date_month']+"-"+request.POST['event_Start_Date_day']
-		eventType= request.POST['eventType']
+		if 'eventType' not in request.POST:
+			eventType = "otherGathering"
+		else:
+			eventType= request.POST['eventType']
 
 
 		
@@ -47,7 +50,7 @@ def new(request):
 		weather.save()
 		
 
-		if (request.POST['eventType'] == u'hike'):
+		if (eventType == u'hike'):
 
 			duration=request.POST['eventDuration']
 			distance=request.POST['eventDistance']
@@ -73,7 +76,7 @@ def new(request):
 			event.save()
 
 
-		elif (request.POST['eventType'] == u'otherTrip'):
+		elif (eventType == u'otherTrip'):
 
 
 			event_End_Date=request.POST['event_End_Date_year']+"-"+request.POST['event_End_Date_month']+\
@@ -89,7 +92,7 @@ def new(request):
 				event_End_Date=event_End_Date, eventType=eventType, creator = request.user)
 			event.save()
 
-		elif (request.POST['eventType'] == u'otherGathering'):
+		elif (eventType == u'otherGathering'):
 
 			event_End_Date=request.POST['event_End_Date_year']+"-"+request.POST['event_End_Date_month']+\
 				"-"+request.POST['event_End_Date_day']
@@ -103,7 +106,7 @@ def new(request):
 			event.save()
 
 
-		elif (request.POST['eventType'] == u'dinner'):
+		elif (eventType == u'dinner'):
 
 			event = DinnerEventModel(event.eventid, \
 				name=request.POST['name'], location=request.POST['location'], \
