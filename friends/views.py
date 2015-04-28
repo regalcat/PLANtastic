@@ -16,7 +16,7 @@ def addFriend(request, userid):
 	user2 = User.objects.get(id=userid)
 	thisUser=request.user
 	friendlist = FriendList.objects.filter(user=request.user)
-
+	
 		
 	isNotFriend=True
 	for user in friendlist[0].friends.all():
@@ -24,6 +24,7 @@ def addFriend(request, userid):
 			isNotFriend=False
 			return render(request, 'friends/alreadyFriend.html', {'menu' : getMenuInfo(request), \
 			'title' : "Already Friends"})
+	
 	context = {'menu' : getMenuInfo(request), 'title' : "Add Friend", 'isNotFriend':isNotFriend,\
 	  'cur_path' : request.get_full_path(),    }
 
@@ -93,9 +94,16 @@ def addFriendQuery(request):
 	if request.method == 'POST':
 		friend = request.POST['friend']
 		user2 = User.objects.filter(username=friend)
+		if(user2[0] == request.user):
+			return HttpResponseRedirect("")
 		if user2.count() != 1:
 			return HttpResponseRedirect(reverse("friends:addFriendQ"))
+		
 		user2 = User.objects.get(username=friend)
+		msg = "You sent a friend request to " + str(user2)+"."
+		recipient = request.user
+		note=NotificationModel()
+		note.createNewNotification(user=recipient, text=msg)
 		return HttpResponseRedirect(reverse('friends:addFriend', kwargs={'userid':int(user2.id)}))
 
 
@@ -104,9 +112,21 @@ def friendListView(request):
 	thisUser=request.user
 	friendlist = FriendList.objects.get(user=request.user)
 	if request.method == 'GET':
-		#friends=friendlist.getFriendList()
+		
 		context = {'menu' : getMenuInfo(request), 'title' : "Friends", 'friendlist':friendlist,\
 		  'cur_path' : request.get_full_path(),  }
 		return render(request, 'friends/friendList.html', context)
+
+
+@login_required(login_url = '/loginRequired/')
+def deleteFriend(request, userid):
+	thisUser=request.user
+	friendlist = FriendList.objects.get(user=request.user)
+	friend = User.objects.get(id=userid)
+	if request.method == 'GET':
+		
+		context = {'menu' : getMenuInfo(request), 'title' : "Delete Friend", 'friend':friend,\
+		  'cur_path' : request.get_full_path(),  }
+		return render(request, 'friends/deleteFriend.html', context)
 
 	
