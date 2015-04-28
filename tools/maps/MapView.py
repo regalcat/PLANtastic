@@ -9,7 +9,7 @@ from tools.maps.models import Gmap
 from tools.ToolView import ToolView
 
 class MapView(ToolView):
-	tile_template = "maps/maps.html"
+	tile_template = "maps/map_tile.html"
 
 	@staticmethod
 	def getIdentifier():
