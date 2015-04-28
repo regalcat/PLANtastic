@@ -128,7 +128,7 @@ def editMembers(request, eventid):
 
 		note = NotificationModel()
 		text = "Your status in the event " + str(event[0].name) + " just got changed to " + str(member.get_status_display) + "."
-		note.createNewNotification(member, text)		
+		note.createNewNotification(member.user, text)		
 
 		return HttpResponseRedirect("")	
 
