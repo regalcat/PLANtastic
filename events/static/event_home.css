@@ -1,19 +1,40 @@
 @import url("bootstrapmin.css")
 @import url("bootstrap-theme.css")
 
+.container-fluid{
+ background-color: #75A6AA
+}
+
+
+
+body{
+ background-color:#75A6AA
+}
+
+
+
 
 .row{
-  margin-top: 5px;
-  margin-bottom: 5px;
+  margin-top: 0px;
+  margin-bottom: 0px
 }
 
 
-.panel{
+.panel.default{
+ margin:0px;
 }
 
-.panel-heading{
- background-color: #9E3555 ;
+.panel-default .panel-heading{
+ background-color: #604576;
+ color: #FFFFFF;
+ border:0px;
 }
+
+.panel-title{
+ background-color: #604576; 
+ color: #FFFFFF;
+}
+
 
 
 

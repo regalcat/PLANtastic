@@ -10,15 +10,15 @@
 </div>
 <div class="row">
 <div class="col-xs-12 col-md-12">
-<div class="panel panel-default" style="background-color:#604576;"><div class="panel-body">
+<div class="panel panel-default" ><div class="panel-body">
 <center><img src="{{ event.picture.url }}" alt="event picture" width="70%"></center>
 </div></div></div></div>
 <div class="row">
 	<div class="col-xs-6 col-md-6">
 
 <div class="panel panel-default">
-	<div class="panel-heading" style="background-color: #604576">
-			<center><h3 class="panel-title" style="color: #FFFFFF">Description</h3></center>
+	<div class="panel-heading" >
+			<center><h3 class="panel-title" >Description</h3></center>
 	</div>
 	<div class="panel-body">
 		{% include event.eventDescriptionTemplate %}
@@ -35,8 +35,8 @@
 	</div>
 	<div class="col-xs-6">
 <div class="panel panel-default">
-	<div class="panel-heading" style="background-color:#604576;">
-			<center><h3 class="panel-title" style="color: #FFFFFF">Members</h3></center>
+	<div class="panel-heading">
+			<center><h3 class="panel-title">Members</h3></center>
 	</div>
 	<div class="panel-body">
 
@@ -56,10 +56,10 @@
 			{% csrf_token %}
 			<input type="hidden" name="username" id="username" value="{{member.user.username}}">
 			<input type="hidden" name="eventid" id="eventid" value="{{event.eventid}}">
-			<input type= "submit" value="See profile" class="btn btn-default" style="background-color: #C0ACD1"></form></td>
+			<input type= "submit" value="See profile" class="btn btn-default" ></form></td>
 			{%endif%}
 		{% if member.user == user and not creator %}
-			<a href="leaveEvent"><button class="btn btn-default" style="background-color:#901316;color:#FFFFFF">Leave Event</button></a>
+			<a href="leaveEvent"><button class="btn btn-default" >Leave Event</button></a>
  		{%endif%}
 </td>
 		</tr>
