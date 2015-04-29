@@ -28,6 +28,12 @@ def addFriend(request, userid):
 	context = {'menu' : getMenuInfo(request), 'title' : "Add Friend", 'isNotFriend':isNotFriend,\
 	  'cur_path' : request.get_full_path(),    }
 
+
+	msg = "You sent a friend request to " + str(user2)+"."
+	recipient = request.user
+	note=NotificationModel()
+	note.createNewNotification(user=recipient, text=msg)
+
 	msg = str(request.user)+" would like to add you as a friend!"
 	recipient= user2
 	btnText = "Confirm"
@@ -109,10 +115,7 @@ def addFriendQuery(request):
 			return HttpResponseRedirect(reverse("friends:addFriendQ"))
 		
 		user2 = User.objects.get(username=friend)
-		msg = "You sent a friend request to " + str(user2)+"."
-		recipient = request.user
-		note=NotificationModel()
-		note.createNewNotification(user=recipient, text=msg)
+		
 		return HttpResponseRedirect(reverse('friends:addFriend', kwargs={'userid':int(user2.id)}))
 
 
