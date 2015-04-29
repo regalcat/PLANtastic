@@ -52,7 +52,6 @@ class MainView(View):
 		for payment in payments:
 			amounts[str(payment.payer.id)]['paid'] += payment.amount
 			amounts[str(payment.receiver.id)]['received'] += payment.amount
-		print amounts
 		for index in amounts:
 			person = amounts[index]
 			person['total'] = (person['owe'] - person['spent'] - person['paid'] + person['received'])

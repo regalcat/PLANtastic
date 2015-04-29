@@ -23,7 +23,6 @@ body {
  color: white;
 }
 
-
 /* ---------------- Buttons default ---------------*/
 
 .btn-default, .btn-default:hover {
@@ -32,6 +31,30 @@ body {
  color: #604576;
 }
 
+.btn-danger, .btn-danger:hover {
+ background-color: #901316;
+ border-color: #901316;
+ color: white;
+}
+
+/* ---------------- Links ---------------*/
+
+a {
+ color: #604576;
+}
+
+a:hover {
+ color: #4A1675;
+}
+
+
+
+/* ---------------- Glyphicons ---------------*/
+
+.badge {
+ color: #604576; 
+ background-color: white;
+}
 
 
 /* ---------------- Menubar ---------------*/
