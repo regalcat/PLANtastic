@@ -9,7 +9,8 @@
 
 body {
  background-color: #6786A2;
-}
+ color:#626262;
+ }
 
 /* 
  #75A6AA
@@ -110,4 +111,23 @@ a:hover {
 }
 
 /* ---------------- End of menubar ---------------*/
+
+/* panel headings */
+.panel-default .panel-heading{
+ background-color: #604576;
+ color: #FFFFFF;
+ border:0px;
+}
+
+.panel-title{
+ background-color: #604576; 
+ color: #FFFFFF;
+}
+
+.panel-footer{
+ background-color: #FFFFFF;
+ border:0px;
+}
+
+/* text color */
 

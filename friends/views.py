@@ -79,8 +79,18 @@ def executeAddFriend(request, userid):
 	note=NotificationModel()
 	note.createNewNotification(user=recipient, text=msg)
 
-	
+	deleteNote(request,userid)
 	return HttpResponseRedirect(reverse('friends:list'))
+
+@login_required(login_url = '/loginRequired/')
+def deleteNote(request, userid):
+	
+	note = NotificationModel.objects.filter(user = request.user, friendarg=userid)
+	if note.count() == 1:
+		note.delete()
+
+	return
+	
 
 
 @login_required(login_url = '/loginRequired/')
