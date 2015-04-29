@@ -2,10 +2,12 @@
 @import url("bootstrap-theme.css")
 
 
-
+body{
+ background-color:#75A6AA
+}
 
 .container-fluid{
- background-color: #24686B
+ background-color: #75A6AA
 }
 
 
