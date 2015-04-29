@@ -137,5 +137,42 @@ def deleteFriend(request, userid):
 		context = {'menu' : getMenuInfo(request), 'title' : "Delete Friend", 'friend':friend,\
 		  'cur_path' : request.get_full_path(),  }
 		return render(request, 'friends/deleteFriend.html', context)
+	if request.method == 'POST':
+
+		return HttpResponseRedirect(reverse('friends:executeDelete', kwargs={'userid':userid}))
+
+
+
+
+@login_required(login_url = '/loginRequired/')
+def executeDeleteFriend(request, userid):
+	user2 = User.objects.get(id=userid)
+	thisUser=request.user
+	friendlist = FriendList.objects.get(user=request.user)
+	friendlist2 = FriendList.objects.get(user=user2)
+	isNotFriend=True
+	for user in friendlist.friends.all():
+		if(user == user2):
+			isNotFriend=False
+	for user in friendlist2.friends.all():
+		if(user == request.user):
+			isNotFriend=False
+	if isNotFriend:	
+		return HttpResponseRedirect("")
+
+
+	friendlist.friends.remove(user2)
+	friendlist.save()
+	friendlist2.friends.remove(request.user)
+	friendlist2.save()
+	
+	msg = "You removed " + str(user2) + " from your friends list"
+	recipient = request.user
+	note=NotificationModel()
+	note.createNewNotification(user=recipient, text=msg)
+
+	
+	return HttpResponseRedirect(reverse('friends:list'))
+
 
 

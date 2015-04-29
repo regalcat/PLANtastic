@@ -8,7 +8,8 @@
 <table class=table>
 {% for user in friendlist.friends.all %}
 <tr><td>{{user.username}} ({{user.get_full_name}})</td>
-<td><a href="{% url 'friends:delete', kwargs={'userid':user.id}"><button class="btn btn-danger"> 
+<td><a href="{{menu.server}}/friends/{{user.id}}/deleteFriend"><button class="btn btn-danger">Delete Friend</button></a>
+</td> 
 </tr>
 {% endfor %}
 </table>
