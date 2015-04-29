@@ -1,15 +1,20 @@
 {% extends "base.html" %}
 {% block content %}
+
+<div class="container-fluid">
+
 <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}event_home.css">
 
 <div class="page-header">
 	<font size="6">{{event.name}}</font>
 </div>
-
+<div class="row">
+<div class="col-xs-12">
 <div class="panel panel-default"><div class="panel-body">
 <center><img src="{{ event.picture.url }}" alt="event picture"></center>
-</div></div>
-
+</div></div></div></div>
+<div class="row">
+	<div class="col-xs-6">
 
 <div class="panel panel-default">
 	<div class="panel-heading">
@@ -17,20 +22,27 @@
 	</div>
 	<div class="panel-body">
 		{% include event.eventDescriptionTemplate %}
+		{% if creator or coplanner %}
+<a href="editEvent"><button type="button" name="editButton" id="editButton" class="btn btn-default" onclick="">Edit Event</button></a>
+		{% endif %}
+	
+	<a href="invite"><button type="button" class="btn btn-default">Invite Friends</button></a>
 	</div>
 </div>
-{% if creator or coplanner %}
-<a href="editEvent"><button type="button" name="editButton" id="editButton" class="btn btn-default" onclick="">Edit Event</button></a><br><br>
-{% endif %}
+
+
 {% block top %}{% endblock %}
+	</div>
+	<div class="col-xs-6">
 <div class="panel panel-default">
 	<div class="panel-heading">
 			<h3 class="panel-title">Members</h3>
 	</div>
 	<div class="panel-body">
 
-	<div class="container">
+	
 	<div class="table-responsive">
+	
 	<table class="table">
 		<thead><tr><td><b>#</b></td><td><b>Name</b></td><td><b>Status</b></td><td></td><td></td></thead>
 		<tbody>
@@ -45,23 +57,28 @@
 			<input type="hidden" name="username" id="username" value="{{member.user.username}}">
 			<input type="hidden" name="eventid" id="eventid" value="{{event.eventid}}">
 			<input type= "submit" value="See profile" class="btn btn-default"></form></td>
-			{%endif%}</td>
-		<td>{% if member.user == user and not creator %}
+			{%endif%}
+		{% if member.user == user and not creator %}
 			<a href="leaveEvent"><button class="btn btn-danger">Leave Event</button></a>
  		{%endif%}
 </td>
 		</tr>
 		{% endfor %}
 		</tbody>
-	</table>
-	</div></div>
+	</table></div></div>
+	</div>
 </div>
 </div>
+
+<div class="row">
 {% block middle %}{% endblock %}
 {% for tool in tools %}
 <br>
 	{% include tool.tile_template %}
+
 <br>
 {% endfor %}
+</div>
 {% block bottom %}{% endblock %}
+
 {% endblock %}
