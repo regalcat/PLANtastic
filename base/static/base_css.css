@@ -1,0 +1,90 @@
+@import url("bootstrapmin.css")
+@import url("bootstrap-theme.css")
+
+
+/* ---------------- Background color ---------------*/
+.container-fluid{
+ background-color: #6786A2;
+}
+
+body {
+ background-color: #6786A2;
+}
+
+/* 
+ #75A6AA
+ #E2FFF2
+*/
+
+
+/* ---------------- Page title ---------------*/
+.page-header {
+ color: white;
+}
+
+
+/* ---------------- Buttons default ---------------*/
+
+.btn-default, .btn-default:hover {
+ background-color: white;
+ border-color: #604576;
+ color: #604576;
+}
+
+
+
+/* ---------------- Menubar ---------------*/
+
+.dropdown-menu {
+ background-color: #604576;
+ color:white;
+ border-color: #604576;
+}
+
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus,
+.dropdown-menu > li > a {
+ color:white;
+ background-color: #604576;
+}
+
+/* navbar */
+.navbar-default {
+    background-color: #604576;
+    border-color: white;
+}
+/* title */
+.navbar-default .navbar-brand {
+    color: white;
+    background-color: #604576;
+}
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+    color: white;
+    background-color: #604576;
+}
+/* link */
+.navbar-default .navbar-nav > li > a {
+    color: white;
+    background-color: #604576;
+}
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+    color: white;
+    background-color: #604576;
+}
+.navbar-default .navbar-nav > .active > a, 
+.navbar-default .navbar-nav > .active > a:hover, 
+.navbar-default .navbar-nav > .active > a:focus {
+    color: white;
+    background-color: #604576;
+}
+.navbar-default .navbar-nav > .open > a, 
+.navbar-default .navbar-nav > .open > a:hover, 
+.navbar-default .navbar-nav > .open > a:focus {
+    color: white;
+    background-color: #604576;
+}
+
+/* ---------------- End of menubar ---------------*/
+

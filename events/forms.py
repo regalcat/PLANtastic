@@ -44,10 +44,10 @@ class DinnerForm(EventForm):
 
 	class Meta:
 		model = DinnerEventModel
-
+		fields = ( 'picture',)
 		exclude = ('eventType','creator',)
 
-		fields = ( 'picture',)
+		
 
 
 class GenericTripForm(EventForm):
@@ -68,8 +68,8 @@ class GenericGatheringForm(EventForm):
 	class Meta:
 		model = GenericGatheringModel
 
-		fields = ('event_End_Date','picture','creator',)
-		exclude = ('eventType',)
+		fields = ('event_End_Date','picture',)
+		exclude = ('eventType','creator',)
 		widgets = {'event_End_Date' : SelectDateWidget(), }
 
 

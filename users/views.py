@@ -7,6 +7,8 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import check_password, make_password, is_password_usable
 from django.views.generic.edit import FormView
+from friends.models import FriendList
+from django.contrib.auth.models import User
 
 from os import listdir
 from os.path import isfile, join
@@ -47,11 +49,15 @@ def loginRequired(request):
 def registerSuccess(request):
 	return render(request, 'users/registerSuccess.html')
 
+
 def register(request):
 	if request.method == "POST":
 		form = UserRegistrationForm(request.POST)
 		if form.is_valid():
 			form.save()
+			user = User.objects.get(username=request.POST['username'])
+			friendlist=FriendList(user=user)
+			friendlist.save()
 			return HttpResponseRedirect(reverse('base:registerSuccess'))
 
 	args = {}

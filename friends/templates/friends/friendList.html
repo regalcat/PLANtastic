@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="page-header">
+	<font size="6">Friend List</font>
+</div>
+<body>
+<a href="{% url 'friends:addFriendQ' %}"><button class="btn btn-default">Add Friends!</button></a><br></br>
+<table class=table>
+{% for user in friendlist.friends.all %}
+<tr><td><a href="{{menu.server}}/friends/{{user.id}}/" >{{user.username}} ({{user.get_full_name}})</a></td>
+<td><a href="{{menu.server}}/friends/{{user.id}}/deleteFriend"><button class="btn btn-danger">Delete Friend</button></a>
+</td> 
+</tr>
+{% endfor %}
+</table>
+</body>
+{% endblock %}

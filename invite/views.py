@@ -67,7 +67,11 @@ class InviteView(FormView):
 
 		notifications = NotificationModel()
 		text = "You have just invited " + str(to) + " to the event " + str(event.name) +"."
-		notifications = notifications.createNewNotification(user=request.user, text = text)
+		link = "events:eventHome"
+		eventarg = int(invite.inviteEvent.eventid)
+		btntext = "Go to event"
+		notifications = notifications.createButtonNotification(user=request.user, text = text, \
+				link=link, btnText=btntext, eventarg = eventarg, friendarg= None)
 
 		
 		template = loader.get_template("invite/inviteSuccess.html")
@@ -97,10 +101,15 @@ def usernameInvite(request, eventid):
 		". Join the event by using this confirmationstring: " \
 		+ rstring + " on the join event page."
 		notifications = notifications.createNewNotification(user=user[0], text = text)
+				
 
 		notifications = NotificationModel()
 		text = "You have just invited " + str(username) + " to the event " + str(event.name) +"."
-		notifications = notifications.createNewNotification(user=request.user, text = text)
+		link = "events:eventHome"
+		eventarg = int(invite.inviteEvent.eventid)
+		btntext = "Go to event"
+		notifications = notifications.createButtonNotification(user=request.user, text = text, \
+				link=link, btnText=btntext, eventarg = eventarg, friendarg= None)
 
 		context = {'event' : event, 'user' : request.user, 'cur_path' : request.get_full_path(), 'title' : "Invite Success", 'menu' : getMenuInfo(request)}
 		return render(request, "invite/inviteSuccess.html", context)
@@ -129,13 +138,46 @@ def join_event(request):
 			creator = MembershipModel.objects.filter(event=invite.inviteEvent, status = "CR")
 			notifications = NotificationModel()
 			text = str(request.user.username) + " has just joined your event " + str(invite.inviteEvent.name) + "."
+			link = "events:eventHome"
+			eventarg = int(invite.inviteEvent.eventid)
+			btntext = "Go to event"
+	
 
-			notifications = notifications.createNewNotification(user=creator[0].user, text = text)
+			notifications = notifications.createButtonNotification(user=creator[0].user, \
+					 text = text, link=link, btnText=btntext, eventarg = eventarg, friendarg= None)
 			invite.delete()
 	
 		return HttpResponseRedirect('http://'+str(request.get_host())+'/'+str(invite.inviteEvent.eventid))
 	return render(request, 'invite/join.html', { 'menu' : getMenuInfo(request), 'title' : "Join Event" })
 
+## REUSABLE STRING FOR THE DEMO!
+@login_required(login_url = '/loginRequired/')
+def tempJoin(request):
+	if (request.method == "POST"):
+		string = request.POST['string']
+		invite = InviteModel.objects.filter(inviteString = string)
+	
+		if (invite.count() != 1):
+			return render(request, 'invite/join.html', { 'menu' : getMenuInfo(request), \
+			'title' : "Join Event" , 'error': True, 'error_message' : "Invalid Confirmation String" })
+		else:
+			invite = invite[0]
+	
+		if (MembershipModel.objects.filter(event=invite.inviteEvent, user=request.user).count() == 0):
+				member = MembershipModel(event=invite.inviteEvent, user=request.user, status=MembershipModel.MEMBER)
+				member.save()
+						
+				creator = MembershipModel.objects.filter(event=invite.inviteEvent, status = "CR")
+				notifications = NotificationModel()
+				text = str(request.user.username) + " has just joined your event " + str(invite.inviteEvent.name) + "."
+				link = "events:eventHome"
+				eventarg = int(invite.inviteEvent.eventid)
+				btntext = "Go to event"
+	
 
+				notifications = notifications.createButtonNotification(user=creator[0].user, \
+					 text = text, link=link, btnText=btntext, eventarg = eventarg, friendarg= None)
+		return HttpResponseRedirect('http://'+str(request.get_host())+'/'+str(invite.inviteEvent.eventid))
+	return render(request, 'invite/join.html', { 'menu' : getMenuInfo(request), 'title' : "Join Event" })
 
 

@@ -4,11 +4,14 @@ from django.views.generic import View
 from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 
 from base.helpers import getMenuInfo
 from events.models import EventModel
 from tools.forum.models import ForumModel, ThreadModel, PostModel
 from tools.ToolView import ToolView
+from base.permissions import memberCheck
 
 class ForumView(ToolView):
 	tile_template = "forum/forumTemplate.html"
@@ -34,8 +37,12 @@ class ForumView(ToolView):
 		return context
 
 	#Returns the template for the forum tile in the event page
-	
+	@method_decorator(login_required(login_url = '/loginRequired/'))
 	def get(self, request, eventid):
+		event = EventModel.getEvent(eventid)
+		if memberCheck(request.user, event) == False:
+			return render(request, 'invite/notMember.html', {'menu' : getMenuInfo(request), 'title' : "Not Member"})
+
 		user = request.user
 		cur_event = EventModel.getEvent(eventid)
 		cur_forum = ForumModel.forums.filter(event=cur_event)
@@ -53,8 +60,12 @@ class ForumView(ToolView):
 		return HttpResponse(template.render(context))
 
 	#Adds the new thread and the initial post and returns the get view
-	
+	@method_decorator(login_required(login_url = '/loginRequired/'))
 	def post(self, request, eventid):
+		event = EventModel.getEvent(eventid)
+		if memberCheck(request.user, event) == False:
+			return render(request, 'invite/notMember.html', {'menu' : getMenuInfo(request), 'title' : "Not Member"})
+
 		cur_event = getEvent(eventid)
 		ttitle = request.POST['ttitle']
 		tforum = ForumModel.forums.filter(event = cur_event)
@@ -70,8 +81,12 @@ class ThreadView(View):
 	template = "forum/threadTemplate.html"
 	
 	#Gets a paginated list of the posts in the current thread
-	
+	@method_decorator(login_required(login_url = '/loginRequired/'))
 	def get(self, request, eventid, threadid):
+		event = EventModel.getEvent(eventid)
+		if memberCheck(request.user, event) == False:
+			return render(request, 'invite/notMember.html', {'menu' : getMenuInfo(request), 'title' : "Not Member"})
+
 		cur_event = EventModel.getEvent(eventid)
 		posts = PostModel.posts.filter(thread=threadid).order_by("-created")
 		title = ThreadModel.threads.get(pk=threadid).title
@@ -83,8 +98,12 @@ class ThreadView(View):
 		return render(request, self.template, context)
 	
 	#Adds the post to the thread and returns the get method
-	
+	@method_decorator(login_required(login_url = '/loginRequired/'))
 	def post(self, request, eventid, threadid):
+		event = EventModel.getEvent(eventid)
+		if memberCheck(request.user, event) == False:
+			return render(request, 'invite/notMember.html', {'menu' : getMenuInfo(request), 'title' : "Not Member"})
+
 		cur_event = EventModel.getEvent(eventid)
 		cur_thread = ThreadModel.threads.get(pk=threadid)
 		puser = request.user

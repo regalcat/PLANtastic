@@ -11,7 +11,16 @@
 	<div class="panel panel-default">
 	<div class="panel-body">
 		{{ note.text }}
-
+		{% if note.link %}
+			{% if note.eventarg %}
+			<a href="{% url note.link eventid=note.eventarg %}"><button class="btn btn-default">{{note.btnText}}</button></a>
+			{% elif note.friendarg %}
+			<a href="{% url note.link userid=note.friendarg %}"><button class="btn btn-success">{{note.btnText}}</button></a>
+			<a href="{% url 'friends:declineFriend' userid=note.friendarg %}"><button class="btn btn-danger">Decline</button></a>
+			{% else %}
+			<a href="{% url note.link %}"><button class="btn btn-default">{{note.btnText}}</button></a>
+			{% endif %}
+		{% endif %}
 	</div></div>
 {% endfor %}
 
