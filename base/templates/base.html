@@ -3,8 +3,8 @@
 <head>
 	<title>{{ title }} </title>
 	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}bootstrap-3.3.2-dist/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}base_css.css">
 </head>
-
 <body>
 {% load static %}
 <nav class="navbar navbar-default">
@@ -69,7 +69,8 @@
 </script>
 
 {% endblock %}
-<div class="container-fluid" style="background-color:#A1D7DD">
+
+<div class="container-fluid">
 <div class="row">
 <div class="col-sm-1">
 </div>

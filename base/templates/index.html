@@ -1,26 +1,11 @@
-{% extends "base.html" %}
 
-{% block menubar %}
 <head>
 	<title>{{title}}</title>
 	<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}bootstrap-3.3.2-dist/css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}index_css.css">
 </head>
 
-<!-- Empty menu bar for prettiness reasons
-<nav class="navbar navbar-default">
-<div class="container-fluid">
-<div class="navbar-header">
-<div class="nav navbar-nav">
-Empty on purpose. Could add a logo later. -->
-</div>
-</div>
-</div>
-</nav>
-{% endblock %}
 
-
-{% block content %}
 {% load static %}
 <!--This is the index page.  Remember to add unique subdirectories in your templates folder! -->
 <br><br><br>
@@ -41,4 +26,4 @@ Empty on purpose. Could add a logo later. -->
 </div>
 </div>
 <script type="text/javascript" src="{% static 'index_scripts.js' %}"></script>
-{% endblock %}
+
