@@ -2,34 +2,18 @@
 @import url("bootstrap-theme.css")
 
 
-
-
-.container-fluid{
- background-color: #24686B
-}
-
-
 .row{
   margin-top: 5px;
-  margin-bottom: 5px
+  margin-bottom: 5px;
 }
-
 
 
 .panel{
 }
 
 .panel-heading{
- background-color: #9E3555 
+ background-color: #9E3555 ;
 }
 
-.transpjumbo{
- padding: 30px;
- margin-bottom: 30px;
- font-size: 21px;
- font-weight: 200;
- line-height: 2.1428571435;
- color: inherit;
- background-color: rgba(255,255,255,0.50);
- 
-}
+
+
