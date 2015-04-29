@@ -55,7 +55,7 @@ class MainView(View):
 		print amounts
 		for index in amounts:
 			person = amounts[index]
-			person['total'] = -1*(person['owe'] - person['spent'] - person['paid'] + person['received'])
+			person['total'] = (person['owe'] - person['spent'] - person['paid'] + person['received'])
 		return render(request, self.template_name, \
 			{'menu' : getMenuInfo(request), 'title' : "Upload Pics Tool", \
 				'items' : items, 'payments' : payments, 'method' : method, \
