@@ -1,37 +1,39 @@
 @import url("bootstrapmin.css")
 @import url("bootstrap-theme.css")
 
-
-body{
- background-color:#75A6AA
-}
-
 .container-fluid{
  background-color: #75A6AA
 }
 
 
+body{
+ background-color:#75A6AA
+}
+
+
+
+
 .row{
-  margin-top: 5px;
-  margin-bottom: 5px
+  margin-top: 0px;
+  margin-bottom: 0px
+}
+
+
+.panel.default{
+ margin:0px;
+}
+
+.panel-default .panel-heading{
+ background-color: #604576;
+ color: #FFFFFF;
+ border:0px;
+}
+
+.panel-title{
+ background-color: #604576; 
+ color: #FFFFFF;
 }
 
 
 
-.panel{
-}
 
-.panel-heading{
- background-color: #9E3555 
-}
-
-.transpjumbo{
- padding: 30px;
- margin-bottom: 30px;
- font-size: 21px;
- font-weight: 200;
- line-height: 2.1428571435;
- color: inherit;
- background-color: rgba(255,255,255,0.50);
- 
-}
