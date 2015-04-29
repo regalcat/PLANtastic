@@ -3,12 +3,15 @@
 {% block content %}
 
 <script src="{{ STATIC_URL }}create_event.js"></script>
-
+<body>
 <div class="page-header">
 	<font size="6">Create new event</font>
 </div>
 
-<body>
+
+<div class="panel panel-default">
+<div class="panel-body">
+
 <form action="{{ current_path }}" method= "POST">
 {% csrf_token %}
 
@@ -120,6 +123,7 @@
 	
 <a href=""><input type= "submit" value="Create Event" class="btn btn-default">
 </form>
+</div>
 </body>
 </html>
 
