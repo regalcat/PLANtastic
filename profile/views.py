@@ -16,6 +16,7 @@ from base.helpers import getMenuInfo
 from forms import ProfileForm, UserForm
 from notifications.models import NotificationModel
 from invite.models import MembershipModel
+from friends.models import FriendList
 
 
 
@@ -53,7 +54,7 @@ def otherProfile(request):
 		if boolean == False:
 			# permission denied
 			context = {'menu' : getMenuInfo(request), 'title' : "Permission denied"}
-			return render(request, 'profile/notFriends.html', context)
+			return render(request, 'profile/notInEvent.html', context)
 
 		else:
 			context = {'menu' : getMenuInfo(request), 'title' : "View profile", \
@@ -66,7 +67,7 @@ def otherProfile(request):
 
 	else:
 		context = {'menu' : getMenuInfo(request), 'title' : "Permission denied"}
-		return render(request, 'profile/notFriends.html', context)
+		return render(request, 'profile/notInEvent.html', context)
 
 
 
@@ -138,5 +139,48 @@ def executeDelete(request):
 	request.user.delete()
 
 	return HttpResponseRedirect(reverse('base:index'))
+
+
+@login_required(login_url = '/loginRequired/')
+def friendProfile(request):
+	if request.method == "POST":
+		otherusername = request.POST['username']
+		
+
+		
+		
+		otheruser = User.objects.filter(username = otherusername)
+		otheruser = otheruser[0]
+
+		
+		friendlist = FriendList.objects.get(user = request.user)
+
+		boolean = False
+		
+		for user in friendlist.friends.all():
+			if user.username == otheruser.username:
+				boolean = True
+			
+
+		if boolean == False:
+			# permission denied
+			context = {'menu' : getMenuInfo(request), 'title' : "Permission denied"}
+			return render(request, 'profile/notFriends.html', context)
+
+		else:
+			context = {'menu' : getMenuInfo(request), 'title' : "View profile", \
+			'membership' : otheruser.date_joined, 'fullname' : otheruser.get_full_name(),  \
+			'avatar' : otheruser.profile.avatar , 'gender' : otheruser.profile.gender, \
+			'description' : otheruser.profile.description, 'email':otheruser.email}
+			
+			return render(request, 'profile/friendProfile.html', context)
+		
+
+	else:
+		context = {'menu' : getMenuInfo(request), 'title' : "Permission denied"}
+		return render(request, 'profile/notFriends.html', context)
+
+
+
 
 			
