@@ -12,11 +12,6 @@ body {
  color:#626262;
  }
 
-/* 
- #75A6AA
- #E2FFF2
-*/
-
 
 /* ---------------- Page title ---------------*/
 .page-header {
@@ -26,15 +21,40 @@ body {
 
 /* ---------------- Buttons default ---------------*/
 
-.btn-default, .btn-default:hover {
+.btn-default {
  background-color: white;
  border-color: #604576;
  color: #604576;
 }
 
-.btn-danger, .btn-danger:hover {
+.btn-default:hover {
+ background-color: white;
+ border-color: #4A1675;
+ color: #4A1675;
+}
+
+
+.btn-danger {
  background-color: #901316;
  border-color: #901316;
+ color: white;
+}
+
+.btn-danger:hover {
+ background-color: #871012;
+ border-color: #871012;
+ color: white;
+}
+
+.btn-success {
+ background-color: #006400;
+ border-color: #006400;
+ color: white;
+}
+
+.btn-success:hover {
+ background-color: #005800;
+ border-color: #005800;
  color: white;
 }
 
