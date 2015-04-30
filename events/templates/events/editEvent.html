@@ -7,6 +7,7 @@
 
 <div class="panel panel-default">
 <div class="panel-body">
+<p><a href="{{menu.server}}/{{event.eventid}}"><button type="button" class="btn btn-default">Go Back</button></a></p>
 
 	<form enctype="multipart/form-data" action= "" method= "POST">
 	{% csrf_token %}
@@ -16,20 +17,20 @@
 	<input type= "submit" value="Edit event" class="btn btn-default">	
 	</form>
 
-</div></div>
 
 
 
+<p></p>
 {% if creator %}
 <a href="editMembers"><button type="button" class="btn btn-default">Edit Members</button></a>
 {% endif %}
-<br><br>
+
 
 {% if creator %}
 <a href="{{menu.server}}/{{event.eventid}}/
 deleteEvent"><button type="button" class="btn btn-danger">Delete Event</button></a>
 {% endif %}
-<br><br>
-<a href="{{menu.server}}/{{event.eventid}}"><button type="button" class="btn btn-default">Go Back</button></a>
 
+
+</div></div>
 {% endblock %}

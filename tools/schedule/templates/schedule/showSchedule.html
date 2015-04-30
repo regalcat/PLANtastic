@@ -7,10 +7,18 @@
 
 <div class="panel panel-default">
 <div class="panel-body">
-<div class="container">
+
+<p><a href="addActivity"><button type="button" class="btn btn-default">Add activity</button></a>
+<a href="{{menu.server}}/{{event.eventid}}"><button type="button" class="btn btn-default">Go Back</button></a></p>
+
+
+{% if activities.count == 0 %}
+<p></p><p>There are no activities yet!</p>
+{% else %}
+<div class="container-fluid">
 	<div class="table-responsive">
 	<table class="table">
-		<thead><tr><td><b>Date and time</b></td><td><b>Activity</b></td><td><b>Description<b></td><td></td></tr></thead>
+		<tr class="table-header"><td><b>Date and time</b></td><td><b>Activity</b></td><td><b>Description<b></td><td></td></tr>
 		<tbody>
 		{% for activity in activities %}
 		<tr>
@@ -30,14 +38,12 @@
 		{% endfor %}
 		</tbody>
 	</table>
+{% endif %}
 
 
 
 
 
-</div></div>
-</div>
-<a href="addActivity"><button type="button" class="btn btn-default">Add activity</button></a>
-<a href="{{menu.server}}/{{event.eventid}}"><button type="button" class="btn btn-default">Go Back</button></a>
 
+</div></div></div>
 {% endblock %}

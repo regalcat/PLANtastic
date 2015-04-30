@@ -13,6 +13,9 @@
 
 	</div>
 <div class="panel-body">
+{% if maps.count == 0 %}
+<p><center>No maps have been added!</center></p>
+{% endif %}
 
 
 <center>{% for gmap in maps.gmaps %}

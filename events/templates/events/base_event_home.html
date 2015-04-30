@@ -43,7 +43,7 @@
 	<div class="table-responsive">
 	
 	<table class="table">
-		<thead><tr><td><b>#</b></td><td><b>Name</b></td><td><b>Status</b></td><td></td><td></td></thead>
+		<tr class="table-header"><td><b>#</b></td><td><b>Name</b></td><td><b>Status</b></td><td></td><td></td></tr>
 		<tbody>
 		{% for member in members %}
 		<tr>
@@ -58,7 +58,7 @@
 			<input type= "submit" value="See profile" class="btn btn-default" ></form></td>
 			{%endif%}
 		{% if member.user == user and not creator %}
-			<a href="leaveEvent"><button class="btn btn-default" >Leave Event</button></a>
+			<a href="leaveEvent"><button class="btn btn-danger" >Leave Event</button></a>
  		{%endif%}
 </td>
 		</tr>

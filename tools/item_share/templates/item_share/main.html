@@ -10,6 +10,10 @@
 <script src="{{ STATIC_URL }}item_share/item_share.js"></script>
 <p><a href="add_item"><button type="button" class="btn btn-default">Add Item</button></a>
 <a href="{{menu.server}}/{{event.eventid}}"><button type="button" class="btn btn-default">Go Back</button></a></p>
+{% if items.count == 0 %}
+<p>No items have been added!</p>
+{% else %}
+
 <table class="table"> 
 
 <tr class="table-header">
@@ -20,6 +24,7 @@
 <td>  Total Signups  </td>
 <td>  Number You'll Bring  </td>
 </tr>
+<tbody>
 {% for item in items %}
 	<tr>
 	{% if item.signups.count > 0 %}<td class="plus">+{% else %}<td> {% endif %}</td>
@@ -41,8 +46,9 @@
 		</tr>
 	{% endfor %}
 {% endfor %}
+</tbody>
 </table>
-
+{% endif %}
 </div>
 </div>
 {% endblock %}

@@ -3,16 +3,27 @@
 <div class="page-header">
 	<font size="6">Past Events</font>
 </div>
-{% for e in menu.prev_events %}
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			<h3 class="panel-title">{{ e.name }}</h3>
-		</div>
-		<div class="panel-body">
-			<p><b>Date:</b> {{ e.event_Start_Date }}</p>
-			<p><b>Location:</b> {{e.location }}</p>
-			<a href="{{ menu.server }}/{{ e.eventid }}" role="button"><button class="btn btn-default">Go to Event Page</button></a>
+<div class="container-fluid">
+<div class="row">
+{% for f in menu.prev_events %}
+	    <div class="col-xs-4 col-md-4">                                                        
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">{{f.name}}</h3>
+			</div>
+			<div class="panel-body">
+				<p><strong>Start Date:</strong> {{f.event_Start_Date}}</p>
+				<p><strong>Description:</strong> {{f.event_Description}}</p>
+			</div>
+			<div class="panel-footer">
+					<center><a href="/{{f.eventid}}"><button class="btn btn-default">Go to Event</button></a></center>
+			</div>
 		</div>
 	</div>
+{% if forloop.counter|divisibleby:"3" %}
+</div><div class="row">
+{%endif%}
 {% endfor %}
+
+</div>
 {% endblock %}

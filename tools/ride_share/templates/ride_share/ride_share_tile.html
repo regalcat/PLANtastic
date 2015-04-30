@@ -9,7 +9,7 @@
 <div class="panel-body">
 
 {% if ride_share.cars.count == 0 %}
-<p>No Cars Signed Up</p>
+<p><center>No Cars Signed Up</center></p>
 {% else %}
 <table class="table"> 
 <tr class="table-header">
@@ -18,13 +18,14 @@
 <td> <b> Available Seats  </b></td>
 <td> <b> </b> </td>
 </tr>
-
+<tbody>
 {% for car in ride_share.cars %}
 	<tr>
 	<td>{{ car.driver.personid }}</td>
 	<td>{{ car.open_seats }}</td>
 	</tr>
 {% endfor %}
+</tbody>
 </table>
 {% endif %}
 <a href="tools/ride_share"><button type="button" class="btn btn-default">Sign Up</button></a>
