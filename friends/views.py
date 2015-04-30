@@ -132,7 +132,11 @@ def addFriendQuery(request):
 @login_required(login_url = '/loginRequired/')
 def friendListView(request):
 	thisUser=request.user
-	friendlist = FriendList.objects.get(user=request.user)
+	if FriendList.objects.filter(user=request.user).count() == 0:
+		friendlist = FriendList(user=request.user)
+		friendlist.save()
+	else:
+		friendlist = FriendList.objects.get(user=request.user)
 	if request.method == 'GET':
 
 		context = {'menu' : getMenuInfo(request), 'title' : "Friends", 'friendlist':friendlist,\
