@@ -76,6 +76,8 @@ a:hover {
 .navbar-default {
     background-color: #604576;
     border-color: white;
+    border:0px;
+    padding:5px;
 }
 /* title */
 .navbar-default .navbar-brand {
