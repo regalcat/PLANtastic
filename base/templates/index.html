@@ -14,15 +14,15 @@
 <br><br><br>
 <!-- Jumbo-sized welcome -->
 <div class="transpjumbo">
-	<center><h1>Welcome to <img src="{% static 'logo-large-dark.png' %}" alt="PLANtastic Logo"></h1></center>
-	<br>
-	<div class="col-sm-2">
+	<div class="row">
+	<center><h1 style="color:#371950;">Welcome to <img src="{% static 'logo-large-dark.png' %}" alt="PLANtastic Logo"></h1></center>
+	
+	
+	<div class="col-xs-2 col-md-3 col-md-offset-4">
+	<a href="{% url 'base:login' %}"><button type="button" class="btn btn-default">Log In</button></a>
 	</div>
-	<div class="col-sm-5">
-	<a href="{% url 'base:login' %}"><button type="button" class="btn btn-default">Click here to log in</button></a>
-	</div>
-	<div class="col-sm-5">
-	<a href="{% url 'base:register' %}"><button type="button" class="btn btn-default">Click here to register for a new account</button></a>
+	<div class="col-xs-2 col-md-3">
+	<a href="{% url 'base:register' %}"><button type="button" class="btn btn-default">Register</button></a>
 	</div>
 	<br>
 

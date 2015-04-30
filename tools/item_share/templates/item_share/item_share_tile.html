@@ -9,7 +9,7 @@
 <div class="panel-body">
 
 {% if item_share.items.count == 0 %}
-<p>No Items to Display </p>
+<p><center>No Items to Display </center></p>
 {% else %}
 <table class="table"> 
 <tr class="table-header">
@@ -18,7 +18,7 @@
 <td><b> Amount Needed  </b></td>
 <td><b>  Amount Signed Up </b></td>
 </tr>
-
+<tbody>
 {% for item in item_share.items %}
 	<tr>
 	
@@ -28,6 +28,7 @@
 	</tr>
 	
 {% endfor %}
+</tbody>
 </table>
 {% endif %}
 

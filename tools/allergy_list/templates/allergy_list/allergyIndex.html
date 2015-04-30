@@ -3,18 +3,24 @@
 {% block content %}
 
 <div class="page-header">
-	<font size="6">Allergy and Foodpreference List</font></div>
+	<font size="6">Allergy and Food Accomodations List</font></div>
 
 <div class="panel panel-default">
 <div class="panel-body">
-<div class="container">
+<a href="addAllergy"><button type="button" class="btn btn-default">Add allergies</button></a>
+<a href="{{menu.server}}/{{event.eventid}}"><button type="button" class="btn btn-default">Go Back</button></a>
+
+<div class="container-fluid">
 	<div class="table-responsive">
 	<table class="table">
 	
-	<thead><tr><td><b>Name</b></td><td><b>Vegetarian</b></td><td><b>Vegan</b></td>
+	<thead><td><b>Name</b></td><td><b>Vegetarian</b></td><td><b>Vegan</b></td>
 	<td><b>Lactose</b></td><td><b>Gluten</b></td><td><b>Nuts</b></td><td><b>Other</b></td></thead>
 	
 	<tbody>
+		{% if list.count == 0 %}
+		<tr><td>No Allergies Listed</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+		{% endif %}
 		{% for person in list %}
 		<tr>
 		<td>{{ person.user.first_name }} {{ person.user.last_name }}</td>
@@ -27,7 +33,7 @@
 		</tr>
 		{% endfor %}
 
-		<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+		
 
 		<tr>
 		<td><b>Total Allergies:</b></td>
@@ -44,7 +50,6 @@
 </table></div></div>
 </div>
 </div>
-<a href="addAllergy"><button type="button" class="btn btn-default">Add allergies</button></a>
-<a href="{{menu.server}}/{{event.eventid}}"><button type="button" class="btn btn-default">Go Back</button></a>
+
 
 {% endblock %}

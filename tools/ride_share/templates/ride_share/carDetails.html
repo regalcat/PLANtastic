@@ -24,7 +24,11 @@
 <td><b> Seats: </b></td> 
 <td><b> Available Seats:  </b></td> 
 <td><b> Passengers: </b></td></tr>
- <tr><td> {{ car.driver.personid }}</td><td> {{ car.seats }} </td><td> {{ car.open_seats }} </td>
+ <tbody>
+<tr><td> {{ car.driver.personid }}</td><td> {{ car.seats }} </td><td> {{ car.open_seats }} </td>
+{% if passengers.count == 0 %}
+<td></td></tr>
+{% endif %}
 {% for person in passengers.all %}
 	<form action="{% url 'events:tools:rideshare:kickPassenger' eventid=eventid carid=car.carid %}" method="post" >
 	<td>{{ person.personid }}</n>
@@ -40,6 +44,7 @@
 
 {% endfor %}
 </tr>
+</tbody>
 </table>
 {% if admin %}
 	<p><a href="deleteCar"><button type="button" class="btn btn-danger">Remove Car</button></a></p>

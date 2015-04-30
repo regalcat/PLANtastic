@@ -75,11 +75,21 @@ def editActivity(request, eventid):
 			form.event = event
 			form.scheduleid = scheduleid
 
+			end_day=request.POST['end_date_year']+"-"+request.POST['end_date_month']+"-"+ \
+			request.POST['end_date_day']
+
+			end_time=request.POST['end_hour']+":"+request.POST['end_minute']
+		
 			start_date=request.POST['start_date_year']+"-"+request.POST['start_date_month']+"-"+ \
 			request.POST['start_date_day']+" "+request.POST['start_hour']+":"+request.POST['start_minute']
 
 			end_date=request.POST['end_date_year']+"-"+request.POST['end_date_month']+"-"+ \
 			request.POST['end_date_day']+" "+request.POST['end_hour']+":"+request.POST['end_minute']
+
+			if end_day=="0-0-0" and end_time!="0:0":
+				end_date=request.POST['start_date_year']+"-"+request.POST['start_date_month']+"-"+ \
+				request.POST['start_date_day']+" "+request.POST['end_hour']+":"+request.POST['end_minute']
+
 
 			if end_date == "0-0-0 0:0":
 				end_date = None
@@ -88,7 +98,8 @@ def editActivity(request, eventid):
 			form.end_date = end_date
 			form.save()
 
-			return HttpResponseRedirect("")
+			#return HttpResponseRedirect("")
+			return HttpResponseRedirect(reverse('events:tools:schedule:scheduleIndex', kwargs={'eventid':eventid}))
 
 
 @login_required(login_url = '/loginRequired/')
@@ -143,17 +154,38 @@ def addActivity(request, eventid):
 		
 		activity = ScheduleModel()
 
-		start_date=request.POST['start_date_year']+"-"+request.POST['start_date_month']+"-"+request.POST['start_date_day']+" "+request.POST['start_hour']+":"+request.POST['start_minute']
+		if scheduleform.is_valid():
+			form = scheduleform.save(commit=False)
+			form.event = event
+			
 
-		end_date=request.POST['end_date_year']+"-"+request.POST['end_date_month']+"-"+request.POST['end_date_day']+" "+request.POST['end_hour']+":"+request.POST['end_minute']
+			end_day=request.POST['end_date_year']+"-"+request.POST['end_date_month']+"-"+ \
+			request.POST['end_date_day']
+
+			end_time=request.POST['end_hour']+":"+request.POST['end_minute']
 		
+			start_date=request.POST['start_date_year']+"-"+request.POST['start_date_month']+"-"+ \
+			request.POST['start_date_day']+" "+request.POST['start_hour']+":"+request.POST['start_minute']
 
-		if end_date == "0-0-0 0:0":
-			end_date = None
+			end_date=request.POST['end_date_year']+"-"+request.POST['end_date_month']+"-"+ \
+			request.POST['end_date_day']+" "+request.POST['end_hour']+":"+request.POST['end_minute']
+
+			if end_day=="0-0-0" and end_time!="0:0":
+				end_date=request.POST['start_date_year']+"-"+request.POST['start_date_month']+"-"+ \
+				request.POST['start_date_day']+" "+request.POST['end_hour']+":"+request.POST['end_minute']
 
 
-		activity.createActivity(event, name=request.POST['name'],description=request.POST['description'], start_date=start_date, end_date=end_date)
-		activity.save()
+			if end_date == "0-0-0 0:0":
+				end_date = None
+		
+			form.start_date = start_date
+			form.end_date = end_date
+			form.save()
+
+
+			#activity.createActivity(event, name=request.POST['name'],description=request.POST['description'],\
+			# start_date=start_date, end_date=end_date)
+			#activity.save()
 		
 		
 		return HttpResponseRedirect(reverse('events:tools:schedule:scheduleIndex', kwargs={'eventid':eventid}))

@@ -54,6 +54,31 @@ def editWeather(request, eventid):
 
 	
 
+@login_required(login_url = '/loginRequired/')
+def weatherTile(request, eventid):
+	event = EventModel.getEvent(eventid)
+	user=request.user
+	if memberCheck(request.user, event) == False:
+			return render(request, 'invite/notMember.html', {'menu' : getMenuInfo(request), 'title' : "Not Member"})
+	creator = isCreator(request.user, event)
+	coplanner = isCoplanner(request.user, event)
+	context={}
+	if request.method == 'GET':
+		information = WeatherModel.objects.filter(event = event_)
+		
+		if information.count() == 1:
+			context['state'] = information[0].get_state_display
+			context['degreeType'] = information[0].degreeType
 
+			city = information[0].city.title()
+			new = ""
+			for i in range(len(city)):
+				if city[i] == " ":
+					new = new + "+"
+				else:
+					new = new + city[i]
+			context['city'] = new
+
+		return render(request, 'weather/maps.html', context)
 
 

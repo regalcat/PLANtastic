@@ -6,17 +6,12 @@
 <h2>Welcome {{ user.first_name }}!</h2>
 </div>
 <br>
-<div id="events-table">
-<table>
-<tr>
-		<td><h4>You are a member of {{menu.num_upcoming_events}} upcoming events!</h4></td>
-</tr>
-<tr>
-		
-		<td></td>
-</tr><tr>
+<div class="container-fluid">
+
+		<h4>You are a member of {{menu.num_upcoming_events}} upcoming events!</h4>
+<div class="row">
 {% for e in menu.upcoming_events %}
-	<td>
+	<div class="col-xs-4 col-md-4">
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h3 class="panel-title">{{e.name}}</h3>
@@ -29,17 +24,18 @@
 				<center><a href="/{{e.eventid}}"><button class="btn btn-default">Go to event</button></a></center>
 			</div>
 		</div>
-	</td>
-{% if forloop.counter|divisibleby:"2" %}
-</tr>
-<tr>
+</div>
+	
+{% if forloop.counter|divisibleby:"3" %}
+</div><div class="row">
 {% endif %}
 {% endfor %}
-</tr><tr>
-	<td><h4>You are a member of {{menu.num_prev_events}} previous events!</h4></td>
-</tr><tr>
+</div>
+
+	<h4>You are a member of {{menu.num_prev_events}} previous events!</h4>
+<div class="row">
 {% for f in menu.prev_events %}
-	<td>                                                                                                                          
+	    <div class="col-xs-4 col-md-4">                                                        
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h3 class="panel-title">{{f.name}}</h3>
@@ -52,13 +48,11 @@
 					<center><a href="/{{f.eventid}}"><button class="btn btn-default">Go to Event</button></a></center>
 			</div>
 		</div>
-	</td>
-{% if forloop.counter|divisibleby:"2" %}
-</tr>
-<tr>
+	</div>
+{% if forloop.counter|divisibleby:"3" %}
+</div><div class="row">
 {%endif%}
 {% endfor %}
 
-</tr>
-</table>
+</div>
 {% endblock %}

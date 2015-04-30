@@ -8,11 +8,11 @@
 	</div>
 <div class="panel-body">
 {% if forum.threads.count == 0 %}
-<p>No Threads to Show</p>
+<p><center>No Threads to Show</center></p>
 {% else %}
 <table class="table">
-	<tr><td><b>Thread Name</b></td><td><b>Posts</b></td><td><b>Last Post</b></td><td></td>
-	
+	<tr class="table-header"><td><b>Thread Name</b></td><td><b>Posts</b></td><td><b>Last Post</b></td><td></td></tr>
+	<tbody>
 	{% for thread in forum.threads %}
 	<tr>
 		<td>{{thread.title}}</td>
@@ -21,7 +21,7 @@
 		<td><a href="tools/forum/{{thread.threadid}}"><button class="btn btn-default">View</button></a></td>
 		</tr>
 	{% endfor %}
-	
+	</tbody>
 	</table>
 {% endif %}
 	<a href="tools/forum/create-thread/"><button class="btn btn-default">Create Thread</button></a>	

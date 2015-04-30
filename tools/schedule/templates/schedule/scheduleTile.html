@@ -9,7 +9,7 @@
 	<p><b>Date and time:</b> {{ schedule.start_date }} {% if schedule.end_date %} -- {{ schedule.end_date }} {% endif %}</p>
 	<p>{% if schedule.description %}<b>Description:</b> {{ schedule.description }} {% endif %}</p>
 	{% else %}
-		<p>This event does not have any scheduled activities yet.</p>
+		<p><center>This event does not have any scheduled activities yet.</center></p>
 	{% endif%}
 
 	<a href="tools/schedule"><button type="button" class="btn btn-default">See full schedule</button></a>

@@ -13,6 +13,10 @@
 <a href="add_car"><button type="button" class="btn btn-default">Add Vehicle</button></a>
 {% endif %}
 <a href="{{menu.server}}/{{event.eventid}}"><button type="button" class="btn btn-default">Go Back</button></a></p>
+{% if cars.count == 0 %}
+No one has signed up yet!
+{% else %}
+
 <table class="table"> 
 
 <tr class="table-header">
@@ -22,6 +26,7 @@
 <td> <b> Available Seats  </b></td>
 <td> <b>  </b> </td>
 </tr>
+<tbody>
 {% for car in cars %}
 	<tr>
 	
@@ -35,7 +40,8 @@
 	</form>	
 		</tr>
 {% endfor %}
+</tbody>
 </table>
-
+{% endif %}
 </div>
 {% endblock %}

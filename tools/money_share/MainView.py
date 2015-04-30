@@ -58,7 +58,7 @@ class MainView(View):
 		return render(request, self.template_name, \
 			{'menu' : getMenuInfo(request), 'title' : "Upload Pics Tool", \
 				'items' : items, 'payments' : payments, 'method' : method, \
-				'amounts' : amounts})
+				'amounts' : amounts, 'members':members})
 
 	@method_decorator(login_required(login_url = '/loginRequired/'))
 	def post(self, request, eventid):

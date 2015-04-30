@@ -14,18 +14,20 @@
 <td> <b>Person</b> </td>
 <td> <b>Total Due</b> </td>
 </tr>
-
+<tbody>
 {% for person,info in money_share.amounts.items %}
 <tr>
 	<td>{{ info.userinfo.user }}</td>
 	<td>${{ info.total }}</td>
+	
 </tr>
 {% endfor %}
-	
+</tbody>
 </table>
 
-
+{% if money_share.members.count > 1 %}
 	<a href="tools/money_share"><button type="button" class="btn btn-default">View/Edit</button></a>
+{% endif %}
 	</div>
 	</a>
 </div>
