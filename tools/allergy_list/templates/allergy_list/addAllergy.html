@@ -5,6 +5,7 @@
 <div class="page-header">
 	<font size="6">Add allergies</font></div>
 
+<div class="panel panel-default">
 <div class="panel-body">
 	<form action= "" method= "POST">
 	{% csrf_token %}
@@ -14,5 +15,6 @@
 	</form>
 <a href="{{menu.server}}/{{event.eventid}}/tools/allergy_list"><button type="button" class="btn btn-default">Go Back</button></a>
 
+</div>
 </div>
 {% endblock %}

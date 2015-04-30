@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
+<div class="panel panel-default">
+<div class="panel-body">
 <a href="add_item"><button type="button" class="btn btn-default">Add Item</button></a>
 <a href="record_payment"><button type="button" class="btn btn-default">Record Payment</button></a>
 <a href="edit_settings/{{ method.id }}"><button type="button" class="btn btn-default">Edit Settings</button></a>
@@ -73,4 +75,6 @@ No Payments Made
 </table>
 </tr>
 
+</div>
+</div>
 {% endblock %}
