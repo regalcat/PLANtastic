@@ -55,11 +55,13 @@ def executeAddFriend(request, userid):
 	for user in friendlist.friends.all():
 		if(user == user2):
 			isNotFriend=False
+			deleteNote(request,userid)
 			return render(request, 'friends/alreadyFriend.html', {'menu' : getMenuInfo(request), \
 				'title' : "Already Friends"})
 	for user in friendlist2.friends.all():
 		if(user == request.user):
 			isNotFriend=False
+			deleteNote(request,userid)
 			return render(request, 'friends/alreadyFriend.html', {'menu' : getMenuInfo(request), \
 				'title' : "Already Friends"})
 
@@ -86,8 +88,9 @@ def executeAddFriend(request, userid):
 def deleteNote(request, userid):
 	
 	note = NotificationModel.objects.filter(user = request.user, friendarg=userid)
-	if note.count() == 1:
-		note.delete()
+	if note.count() > 0:
+		for n in note:
+			n.delete()
 
 	return
 	
@@ -97,8 +100,9 @@ def deleteNote(request, userid):
 def declineFriend(request, userid):
 	
 	note = NotificationModel.objects.filter(user = request.user, friendarg=userid)
-	if note.count() == 1:
-		note.delete()
+	if note.count() > 0:
+		for n in note:
+			n.delete()
 
 	return HttpResponseRedirect(reverse("notifications:notifications.index"))
 	
