@@ -26,6 +26,5 @@ urlpatterns = patterns('',
 	url(r'^registerSuccess/', users_views.registerSuccess, name='registerSuccess'),
 	
 	#Urls pertaining to email invites
-	# CHANGED FUNCTION FOR THE DEMO (is otherwise invite_views.join_event)
-	url(r'^join', invite_views.tempJoin, name=('join-event')),
+	url(r'^join', invite_views.join_event, name=('join-event')),
 )

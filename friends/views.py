@@ -119,11 +119,11 @@ def addFriendQuery(request):
 
 		friend = request.POST['friend']
 		user2 = User.objects.filter(username=friend)
-		if(user2[0] == request.user):
-			return HttpResponseRedirect("")
 		if user2.count() != 1:
 			return HttpResponseRedirect(reverse("friends:addFriendQ"))
-		
+		if(user2[0] == request.user):
+			return HttpResponseRedirect("")
+
 		user2 = User.objects.get(username=friend)
 		
 		return HttpResponseRedirect(reverse('friends:addFriend', kwargs={'userid':int(user2.id)}))
