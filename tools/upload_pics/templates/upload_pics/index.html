@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
+<div class="panel panel-default">
+<div class="panel-body">
 <link rel="stylesheet" type="text/css" href="{{ STATIC_URL}}upload_pics.css">
 <script src="{{ STATIC_URL }}upload_pics.js"></script>
 <a href="upload_pic"><button type="button" class="btn btn-default">Upload Pictures</button></a>
@@ -35,5 +37,7 @@
 {% empty %}
 <h2> No pictures have been uploaded yet.</h2>
 {% endfor %}
+</div>
+</div>
 </div>
 {% endblock %}
