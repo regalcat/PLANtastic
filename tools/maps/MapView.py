@@ -23,7 +23,7 @@ class MapView(ToolView):
 		gmaps=Gmap.objects.filter(event=event)
 		for gmap in gmaps:
 			gmap.location = gmap.location
-		count = gmaps.count()
+		count = gmaps.count() % 3
 		context = {'event' : event, 'gmaps':gmaps, 'count':count }
 
 		return context
