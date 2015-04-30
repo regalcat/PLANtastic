@@ -21,6 +21,7 @@ body {
 /* ---------------- Page title ---------------*/
 .page-header {
  color: white;
+ border-bottom:2px solid #604576;
 }
 
 /* ---------------- Buttons default ---------------*/
