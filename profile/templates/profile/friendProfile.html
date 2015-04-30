@@ -14,6 +14,9 @@
 	{% if avatar %}
 	<img src="{{ avatar.url }}" alt="profile avatar" width="200px"></img><br><br>
 	{% endif %}
+	{% if email %}
+	<br><b>Email:</b> {{ email }}
+	{% endif %}
 	{% if birthday %}
 	<br><b>Birthday:</b> {{ birthday }}
 	{% endif %}
@@ -27,7 +30,7 @@
 	{% endif %}</font>
 
 <br><br>
-<a href="{{menu.server}}/{{event.eventid}}"><button type="button" class="btn btn-default">Go Back</button></a>
+<a href="{{menu.server}}/friends/list/"><button type="button" class="btn btn-default">Go Back</button></a>
 </div></div>
 
 
