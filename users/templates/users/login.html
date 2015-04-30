@@ -4,6 +4,7 @@
 <head>
 	<title>{{title}}</title>
 	<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}bootstrap-3.3.2-dist/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}base_css.css">
 </head>
 <!-- Empty menu bar for prettiness reasons -->
 <nav class="navbar navbar-default" style="margin:0px;padding:5px;">
@@ -25,7 +26,7 @@
 {% if form.error %}
 <p class="error">Sorry, that was not a valid username or password.</p>
 {% endif %}
-
+<br>
 <div class="panel panel-default">
 	<div class="panel-heading">
 			<h3 class="panel-title">Log in</h3>

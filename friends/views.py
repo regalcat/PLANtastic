@@ -79,8 +79,18 @@ def executeAddFriend(request, userid):
 	note=NotificationModel()
 	note.createNewNotification(user=recipient, text=msg)
 
-	
+	deleteNote(request,userid)
 	return HttpResponseRedirect(reverse('friends:list'))
+
+@login_required(login_url = '/loginRequired/')
+def deleteNote(request, userid):
+	
+	note = NotificationModel.objects.filter(user = request.user, friendarg=userid)
+	if note.count() == 1:
+		note.delete()
+
+	return
+	
 
 
 @login_required(login_url = '/loginRequired/')
@@ -122,7 +132,11 @@ def addFriendQuery(request):
 @login_required(login_url = '/loginRequired/')
 def friendListView(request):
 	thisUser=request.user
-	friendlist = FriendList.objects.get(user=request.user)
+	if FriendList.objects.filter(user=request.user).count() == 0:
+		friendlist = FriendList(user=request.user)
+		friendlist.save()
+	else:
+		friendlist = FriendList.objects.get(user=request.user)
 	if request.method == 'GET':
 
 		context = {'menu' : getMenuInfo(request), 'title' : "Friends", 'friendlist':friendlist,\

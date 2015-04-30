@@ -2,9 +2,6 @@
 @import url("bootstrap-theme.css")
 
 
-.jumbotron{
- opacity: 0.5;
-}
 
 .transpjumbo{
  padding: 30px;
@@ -17,6 +14,3 @@
  
 }
 
-body {
-background-color: rgb(100,100,100)
-}
