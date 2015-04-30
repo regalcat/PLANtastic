@@ -5,6 +5,7 @@
 <div class="page-header">
 	<font size="6">Edit schedule</font></div>
 
+<div class="panel panel-default">
 <div class="panel-body">
 	<form action= "" method= "POST">
 	{% csrf_token %}
@@ -116,5 +117,6 @@
 
 <a href="{{menu.server}}/{{event.eventid}}/tools/schedule"><button type="button" class="btn btn-default">Go Back</button></a>
 
+</div>
 </div>
 {% endblock %}
