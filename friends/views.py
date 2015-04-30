@@ -141,9 +141,12 @@ def friendListView(request):
 		friendlist.save()
 	else:
 		friendlist = FriendList.objects.get(user=request.user)
+
+	friends = friendlist.friends.all().order_by('last_name')	
+
 	if request.method == 'GET':
 
-		context = {'menu' : getMenuInfo(request), 'title' : "Friends", 'friendlist':friendlist,\
+		context = {'menu' : getMenuInfo(request), 'title' : "Friends", 'friends':friends,\
 		  'cur_path' : request.get_full_path(),  }
 		return render(request, 'friends/friendList.html', context)
 

@@ -10,7 +10,7 @@
 <div class="panel-body">
 <a href="{% url 'friends:addFriendQ' %}"><button class="btn btn-default">Add Friends!</button></a><br></br>
 <table class=table style="color:#000000">
-{% for user in friendlist.friends.all %}
+{% for user in friends %}
 <tr><td>{{user.username}} ({{user.get_full_name}})</td>
 <form action="{% url 'profile:friendProfile' %}" method= "POST">
 			{% csrf_token %}
