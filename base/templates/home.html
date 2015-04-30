@@ -9,10 +9,10 @@
 <div id="events-table">
 <table>
 <tr>
-		<td>You are a member of {{menu.num_upcoming_events}} upcoming events!</td>
+		<td><h4>You are a member of {{menu.num_upcoming_events}} upcoming events!</h4></td>
 </tr>
 <tr>
-		<td>Featured Events:</td>
+		
 		<td></td>
 </tr><tr>
 {% for e in menu.upcoming_events %}
@@ -36,7 +36,7 @@
 {% endif %}
 {% endfor %}
 </tr><tr>
-	<td>You are a member of {{menu.num_prev_events}} previous events!</td>
+	<td><h4>You are a member of {{menu.num_prev_events}} previous events!</h4></td>
 </tr><tr>
 {% for f in menu.prev_events %}
 	<td>                                                                                                                          

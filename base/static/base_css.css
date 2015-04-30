@@ -9,7 +9,7 @@
 
 body {
  background-color: #75A6AA;
- color:#626262;
+ color:#FFFFFF;
  }
 
 /* 
@@ -21,6 +21,7 @@ body {
 /* ---------------- Page title ---------------*/
 .page-header {
  color: white;
+ border-bottom:2px solid #604576;
 }
 
 /* ---------------- Buttons default ---------------*/
@@ -76,6 +77,8 @@ a:hover {
 .navbar-default {
     background-color: #604576;
     border-color: white;
+    border:0px;
+    padding:5px;
 }
 /* title */
 .navbar-default .navbar-brand {
@@ -111,6 +114,11 @@ a:hover {
 }
 
 /* ---------------- End of menubar ---------------*/
+
+
+.panel-default{
+ color: #000000
+}
 
 /* panel headings */
 .panel-default .panel-heading{
