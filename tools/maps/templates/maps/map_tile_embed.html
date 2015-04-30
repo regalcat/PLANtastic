@@ -1,4 +1,12 @@
 
+{% if maps.count <= 1 %}
+<div class="col-xs-4 col-md-4"> 
+{% elif maps.count == 2 %}
+<div class="col-xs-8 col-md-8 col-md-offset-2">
+{% elif maps.count >= 3 %}
+<div class="col-xs-12 col-md-12">
+{% endif %}
+
 <div class="panel panel-default">
 	<div class="panel-heading">
 		<center><h3 class="panel-title" >Maps</h3></center>
