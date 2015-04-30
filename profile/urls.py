@@ -12,6 +12,7 @@ urlpatterns = patterns('',
 	url(r'^executeDelete/$', views.executeDelete, name='executeDelete'),
 	url(r'^other/$', views.otherProfile, name ='otherProfile'),
 	url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
+	url(r'^friend/$', views.friendProfile, name ='friendProfile'),
 
 
 )

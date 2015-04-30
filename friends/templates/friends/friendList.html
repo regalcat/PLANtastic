@@ -5,14 +5,25 @@
 	<font size="6">Friend List</font>
 </div>
 <body>
+<div class="panel">
+<div class="panel-default">
+<div class="panel-body">
 <a href="{% url 'friends:addFriendQ' %}"><button class="btn btn-default">Add Friends!</button></a><br></br>
-<table class=table>
+<table class=table style="color:#000000">
 {% for user in friendlist.friends.all %}
-<tr><td><a href="{{menu.server}}/friends/{{user.id}}/" >{{user.username}} ({{user.get_full_name}})</a></td>
+<tr><td>{{user.username}} ({{user.get_full_name}})</td>
+<form action="{% url 'profile:friendProfile' %}" method= "POST">
+			{% csrf_token %}
+			<input type="hidden" name="username" id="username" value="{{user.username}}">
+			
+			<td><input type= "submit" value="See profile" class="btn btn-default" ></form></td>
+			
 <td><a href="{{menu.server}}/friends/{{user.id}}/deleteFriend"><button class="btn btn-danger">Delete Friend</button></a>
 </td> 
 </tr>
 {% endfor %}
 </table>
+</div>
+</div></div>
 </body>
 {% endblock %}
