@@ -5,6 +5,8 @@
 	<font size="6">Add Vehicle</font>
 </div>
 
+<div class="panel-default panel">
+<div class="panel-body">
 <form action="" method="post">
 {% csrf_token %}
 <p><b>Driver:  </b>{{user}}</p>
@@ -14,4 +16,6 @@
 
 <a href="../"><button type="button" class="btn btn-default">Go Back</button></a>
 </form>
+</div>
+</div>
 {% endblock %}

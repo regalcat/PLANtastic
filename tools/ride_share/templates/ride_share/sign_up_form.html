@@ -4,6 +4,8 @@
 <div class="page-header">
 	<font size="6">Ride Share Sign Up</font>
 </div>
+<div class="panel panel-default">
+<div class="panel-body">
 
 <form action="../executeSignup/" method="post">
 {% csrf_token %}
@@ -17,4 +19,6 @@
 
 <a href="../"><button type="button" class="btn btn-danger">Cancel</button></a>
 </form>
+</div>
+</div>
 {% endblock %}
